@@ -1,3 +1,5 @@
+import { getAllProjects } from "../projectManager/projectManager";
+
 // contains the different factory patterns and functions for
 // creating and modifying to do tasks
 
@@ -37,9 +39,87 @@ const deleteTask = (index) => {
   return deletedTask;
 };
 
+
+
+const changeTaskTitle = (projectIndex, taskIndex, newTitle) => {
+  const projects = getAllProjects();
+  projects.forEach((project, index) => {
+    if (projectIndex === index) {
+      const projectTasks = project.tasksArr;
+      projectTasks.forEach((task, index) => {
+        if (taskIndex === index) {
+          task.title = newTitle
+        }
+      })
+    }
+  })
+}
+
+const changeTaskDescription = (projectIndex, taskIndex, newDescription) => {
+  const projects = getAllProjects();
+  projects.forEach((project, index) => {
+    if (projectIndex === index) {
+      const projectTasks = project.tasksArr;
+      projectTasks.forEach((task, index) => {
+        if (taskIndex === index) {
+          task.description = newDescription
+        }
+      })
+    }
+  })
+}
+
+const changeTaskDueDate = (projectIndex, taskIndex, newDueDate) => {
+  const projects = getAllProjects();
+  projects.forEach((project, index) => {
+    if (projectIndex === index) {
+      const projectTasks = project.tasksArr;
+      projectTasks.forEach((task, index) => {
+        if (taskIndex === index) {
+          task.dueDate = newDueDate
+        }
+      })
+    }
+  })
+}
+
+const changeTaskPriority = (projectIndex, taskIndex, newPriority) => {
+  const projects = getAllProjects();
+  projects.forEach((project, index) => {
+    if (projectIndex === index) {
+      const projectTasks = project.tasksArr;
+      projectTasks.forEach((task, index) => {
+        if (taskIndex === index) {
+          task.priority = newPriority
+        }
+      })
+    }
+  })
+}
+
+const changeTaskNotes = (projectIndex, taskIndex, updatedNotes) => {
+  const projects = getAllProjects();
+  projects.forEach((project, index) => {
+    if (projectIndex === index) {
+      const projectTasks = project.tasksArr;
+      projectTasks.forEach((task, index) => {
+        if (taskIndex === index) {
+          task.notes = updatedNotes
+        }
+      })
+    }
+  })
+}
+
+
 export {
   createToDoTask,
   addToDoTaskArr,
   deleteAllTasks,
   deleteTask,
+  changeTaskPriority,
+  changeTaskTitle,
+  changeTaskDescription,
+  changeTaskDueDate,
+  changeTaskNotes
 };

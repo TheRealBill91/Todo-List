@@ -2,6 +2,8 @@
 
 const projects = [];
 
+let currentProject;
+
 const createProject = (projectTitle, tasksArr) => {
   return { projectTitle, tasksArr };
 };
@@ -27,10 +29,23 @@ const deleteProjectTask = (projectIndex, taskIndex) => {
   })
 };
 
+// Sets the current project to whatever project the user last clicked on
+const setCurrentProject = (project) => {
+  currentProject = project;
+}
+
+
+// Gets the current project the user last clicked on
+const getCurrentProject = () => currentProject;
+
+
+
 export {
   createProject,
   getAllProjects,
   addProjectToProjectsArray,
   addTaskToProjectObj,
   deleteProjectTask,
+  setCurrentProject,
+  getCurrentProject
 };

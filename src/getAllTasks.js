@@ -11,6 +11,7 @@ const getAllTasks = () => {
   const tasks = [];
   projects.forEach((project) => {
     const currentTasks = project.tasksArr;
+    /*  console.log("Current task object key values:", Object.keys(currentTasks)) */
     tasks.push(...currentTasks);
   });
   return tasks;

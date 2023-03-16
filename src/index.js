@@ -3,16 +3,19 @@ import {
   addToDoTaskArr,
   deleteAllTasks,
   deleteTask,
+  changeTaskPriority,
+  changeTaskTitle,
+  changeTaskNotes,
 } from "./toDoManager/toDoManager";
-import { deleteProjectTask } from "./projectManager/projectManager";
-import { projectHolder, getAllTasks } from "./getAllTasks";
-
 import {
+  deleteProjectTask, getCurrentProject, setCurrentProject,
   addTaskToProjectObj,
   createProject,
   addProjectToProjectsArray,
   getAllProjects,
 } from "./projectManager/projectManager";
+import { projectHolder, getAllTasks } from "./getAllTasks";
+
 
 /* toDoManager(); */
 
@@ -68,17 +71,23 @@ const secondProjTaskTwo = createToDoTask(
   "description",
   "03/15/2023",
   "low",
-  "notes"
+  "notes",
+
 );
 const secondProject = createProject("Project Two", []);
 addTaskToProjectObj(secondProject, secondProjTask);
 addTaskToProjectObj(secondProject, secondProjTaskTwo);
 addProjectToProjectsArray(secondProject);
-const deletedTask = deleteProjectTask(1, 1);
-console.log("Some info about deleted task:", deletedTask);
-/* sampleProject.sampleTask = sampleTask;
-sampleProject.sampleTaskTwo = sampleTaskTwo;
-sampleProject.sampleTaskThree = sampleTaskThree; */
+/* deleteProjectTask(1, 1); */
+
+setCurrentProject(sampleProject);
+console.log("The current project is set to:", getCurrentProject().projectTitle);
+setCurrentProject(secondProject);
+console.log("The current project is now set to:", getCurrentProject().projectTitle);
+
+changeTaskPriority(0, 0, "med");
+changeTaskTitle(0, 0, "Changed, now first task")
+changeTaskNotes(0, 0, "Updated Notes!")
 
 console.log(getAllTasks());
 
