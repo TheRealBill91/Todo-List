@@ -2,27 +2,35 @@
 
 const projects = [];
 
-
-
 const createProject = (projectTitle, tasksArr) => {
-
-    return { projectTitle, tasksArr };
-}
+  return { projectTitle, tasksArr };
+};
 
 const addProjectToProjectsArray = (project) => {
-    projects.push(project);
-}
+  projects.push(project);
+};
 
 const getAllProjects = () => {
-    return projects;
-}
+  return projects;
+};
 
 const addTaskToProjectObj = (project, task) => {
-    project.tasksArr.push(task)
-}
+  project.tasksArr.push(task);
+};
 
-export { createProject, getAllProjects, addProjectToProjectsArray, addTaskToProjectObj }
+const deleteProjectTask = (projectIndex, taskIndex) => {
+  projects.forEach((project, index) => {
+    if (projectIndex === index) {
+      const projectTasks = project.tasksArr;
+      return projectTasks.splice(taskIndex, 1);
+    }
+  })
+};
 
-
-
-/* export default projectManager */
+export {
+  createProject,
+  getAllProjects,
+  addProjectToProjectsArray,
+  addTaskToProjectObj,
+  deleteProjectTask,
+};
