@@ -6,10 +6,53 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
-    <script src="main.js"></script>
+    <script defer src="main.js"></script>
 </head>
 
 <body>
+    <header>
+        <h1>Task Manager</h1>
+    </header>
+    <aside>
+        <nav>
+            <div class="home">
+                <p>Home</p>
+            </div>
+            <div class="today">
+                <p>Today</p>
+            </div>
+            <div class="thisWeek">
+                <p>Week</p>
+            </div>
+            <!-- This is where you will dynamically generate each project object on the DOM -->
+            <div class="projectContainer">
+                <div>
+                    <p>Projects</p>
+                    <button>+</button>
+                </div>
+
+                <div class="projects">
+                    <p>Test Project</p>
+                </div>
+                <div class="projectInput">
+                    <form class="projectInputForm">
+                        <label class="projectTitle" for="projectTitle">
+                            Project Title<input class="projTitleInput" type="text" name="projectTitle" id="projectTitle"
+                                required>
+                        </label>
+                        <button class="projSubmitBtn" type="submit">Add</button>
+                    </form>
+
+                </div>
+                <button class="closeProjectAddInput">Close</button>
+
+            </div>
+        </nav>
+    </aside>
+    <!-- This is where the dynamically generated task objects will be rendered -->
+    <main>
+
+    </main>
 
 </body>
 
