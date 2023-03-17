@@ -6,7 +6,9 @@ import {
   changeTaskPriority,
   changeTaskTitle,
   changeTaskNotes,
+  toggleTaskCompletion,
 } from "./toDoManager/toDoManager";
+
 import {
   deleteProjectTask, getCurrentProject, setCurrentProject,
   addTaskToProjectObj,
@@ -14,7 +16,14 @@ import {
   addProjectToProjectsArray,
   getAllProjects,
 } from "./projectManager/projectManager";
+
 import { projectHolder, getAllTasks } from "./getAllTasks";
+
+import { addProjectToDOM, renderProjectsToDOM } from "./displayController/displayController";
+
+import "./normalize.css";
+import "./generalStyles.css";
+
 
 
 /* toDoManager(); */
@@ -36,7 +45,8 @@ const sampleTask = createToDoTask(
   "description",
   "03/15/2023",
   "low",
-  "notes"
+  "notes",
+  true
 );
 const sampleTaskTwo = createToDoTask(
   "taskTwo",
@@ -74,21 +84,31 @@ const secondProjTaskTwo = createToDoTask(
   "notes",
 
 );
-const secondProject = createProject("Project Two", []);
-addTaskToProjectObj(secondProject, secondProjTask);
-addTaskToProjectObj(secondProject, secondProjTaskTwo);
-addProjectToProjectsArray(secondProject);
-/* deleteProjectTask(1, 1); */
 
-setCurrentProject(sampleProject);
-console.log("The current project is set to:", getCurrentProject().projectTitle);
-setCurrentProject(secondProject);
-console.log("The current project is now set to:", getCurrentProject().projectTitle);
+function modelTesting() {
+  const secondProject = createProject("Project Two", []);
+  addTaskToProjectObj(secondProject, secondProjTask);
+  addTaskToProjectObj(secondProject, secondProjTaskTwo);
+  addProjectToProjectsArray(secondProject);
+  /* deleteProjectTask(1, 1); */
 
-changeTaskPriority(0, 0, "med");
-changeTaskTitle(0, 0, "Changed, now first task")
-changeTaskNotes(0, 0, "Updated Notes!")
+  setCurrentProject(sampleProject);
+  console.log("The current project is set to:", getCurrentProject().projectTitle);
+  setCurrentProject(secondProject);
+  console.log("The current project is now set to:", getCurrentProject().projectTitle);
 
-console.log(getAllTasks());
+  changeTaskPriority(0, 0, "med");
+  changeTaskTitle(0, 0, "Changed, now first task")
+  changeTaskNotes(0, 0, "Updated Notes!")
+  toggleTaskCompletion(0, 0);
+  toggleTaskCompletion(0, 0)
 
-console.table(getAllProjects());
+  console.log(getAllTasks());
+
+  console.table(getAllProjects());
+}
+
+/* modelTesting() */
+addProjectToDOM();
+renderProjectsToDOM();
+

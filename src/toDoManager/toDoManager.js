@@ -5,14 +5,17 @@ import { getAllProjects } from "../projectManager/projectManager";
 
 const tasks = [];
 
+const projects = getAllProjects();
+
 // factory pattern for creating a toDoTask
-const createToDoTask = (title, description, dueDate, priority, notes) => {
+const createToDoTask = (title, description, dueDate, priority, notes, isComplete) => {
   return {
     title,
     description,
     dueDate,
     priority,
     notes,
+    isComplete
   };
 };
 
@@ -42,7 +45,6 @@ const deleteTask = (index) => {
 
 
 const changeTaskTitle = (projectIndex, taskIndex, newTitle) => {
-  const projects = getAllProjects();
   projects.forEach((project, index) => {
     if (projectIndex === index) {
       const projectTasks = project.tasksArr;
@@ -56,7 +58,6 @@ const changeTaskTitle = (projectIndex, taskIndex, newTitle) => {
 }
 
 const changeTaskDescription = (projectIndex, taskIndex, newDescription) => {
-  const projects = getAllProjects();
   projects.forEach((project, index) => {
     if (projectIndex === index) {
       const projectTasks = project.tasksArr;
@@ -70,7 +71,6 @@ const changeTaskDescription = (projectIndex, taskIndex, newDescription) => {
 }
 
 const changeTaskDueDate = (projectIndex, taskIndex, newDueDate) => {
-  const projects = getAllProjects();
   projects.forEach((project, index) => {
     if (projectIndex === index) {
       const projectTasks = project.tasksArr;
@@ -84,7 +84,6 @@ const changeTaskDueDate = (projectIndex, taskIndex, newDueDate) => {
 }
 
 const changeTaskPriority = (projectIndex, taskIndex, newPriority) => {
-  const projects = getAllProjects();
   projects.forEach((project, index) => {
     if (projectIndex === index) {
       const projectTasks = project.tasksArr;
@@ -98,13 +97,25 @@ const changeTaskPriority = (projectIndex, taskIndex, newPriority) => {
 }
 
 const changeTaskNotes = (projectIndex, taskIndex, updatedNotes) => {
-  const projects = getAllProjects();
   projects.forEach((project, index) => {
     if (projectIndex === index) {
       const projectTasks = project.tasksArr;
       projectTasks.forEach((task, index) => {
         if (taskIndex === index) {
           task.notes = updatedNotes
+        }
+      })
+    }
+  })
+}
+
+const toggleTaskCompletion = (projectIndex, taskIndex) => {
+  projects.forEach((project, index) => {
+    if (projectIndex === index) {
+      const projectTasks = project.tasksArr;
+      projectTasks.forEach((task, index) => {
+        if (taskIndex === index) {
+          task.isComplete ? task.isComplete = false : task.isComplete = true;
         }
       })
     }
@@ -121,5 +132,6 @@ export {
   changeTaskTitle,
   changeTaskDescription,
   changeTaskDueDate,
-  changeTaskNotes
+  changeTaskNotes,
+  toggleTaskCompletion
 };
