@@ -10,7 +10,9 @@ import {
 } from "./toDoManager/toDoManager";
 
 import {
-  deleteProjectTask, getCurrentProject, setCurrentProject,
+  deleteProjectTask,
+  getCurrentProject,
+  setCurrentProject,
   addTaskToProjectObj,
   createProject,
   addProjectToProjectsArray,
@@ -19,12 +21,16 @@ import {
 
 import { projectHolder, getAllTasks } from "./getAllTasks";
 
-import { addProjectToDOM, renderProjectsToDOM } from "./displayController/displayController";
+import {
+  renderProjectsToDOM,
+  projInputFormListener,
+  addProjectToDOM,
+  closeProjInputEventListener,
+  showProjInputEventListener
+} from "./displayController/displayController";
 
 import "./normalize.css";
 import "./generalStyles.css";
-
-
 
 /* toDoManager(); */
 
@@ -81,8 +87,7 @@ const secondProjTaskTwo = createToDoTask(
   "description",
   "03/15/2023",
   "low",
-  "notes",
-
+  "notes"
 );
 
 function modelTesting() {
@@ -93,15 +98,21 @@ function modelTesting() {
   /* deleteProjectTask(1, 1); */
 
   setCurrentProject(sampleProject);
-  console.log("The current project is set to:", getCurrentProject().projectTitle);
+  console.log(
+    "The current project is set to:",
+    getCurrentProject().projectTitle
+  );
   setCurrentProject(secondProject);
-  console.log("The current project is now set to:", getCurrentProject().projectTitle);
+  console.log(
+    "The current project is now set to:",
+    getCurrentProject().projectTitle
+  );
 
   changeTaskPriority(0, 0, "med");
-  changeTaskTitle(0, 0, "Changed, now first task")
-  changeTaskNotes(0, 0, "Updated Notes!")
+  changeTaskTitle(0, 0, "Changed, now first task");
+  changeTaskNotes(0, 0, "Updated Notes!");
   toggleTaskCompletion(0, 0);
-  toggleTaskCompletion(0, 0)
+  toggleTaskCompletion(0, 0);
 
   console.log(getAllTasks());
 
@@ -109,6 +120,10 @@ function modelTesting() {
 }
 
 /* modelTesting() */
-addProjectToDOM();
+
+
+showProjInputEventListener();
+closeProjInputEventListener();
 renderProjectsToDOM();
+projInputFormListener();
 
