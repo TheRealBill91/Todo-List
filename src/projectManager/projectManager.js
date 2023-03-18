@@ -1,4 +1,5 @@
 /* import toDoManager from "../toDoManager/toDoManager"; */
+import { setAttributes } from "../setAttributes";
 
 const projects = [];
 
@@ -34,9 +35,15 @@ const setCurrentProject = (project) => {
   currentProject = project;
 }
 
-
 // Gets the current project the user last clicked on
 const getCurrentProject = () => currentProject;
+
+const getProjectTasks = (project) => {
+  return project.tasksArr;
+
+}
+
+
 
 
 
@@ -47,5 +54,6 @@ export {
   addTaskToProjectObj,
   deleteProjectTask,
   setCurrentProject,
-  getCurrentProject
+  getCurrentProject,
+  getProjectTasks
 };
