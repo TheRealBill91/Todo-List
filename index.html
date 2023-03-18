@@ -34,13 +34,13 @@
                 <div class="projects">
                     <p>Test Project</p>
                 </div>
-                    <form class="projectInputForm">
-                        <label class="projectTitle" for="projectTitle">
-                            Project Title<input class="projTitleInput" type="text" name="projectTitle" id="projectTitle"
-                                required>
-                        </label>
-                        <button class="projSubmitBtn" type="submit">Add</button>
-                    </form>
+                <form class="projectInputForm">
+                    <label class="projectTitle" for="projectTitle">
+                        Project Title<input class="projTitleInput" type="text" name="projectTitle" id="projectTitle"
+                            required>
+                    </label>
+                    <button class="projSubmitBtn" type="submit">Add</button>
+                </form>
 
                 <button class="closeProjectInputBtn">Close</button>
 
@@ -49,7 +49,28 @@
     </aside>
     <!-- This is where the dynamically generated task objects will be rendered -->
     <main>
+        <div class="taskContainer">
+            <div class="taskHeaderContainer">
+                <h3>
+                    Task header
+                </h3>
+            </div>
+            <div class="tasks">
+                <div class="task">
+                    <div class="taskTitle">
+                        <p>Task title</p>
+                    </div>
+                    <div class="taskControls">
+                        <p>Date</p>
+                        <button>Edit</button>
+                        <button>Info</button>
+                        <button>delete</button>
+                    </div>
+                </div>
 
+
+            </div>
+        </div>
     </main>
 
 </body>
