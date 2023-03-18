@@ -99,7 +99,7 @@ const secondProjTaskTwo = createToDoTask(
 
 
 console.log(getProjectTasks(sampleProject));
-
+console.log(getAllProjects());
 
 showProjInputEventListener();
 closeProjInputEventListener();

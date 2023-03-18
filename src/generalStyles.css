@@ -3,6 +3,130 @@ body {
   /* rows, columns */
   grid-template: 60px auto / 350px auto;
   height: 100vh;
+  position: relative;
+}
+
+.form-container {
+  z-index: 1;
+  position: absolute;
+  background-color: white;
+  display: none;
+  /* width: 200px; */
+  padding: 8px 14px;
+  height: 73vh;
+  box-shadow: 0px 6px 4px 4px rgba(155, 155, 155, 0.322);
+  border-radius: 12px 12px;
+  grid-template-columns: 343px 32px;
+  grid-template-rows: 65vh;
+  place-self: center;
+  overflow: auto;
+}
+
+#taskForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  background-color: white;
+  position: absolute;
+  transition: 0.1s ease-in;
+  animation: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  place-self: flex-start;
+  width: 90%;
+  height: 69vh;
+}
+
+#taskForm > fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  height: auto;
+  border-style: none;
+  height: 80%;
+  width: 80%;
+  padding: 0;
+  flex: 1;
+}
+
+fieldset > label:first-of-type {
+  margin-top: 8px;
+}
+
+.fieldset-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 90%;
+}
+
+legend {
+  display: flex;
+  gap: 8px;
+  font-size: 1.2rem;
+  /* transform: scale( 1,2); */
+  /* width: 90%; */
+  font-weight: 700;
+}
+
+button.close-modal {
+  /* align-self: flex-end; */
+  justify-items: end;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  justify-self: end;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  border-radius: 50%;
+  background-color: rgb(196, 196, 196);
+  border: none;
+  transition: 0.1s ease-in-out;
+}
+
+.form-modal-background {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  background-color: grey;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  opacity: 70%;
+  transition: 0.1s ease-in;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-container > form {
+}
+
+input[type="radio"] {
+  appearance: none;
+
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+
+  border: 2px solid #999;
+  transition: 0.2s all linear;
+  margin-right: 5px;
+
+  position: relative;
+  top: 4px;
+}
+
+input[type="radio"]:checked {
+  border: 6px solid black;
 }
 
 header {
@@ -28,7 +152,7 @@ nav {
   flex-direction: column;
 }
 
-nav>div {
+nav > div {
   outline: 1px solid black;
   display: flex;
   justify-content: center;
@@ -36,7 +160,7 @@ nav>div {
   height: 80px;
 }
 
-nav>div>p {
+nav > div > p {
   outline: 1px solid black;
   font-size: 1.2rem;
   padding: 6px;
@@ -47,7 +171,7 @@ nav>div>p {
 }
 
 /* Styles project container header */
-.projectContainer>div>p:first-of-type {
+.projectContainer > div > p:first-of-type {
   /* margin-left: 30px; */
   /*  outline: 1px solid black; */
   justify-content: center;
@@ -55,7 +179,7 @@ nav>div>p {
 }
 
 /* Apply styles for project container title and add button */
-.projectContainer>div:first-of-type {
+.projectContainer > div:first-of-type {
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -65,7 +189,7 @@ nav>div>p {
 }
 
 /* For styling the add project button */
-.projectContainer>div:first-of-type>button {
+.projectContainer > div:first-of-type > button {
   font-size: 1.5rem;
   font-weight: 1000;
 }
@@ -82,18 +206,18 @@ nav>div>p {
   overflow: auto;
 }
 
-.projects>div {
+.projects > div {
   font-size: 1.1rem;
 }
 
-nav>.projectContainer {
+nav > .projectContainer {
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.projects>p {
+.projects > p {
   outline: 1px solid black;
   padding: 6px;
 }
@@ -106,12 +230,11 @@ nav>.projectContainer {
   justify-self: end;
 }
 
-.projectInput>label {
+.projectInput > label {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
-
 
 input {
   background-color: whitesmoke;
@@ -146,13 +269,12 @@ input {
   flex-direction: column;
 }
 
-.tasks>div {
+.tasks > div {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
-
 
 .taskHeaderContainer {
   display: flex;
@@ -164,4 +286,12 @@ input {
   gap: 4px;
 }
 
-.taskHeader {}
+.taskHeader {
+}
+
+.addTaskBtn {
+  width: 60%;
+  padding: 8px;
+  margin: 8px;
+  align-self: center;
+}
