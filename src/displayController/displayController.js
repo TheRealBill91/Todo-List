@@ -192,6 +192,7 @@ const loadTaskValues = (currentTask) => {
   const notes = document.getElementById("notes");
 
   const taskValues = Object.values(currentTask);
+  const priorityValue = taskValues[3];
   const dateString = taskValues[2];
   const dateObject = parseISO(dateString)
   // You only need this version for the tasks you manually created 
@@ -202,9 +203,20 @@ const loadTaskValues = (currentTask) => {
   title.value = taskValues[0];
   description.value = taskValues[1];
   dueDate.value = formattedDate;
-  // priority.value = currentTask[3];
+  setPriorityRadioButton(priorityValue)
   notes.value = taskValues[4];
 };
+
+const setPriorityRadioButton = (priorityValue) => {
+  const radioButtons = document.querySelectorAll('label input[type="radio"]');
+
+  radioButtons.forEach(radioBtn => {
+    if (radioBtn.id === priorityValue) {
+      radioBtn.checked = priorityValue;
+      return radioBtn.checked;
+    }
+  })
+}
 
 const modifyTaskSubmitListen = (projTasks, j) => {
   const taskForm = document.getElementById("taskForm");

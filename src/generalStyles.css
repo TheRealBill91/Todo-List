@@ -38,7 +38,7 @@ body {
   height: 69vh;
 }
 
-#taskForm > fieldset {
+#taskForm>fieldset {
   display: flex;
   flex-direction: column;
   gap: 34px;
@@ -50,7 +50,7 @@ body {
   flex: 1;
 }
 
-fieldset > label:first-of-type {
+fieldset>label:first-of-type {
   margin-top: 8px;
 }
 
@@ -107,7 +107,9 @@ label {
   gap: 4px;
 }
 
-.form-container > form {
+.btnPriorityContainer {
+  display: flex;
+  gap: 6px;
 }
 
 input[type="radio"] {
@@ -152,7 +154,7 @@ nav {
   flex-direction: column;
 }
 
-nav > div {
+nav>div {
   outline: 1px solid black;
   display: flex;
   justify-content: center;
@@ -160,7 +162,7 @@ nav > div {
   height: 80px;
 }
 
-nav > div > p {
+nav>div>p {
   outline: 1px solid black;
   font-size: 1.2rem;
   padding: 6px;
@@ -171,7 +173,7 @@ nav > div > p {
 }
 
 /* Styles project container header */
-.projectContainer > div > p:first-of-type {
+.projectContainer>div>p:first-of-type {
   /* margin-left: 30px; */
   /*  outline: 1px solid black; */
   justify-content: center;
@@ -179,7 +181,7 @@ nav > div > p {
 }
 
 /* Apply styles for project container title and add button */
-.projectContainer > div:first-of-type {
+.projectContainer>div:first-of-type {
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -189,7 +191,7 @@ nav > div > p {
 }
 
 /* For styling the add project button */
-.projectContainer > div:first-of-type > button {
+.projectContainer>div:first-of-type>button {
   font-size: 1.5rem;
   font-weight: 1000;
 }
@@ -206,18 +208,18 @@ nav > div > p {
   overflow: auto;
 }
 
-.projects > div {
+.projects>div {
   font-size: 1.1rem;
 }
 
-nav > .projectContainer {
+nav>.projectContainer {
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.projects > p {
+.projects>p {
   outline: 1px solid black;
   padding: 6px;
 }
@@ -230,7 +232,7 @@ nav > .projectContainer {
   justify-self: end;
 }
 
-.projectInput > label {
+.projectInput>label {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -269,7 +271,7 @@ input {
   flex-direction: column;
 }
 
-.tasks > div {
+.tasks>div {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -286,8 +288,7 @@ input {
   gap: 4px;
 }
 
-.taskHeader {
-}
+.taskHeader {}
 
 .addTaskBtn {
   width: 60%;

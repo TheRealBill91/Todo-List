@@ -54,7 +54,7 @@ console.log(remove); */
 const sampleTask = createToDoTask(
   "title",
   "description",
-  "03/15/2023",
+  "2022-03-15",
   "low",
   "notes",
   true
@@ -62,38 +62,24 @@ const sampleTask = createToDoTask(
 const sampleTaskTwo = createToDoTask(
   "taskTwo",
   "descriptionTwo",
-  "03/15/2023",
+  "2022-03-16",
   "medium",
-  "notes"
+  "notes",
+  true
 );
 const sampleTaskThree = createToDoTask(
   "taskThree",
   "descriptionThree",
-  "03/15/2023",
+  "2022-03-17",
   "medium",
-  "notes"
+  "notes",
+  false
 );
 const sampleProject = createProject("testProjectObject", []);
 addTaskToProjectObj(sampleProject, sampleTask);
 addTaskToProjectObj(sampleProject, sampleTaskTwo);
 addTaskToProjectObj(sampleProject, sampleTaskThree);
 addProjectToProjectsArray(sampleProject);
-
-const secondProjTask = createToDoTask(
-  "title",
-  "description",
-  "03/15/2023",
-  "low",
-  "notes"
-);
-
-const secondProjTaskTwo = createToDoTask(
-  "title",
-  "description",
-  "03/15/2023",
-  "low",
-  "notes"
-);
 
 
 
