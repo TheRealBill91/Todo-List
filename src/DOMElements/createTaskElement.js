@@ -11,19 +11,28 @@ const createTaskElement = (taskObj, index, tasks) => {
     "data-index": `${index}`,
   });
   tasks.appendChild(taskElement);
+  createTaskTitle(taskElement, taskValues, index);
+  createTaskControls(taskElement, taskValues, index);
+};
+
+// Creates the task title using the DOM
+const createTaskTitle = (taskElement, taskValues, index) => {
   const taskTitle = document.createElement("div");
   setAttributes(taskTitle, { class: "taskTitle", "data-index": `${index}` });
   taskElement.appendChild(taskTitle);
   const taskTitlePara = document.createElement("p");
   taskTitlePara.textContent = `${taskValues[0]}`;
   taskTitle.appendChild(taskTitlePara);
+};
 
+const createTaskControls = (taskElement, taskValues, index) => {
   const taskControls = document.createElement("div");
   taskControls.classList.add("taskControls");
   taskElement.appendChild(taskControls);
   const datePara = document.createElement("p");
   datePara.textContent = `${taskValues[2]}`;
   const editButton = document.createElement("button");
+  setAttributes(editButton, { "data-index": `${index}`, class: "editButton" });
   editButton.textContent = "Edit";
   const infoButton = document.createElement("button");
   infoButton.textContent = "Info";

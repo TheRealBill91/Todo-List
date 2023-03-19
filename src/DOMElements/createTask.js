@@ -37,7 +37,9 @@ const closeTaskForm = () => {
   const formModalBg = document.querySelector(".form-modal-background");
   const formContainer = document.querySelector(".form-container");
   const closeModalBtn = document.querySelector(".close-modal");
+  const form = document.getElementById("taskForm");
   closeModalBtn.addEventListener("click", () => {
+    form.reset();
     formModalBg.style.display = "none";
     formContainer.style.display = "none";
   });
@@ -69,8 +71,8 @@ const createTask = (event) => {
 
   console.log("Submitted task:", task);
   addTaskToProjectObj(currentProj, task);
-  formContainer.style.display = "none";
   taskForm.reset();
+  formContainer.style.display = "none";
   formModalBg.style.display = "none";
   renderProjectTasks();
 };

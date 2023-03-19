@@ -7,6 +7,17 @@ import {
   getCurrentProject,
 } from "../projectManager/projectManager";
 
+import { format, parse, parseISO } from "date-fns";
+
+import {
+  changeTaskTitle,
+  changeTaskDescription,
+  changeTaskDueDate,
+  changeTaskPriority,
+  changeTaskNotes,
+  modifyTask,
+} from "../toDoManager/toDoManager";
+
 import { setAttributes } from "../setAttributes";
 import { createTaskElement } from "../DOMElements/createTaskElement";
 import {
@@ -99,6 +110,7 @@ const renderProjectTasksOnClick = (event) => {
   });
   // listens for user click of task delete button
   deleteTaskListener();
+  editTaskListener();
 };
 
 // renders project tasks for cases when user doesn't first click on the project
@@ -116,6 +128,7 @@ const renderProjectTasks = () => {
     });
   }
   deleteTaskListener();
+  editTaskListener();
 };
 
 const deleteTaskListener = () => {
@@ -141,9 +154,72 @@ const deleteTask = (event) => {
   }
 };
 
-/* const editTask = () => {
+// Sets event listener on each edit button for all the tasks
+// in the currently selected project
+const editTaskListener = () => {
+  const editButtons = document.querySelectorAll(".editButton");
+  editButtons.forEach((editBtn) => editBtn.addEventListener("click", editTask));
+};
 
-} */
+const editTask = (event) => {
+  const targetEditBtn = +event.target.dataset.index;
+  const currentProj = getCurrentProject();
+  const formModalBg = document.querySelector(".form-modal-background");
+  const formContainer = document.querySelector(".form-container");
+
+  const projTasks = getProjectTasks(currentProj);
+  if (projTasks) {
+    for (let j = 0; j < projTasks.length; j++) {
+      if (j === targetEditBtn) {
+        formModalBg.style.display = "flex";
+        formContainer.style.display = "grid";
+        const currentTask = projTasks[j];
+        loadTaskValues(currentTask);
+        modifyTaskSubmitListen(projTasks, j);
+        closeTaskForm();
+        return;
+      }
+    }
+  }
+};
+
+// loads task values into form when user hits the edit button
+const loadTaskValues = (currentTask) => {
+  const title = document.getElementById("title");
+  const description = document.getElementById("description");
+  const dueDate = document.getElementById("dueDate");
+  const priority = document.getElementById("priority");
+  const notes = document.getElementById("notes");
+
+  const taskValues = Object.values(currentTask);
+  const dateString = taskValues[2];
+  const dateObject = parseISO(dateString)
+  // You only need this version for the tasks you manually created 
+  // inside index.js
+  // const parsedDate = parse(dateValue, 'MM/dd/yyyy', new Date());
+  const formattedDate = format(dateObject, "yyyy-MM-dd");
+
+  title.value = taskValues[0];
+  description.value = taskValues[1];
+  dueDate.value = formattedDate;
+  // priority.value = currentTask[3];
+  notes.value = taskValues[4];
+};
+
+const modifyTaskSubmitListen = (projTasks, j) => {
+  const taskForm = document.getElementById("taskForm");
+  const formModalBg = document.querySelector(".form-modal-background");
+  const formContainer = document.querySelector(".form-container");
+  taskForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const title = document.getElementById("title");
+    const newTitle = title.value;
+    modifyTask(projTasks, j, newTitle);
+    renderProjectTasks();
+    formModalBg.style.display = "none";
+    formContainer.style.display = "none";
+  });
+};
 
 export {
   addProjectToDOM,
@@ -155,4 +231,5 @@ export {
   renderProjectTasksOnClick,
   deleteTaskListener,
   renderProjectTasks,
+  editTaskListener,
 };

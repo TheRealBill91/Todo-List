@@ -8,14 +8,21 @@ const tasks = [];
 const projects = getAllProjects();
 
 // factory pattern for creating a toDoTask
-const createToDoTask = (title, description, dueDate, priority, notes, isComplete) => {
+const createToDoTask = (
+  title,
+  description,
+  dueDate,
+  priority,
+  notes,
+  isComplete
+) => {
   return {
     title,
     description,
     dueDate,
     priority,
     notes,
-    isComplete
+    isComplete,
   };
 };
 
@@ -23,7 +30,6 @@ const createToDoTask = (title, description, dueDate, priority, notes, isComplete
 const addToDoTaskArr = (task) => {
   return tasks.push(task);
 };
-
 
 // deletes all tasks in task array
 const deleteAllTasks = () => {
@@ -42,20 +48,15 @@ const deleteTask = (index) => {
   return deletedTask;
 };
 
+const modifyTask = (projTasks, j, newTitle) => {
+  changeTaskTitle(projTasks, j, newTitle);
+};
 
+const changeTaskTitle = (projTasks, j, newTitle) => {
+  const currentTask = projTasks[j];
 
-const changeTaskTitle = (projectIndex, taskIndex, newTitle) => {
-  projects.forEach((project, index) => {
-    if (projectIndex === index) {
-      const projectTasks = project.tasksArr;
-      projectTasks.forEach((task, index) => {
-        if (taskIndex === index) {
-          task.title = newTitle
-        }
-      })
-    }
-  })
-}
+  currentTask.title = newTitle;
+};
 
 const changeTaskDescription = (projectIndex, taskIndex, newDescription) => {
   projects.forEach((project, index) => {
@@ -63,12 +64,12 @@ const changeTaskDescription = (projectIndex, taskIndex, newDescription) => {
       const projectTasks = project.tasksArr;
       projectTasks.forEach((task, index) => {
         if (taskIndex === index) {
-          task.description = newDescription
+          task.description = newDescription;
         }
-      })
+      });
     }
-  })
-}
+  });
+};
 
 const changeTaskDueDate = (projectIndex, taskIndex, newDueDate) => {
   projects.forEach((project, index) => {
@@ -76,12 +77,12 @@ const changeTaskDueDate = (projectIndex, taskIndex, newDueDate) => {
       const projectTasks = project.tasksArr;
       projectTasks.forEach((task, index) => {
         if (taskIndex === index) {
-          task.dueDate = newDueDate
+          task.dueDate = newDueDate;
         }
-      })
+      });
     }
-  })
-}
+  });
+};
 
 const changeTaskPriority = (projectIndex, taskIndex, newPriority) => {
   projects.forEach((project, index) => {
@@ -89,12 +90,12 @@ const changeTaskPriority = (projectIndex, taskIndex, newPriority) => {
       const projectTasks = project.tasksArr;
       projectTasks.forEach((task, index) => {
         if (taskIndex === index) {
-          task.priority = newPriority
+          task.priority = newPriority;
         }
-      })
+      });
     }
-  })
-}
+  });
+};
 
 const changeTaskNotes = (projectIndex, taskIndex, updatedNotes) => {
   projects.forEach((project, index) => {
@@ -102,12 +103,12 @@ const changeTaskNotes = (projectIndex, taskIndex, updatedNotes) => {
       const projectTasks = project.tasksArr;
       projectTasks.forEach((task, index) => {
         if (taskIndex === index) {
-          task.notes = updatedNotes
+          task.notes = updatedNotes;
         }
-      })
+      });
     }
-  })
-}
+  });
+};
 
 const toggleTaskCompletion = (projectIndex, taskIndex) => {
   projects.forEach((project, index) => {
@@ -115,13 +116,14 @@ const toggleTaskCompletion = (projectIndex, taskIndex) => {
       const projectTasks = project.tasksArr;
       projectTasks.forEach((task, index) => {
         if (taskIndex === index) {
-          task.isComplete ? task.isComplete = false : task.isComplete = true;
+          task.isComplete
+            ? (task.isComplete = false)
+            : (task.isComplete = true);
         }
-      })
+      });
     }
-  })
-}
-
+  });
+};
 
 export {
   createToDoTask,
@@ -133,5 +135,6 @@ export {
   changeTaskDescription,
   changeTaskDueDate,
   changeTaskNotes,
-  toggleTaskCompletion
+  toggleTaskCompletion,
+  modifyTask,
 };
