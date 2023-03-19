@@ -70,7 +70,7 @@ const renderProjTasksListener = () =>
     projObject.addEventListener("click", renderProjectTasksOnClick)
   );
 
-// renders project tasks when user clicks on project sidebar
+// renders project tasks when user clicks on project on the sidebar
 const renderProjectTasksOnClick = (event) => {
   /* console.log("Event listener is working!"); */
   const taskContainer = document.querySelector(".taskContainer");
@@ -127,21 +127,23 @@ const deleteTaskListener = () => {
 
 const deleteTask = (event) => {
   const targetDeleteBtn = +event.target.dataset.index;
-  const projectObjects = getAllProjects();
+  const currentProj = getCurrentProject();
 
-  projectObjects.forEach((projObject, index) => {
-    const projTasks = getProjectTasks(projObject);
-    if (projTasks) {
-      for (let j = 0; j < projTasks.length; j++) {
-        if (j === targetDeleteBtn) {
-          projTasks.splice(j, 1);
-          renderProjectTasks();
-          return;
-        }
+  const projTasks = getProjectTasks(currentProj);
+  if (projTasks) {
+    for (let j = 0; j < projTasks.length; j++) {
+      if (j === targetDeleteBtn) {
+        projTasks.splice(j, 1);
+        renderProjectTasks();
+        return;
       }
     }
-  });
+  }
 };
+
+/* const editTask = () => {
+
+} */
 
 export {
   addProjectToDOM,
