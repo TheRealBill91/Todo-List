@@ -23,7 +23,7 @@
           <div class="fieldset-body">
             <label for="title"
               >Title
-              <input id="title" type="text" id="title" name="title" />
+              <input id="title" type="text" id="title" name="title" required />
             </label>
 
             <label for="description"
@@ -33,12 +33,13 @@
                 type="text"
                 id="description"
                 name="description"
+                required
               />
             </label>
 
             <label for="dueDate"
               >Due Date
-              <input id="dueDate" type="date" id="dueDate" name="dueDate" />
+              <input id="dueDate" type="date" id="dueDate" name="dueDate" required />
             </label>
 
             <label for="priority">
@@ -46,22 +47,27 @@
               <div class="btnPriorityContainer">
                 <label for="low">
                   Low
-                  <input type="radio" name="priority" id="low" value="low" />
+                  <input type="radio" name="priority" id="low" value="low" required />
                 </label>
                 <label for="medium">
-                    Medium
-                    <input type="radio" name="priority" id="medium" value="medium" />
-                  </label>
-                  <label for="high">
-                    High
-                    <input type="radio" name="priority" id="high" value="high" />
-                  </label>
+                  Medium
+                  <input
+                    type="radio"
+                    name="priority"
+                    id="medium"
+                    value="medium"
+                  />
+                </label>
+                <label for="high">
+                  High
+                  <input type="radio" name="priority" id="high" value="high" />
+                </label>
               </div>
             </label>
 
             <label for="notes">
               Notes
-              <textarea id="notes" name="textarea" rows="5" cols="50">
+              <textarea id="notes" name="textarea" rows="5" cols="50" required>
 Test</textarea
               >
             </label>
