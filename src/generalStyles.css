@@ -6,6 +6,8 @@ body {
   position: relative;
 }
 
+/* Styling for form used to create and edit tasks */
+
 .form-container {
   z-index: 1;
   position: absolute;
@@ -278,6 +280,12 @@ input {
   width: 100%;
 }
 
+.leftSideContainer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .taskHeaderContainer {
   display: flex;
   justify-content: center;
@@ -295,4 +303,42 @@ input {
   padding: 8px;
   margin: 8px;
   align-self: center;
+}
+
+/* Task toggle checkbox styling */
+
+input[type="checkbox"]:before {
+  content: "\2713";
+  font-size: 20px;
+  color: #292525;
+  position: absolute;
+  top: -6px;
+  left: 1px;
+  text-shadow: 1px 1px #444;
+  opacity: 0;
+  transition: all 0.1s ease;
+  font-weight: 700;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  position: relative;
+  background-color: white;
+}
+
+input[type="checkbox"]:checked:before {
+  opacity: 1;
+
+  height: 16px;
+  width: 16px;
+}
+
+input[type="checkbox"]:checked {
+  background-color: rgb(189, 106, 106);
 }

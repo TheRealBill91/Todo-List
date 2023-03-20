@@ -11,18 +11,49 @@ const createTaskElement = (taskObj, index, tasks) => {
     "data-index": `${index}`,
   });
   tasks.appendChild(taskElement);
-  createTaskTitle(taskElement, taskValues, index);
+  createLeftContainer(taskElement, index, taskValues)
   createTaskControls(taskElement, taskValues, index);
+
 };
 
+// Puts the task checkbox toggle and task title in the same div on the left side
+const createLeftContainer = (taskElement, index, taskValues) => {
+  const leftSideContainer = document.createElement("div");
+  leftSideContainer.classList.add("leftSideContainer");
+  taskElement.appendChild(leftSideContainer)
+  leftSideContainer.append(createTaskCheckbox(leftSideContainer, index),
+    createTaskTitle(taskValues, index, leftSideContainer));
+
+
+}
+
+// Creates checkbox for user to toggle task completion status
+const createTaskCheckbox = (taskElement, index, leftSideContainer) => {
+  // Will hold the checkbox input and span
+  const checkBoxDiv = document.createElement("div");
+  checkBoxDiv.classList.add("checkBoxDiv");
+  /* leftSideContainer.appendChild(checkBoxDiv) */
+
+  const taskCheckbox = document.createElement("input");
+  setAttributes(taskCheckbox, { class: `toggleTaskStatus`, "data-index": `${index}`, "type": "checkbox" })
+  checkBoxDiv.appendChild(taskCheckbox);
+
+  const checkBoxBackground = document.createElement("span");
+  checkBoxBackground.classList.add("checkBoxBackground");
+  checkBoxDiv.appendChild(checkBoxBackground);
+  return checkBoxDiv
+
+
+}
+
 // Creates the task title using the DOM
-const createTaskTitle = (taskElement, taskValues, index) => {
+const createTaskTitle = (taskValues, index, leftSideContainer) => {
   const taskTitle = document.createElement("div");
   setAttributes(taskTitle, { class: "taskTitle", "data-index": `${index}` });
-  taskElement.appendChild(taskTitle);
   const taskTitlePara = document.createElement("p");
   taskTitlePara.textContent = `${taskValues[0]}`;
   taskTitle.appendChild(taskTitlePara);
+  return taskTitle
 };
 
 const createTaskControls = (taskElement, taskValues, index) => {
