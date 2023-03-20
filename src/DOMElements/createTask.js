@@ -74,12 +74,14 @@ const createTask = (event) => {
   taskForm.reset();
   formContainer.style.display = "none";
   formModalBg.style.display = "none";
+  /*   taskForm.removeEventListener("submit", createTask) */
   renderProjectTasks();
 };
 
 // listens for user clicking submit button when creating
 // task
 const taskFormSubmitListen = () => {
+
   const taskForm = document.getElementById("taskForm");
   taskForm.addEventListener("submit", createTask);
 };
@@ -103,4 +105,4 @@ const formatDate = (date) => {
 
 }
 
-export { createTaskBtn, createTaskBtnListener, closeTaskForm };
+export { createTaskBtn, createTaskBtnListener, closeTaskForm, btnPrioritySelector };

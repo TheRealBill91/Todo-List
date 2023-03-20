@@ -1,3 +1,4 @@
+import { btnPrioritySelector } from "../DOMElements/createTask";
 import { getAllProjects } from "../projectManager/projectManager";
 
 // contains the different factory patterns and functions for
@@ -48,8 +49,14 @@ const deleteTask = (index) => {
   return deletedTask;
 };
 
-const modifyTask = (projTasks, j, newTitle) => {
-  changeTaskTitle(projTasks, j, newTitle);
+const modifyTask = (projTasks, j, getNewTaskValues) => {
+  const newTaskValues = getNewTaskValues;
+  changeTaskTitle(projTasks, j, newTaskValues[0]);
+  changeTaskDescription(projTasks, j, newTaskValues[1]);
+  changeTaskDueDate(projTasks, j, newTaskValues[2]);
+  changeTaskPriority(projTasks, j, newTaskValues[3]);
+  changeTaskNotes(projTasks, j, newTaskValues[4]);
+
 };
 
 const changeTaskTitle = (projTasks, j, newTitle) => {
@@ -58,56 +65,24 @@ const changeTaskTitle = (projTasks, j, newTitle) => {
   currentTask.title = newTitle;
 };
 
-const changeTaskDescription = (projectIndex, taskIndex, newDescription) => {
-  projects.forEach((project, index) => {
-    if (projectIndex === index) {
-      const projectTasks = project.tasksArr;
-      projectTasks.forEach((task, index) => {
-        if (taskIndex === index) {
-          task.description = newDescription;
-        }
-      });
-    }
-  });
+const changeTaskDescription = (projTasks, j, newDescription) => {
+  const currentTask = projTasks[j];
+  currentTask.description = newDescription
 };
 
-const changeTaskDueDate = (projectIndex, taskIndex, newDueDate) => {
-  projects.forEach((project, index) => {
-    if (projectIndex === index) {
-      const projectTasks = project.tasksArr;
-      projectTasks.forEach((task, index) => {
-        if (taskIndex === index) {
-          task.dueDate = newDueDate;
-        }
-      });
-    }
-  });
+const changeTaskDueDate = (projTasks, j, newTaskDueDate) => {
+  const currentTask = projTasks[j];
+  currentTask.dueDate = newTaskDueDate
 };
 
-const changeTaskPriority = (projectIndex, taskIndex, newPriority) => {
-  projects.forEach((project, index) => {
-    if (projectIndex === index) {
-      const projectTasks = project.tasksArr;
-      projectTasks.forEach((task, index) => {
-        if (taskIndex === index) {
-          task.priority = newPriority;
-        }
-      });
-    }
-  });
+const changeTaskPriority = (projTasks, j, newPriority) => {
+  const currentTask = projTasks[j];
+  currentTask.priority = btnPrioritySelector();
 };
 
-const changeTaskNotes = (projectIndex, taskIndex, updatedNotes) => {
-  projects.forEach((project, index) => {
-    if (projectIndex === index) {
-      const projectTasks = project.tasksArr;
-      projectTasks.forEach((task, index) => {
-        if (taskIndex === index) {
-          task.notes = updatedNotes;
-        }
-      });
-    }
-  });
+const changeTaskNotes = (projTasks, j, newTaskNotes) => {
+  const currentTask = projTasks[j];
+  currentTask.notes = newTaskNotes
 };
 
 const toggleTaskCompletion = (projectIndex, taskIndex) => {

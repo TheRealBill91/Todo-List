@@ -7,6 +7,13 @@ import {
   getCurrentProject,
 } from "../projectManager/projectManager";
 
+import {
+  btnPrioritySelector,
+  createTaskBtn,
+  createTaskBtnListener,
+  closeTaskForm,
+} from "../DOMElements/createTask";
+
 import { format, parse, parseISO } from "date-fns";
 
 import {
@@ -20,11 +27,6 @@ import {
 
 import { setAttributes } from "../setAttributes";
 import { createTaskElement } from "../DOMElements/createTaskElement";
-import {
-  createTaskBtn,
-  createTaskBtnListener,
-  closeTaskForm,
-} from "../DOMElements/createTask";
 import { renderProjectHeader } from "../DOMElements/createTaskHeader";
 
 const addProjectButton = document.querySelector(".projSubmitBtn");
@@ -207,6 +209,8 @@ const loadTaskValues = (currentTask) => {
   notes.value = taskValues[4];
 };
 
+// loads and checks the correct priority value for the task that user is trying to
+// edit using the edit task form
 const setPriorityRadioButton = (priorityValue) => {
   const radioButtons = document.querySelectorAll('label input[type="radio"]');
 
@@ -220,18 +224,48 @@ const setPriorityRadioButton = (priorityValue) => {
 
 const modifyTaskSubmitListen = (projTasks, j) => {
   const taskForm = document.getElementById("taskForm");
+  taskForm.addEventListener("submit", (event) => modifyTaskSubmit(event, projTasks, j, taskForm));
+};
+
+const modifyTaskSubmit = (event, projTasks, j, taskForm) => {
+  event.preventDefault()
   const formModalBg = document.querySelector(".form-modal-background");
   const formContainer = document.querySelector(".form-container");
-  taskForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const title = document.getElementById("title");
-    const newTitle = title.value;
-    modifyTask(projTasks, j, newTitle);
-    renderProjectTasks();
-    formModalBg.style.display = "none";
-    formContainer.style.display = "none";
-  });
-};
+
+  modifyTask(projTasks, j, getNewTaskValues());
+  renderProjectTasks();
+  formModalBg.style.display = "none";
+  formContainer.style.display = "none";
+  taskForm.removeEventListener("submit", (event) => modifyTaskSubmit(projTasks, j, taskForm))
+}
+
+// Retrieves all of the new task values the user has entered before
+// submitting, and pushes them into an array. Makes it easier to
+// new task values into function that modifies the task values
+const getNewTaskValues = () => {
+  const taskValues = [];
+
+  const title = document.getElementById("title");
+  const newTitle = title.value;
+  taskValues.push(newTitle);
+
+  const description = document.getElementById("description");
+  const newDescription = description.value;
+  taskValues.push(newDescription);
+
+  const dueDate = document.getElementById("dueDate");
+  const newDueDate = dueDate.value;
+  taskValues.push(newDueDate);
+
+  taskValues.push(btnPrioritySelector());
+
+  const notes = document.getElementById("notes");
+  const newNotes = notes.value;
+  taskValues.push(newNotes);
+
+  return taskValues;
+
+}
 
 export {
   addProjectToDOM,
