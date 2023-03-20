@@ -33,13 +33,17 @@ const createTaskBtnListener = () => {
   });
 };
 
-const closeTaskForm = () => {
+const closeTaskForm = (wrappedModifySubmit) => {
   const formModalBg = document.querySelector(".form-modal-background");
   const formContainer = document.querySelector(".form-container");
   const closeModalBtn = document.querySelector(".close-modal");
   const form = document.getElementById("taskForm");
   closeModalBtn.addEventListener("click", () => {
     form.reset();
+    // remove event listener when user closes form without creating task
+    form.removeEventListener("submit", createTask, { once: true });
+    // remove event listener when user closes form without creat
+    form.removeEventListener("submit", wrappedModifySubmit);
     formModalBg.style.display = "none";
     formContainer.style.display = "none";
   });
@@ -74,16 +78,15 @@ const createTask = (event) => {
   taskForm.reset();
   formContainer.style.display = "none";
   formModalBg.style.display = "none";
-  /*   taskForm.removeEventListener("submit", createTask) */
+  // taskForm.removeEventListener("submit", createTask);
   renderProjectTasks();
 };
 
 // listens for user clicking submit button when creating
 // task
 const taskFormSubmitListen = () => {
-
   const taskForm = document.getElementById("taskForm");
-  taskForm.addEventListener("submit", createTask);
+  taskForm.addEventListener("submit", createTask, { once: true });
 };
 
 // selects the task priority based on the button the user
@@ -101,8 +104,11 @@ const btnPrioritySelector = () => {
   return selectedPriority;
 };
 
-const formatDate = (date) => {
+const formatDate = (date) => {};
 
-}
-
-export { createTaskBtn, createTaskBtnListener, closeTaskForm, btnPrioritySelector };
+export {
+  createTaskBtn,
+  createTaskBtnListener,
+  closeTaskForm,
+  btnPrioritySelector,
+};

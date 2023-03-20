@@ -112,6 +112,7 @@ const renderProjectTasksOnClick = (event) => {
   });
   // listens for user click of task delete button
   deleteTaskListener();
+
   editTaskListener();
 };
 
@@ -177,8 +178,13 @@ const editTask = (event) => {
         formContainer.style.display = "grid";
         const currentTask = projTasks[j];
         loadTaskValues(currentTask);
-        modifyTaskSubmitListen(projTasks, j);
-        closeTaskForm();
+        // Use a variable to wrap the callback with parameters for editing task form
+        // Remove the form event listener each time to avoid accumulation
+        // Remove the form event listener in a separate function if not submitted
+        const wrappedModifySubmit = (event) =>
+          modifyTaskSubmit(event, projTasks, j);
+        modifyTaskSubmitListen(wrappedModifySubmit);
+        closeTaskForm(wrappedModifySubmit);
         return;
       }
     }
@@ -196,8 +202,8 @@ const loadTaskValues = (currentTask) => {
   const taskValues = Object.values(currentTask);
   const priorityValue = taskValues[3];
   const dateString = taskValues[2];
-  const dateObject = parseISO(dateString)
-  // You only need this version for the tasks you manually created 
+  const dateObject = parseISO(dateString);
+  // You only need this version for the tasks you manually created
   // inside index.js
   // const parsedDate = parse(dateValue, 'MM/dd/yyyy', new Date());
   const formattedDate = format(dateObject, "yyyy-MM-dd");
@@ -205,7 +211,7 @@ const loadTaskValues = (currentTask) => {
   title.value = taskValues[0];
   description.value = taskValues[1];
   dueDate.value = formattedDate;
-  setPriorityRadioButton(priorityValue)
+  setPriorityRadioButton(priorityValue);
   notes.value = taskValues[4];
 };
 
@@ -214,30 +220,31 @@ const loadTaskValues = (currentTask) => {
 const setPriorityRadioButton = (priorityValue) => {
   const radioButtons = document.querySelectorAll('label input[type="radio"]');
 
-  radioButtons.forEach(radioBtn => {
+  radioButtons.forEach((radioBtn) => {
     if (radioBtn.id === priorityValue) {
       radioBtn.checked = priorityValue;
       return radioBtn.checked;
     }
-  })
-}
-
-const modifyTaskSubmitListen = (projTasks, j) => {
-  const taskForm = document.getElementById("taskForm");
-  taskForm.addEventListener("submit", (event) => modifyTaskSubmit(event, projTasks, j, taskForm));
+  });
 };
 
-const modifyTaskSubmit = (event, projTasks, j, taskForm) => {
-  event.preventDefault()
+const modifyTaskSubmitListen = (wrappedModifySubmit) => {
+  const taskForm = document.getElementById("taskForm");
+  taskForm.addEventListener("submit", wrappedModifySubmit, { once: true });
+};
+
+const modifyTaskSubmit = (event, projTasks, j) => {
+  event.preventDefault();
+  const taskForm = document.getElementById("taskForm");
   const formModalBg = document.querySelector(".form-modal-background");
   const formContainer = document.querySelector(".form-container");
 
   modifyTask(projTasks, j, getNewTaskValues());
   renderProjectTasks();
+  taskForm.reset();
   formModalBg.style.display = "none";
   formContainer.style.display = "none";
-  taskForm.removeEventListener("submit", (event) => modifyTaskSubmit(projTasks, j, taskForm))
-}
+};
 
 // Retrieves all of the new task values the user has entered before
 // submitting, and pushes them into an array. Makes it easier to
@@ -264,8 +271,7 @@ const getNewTaskValues = () => {
   taskValues.push(newNotes);
 
   return taskValues;
-
-}
+};
 
 export {
   addProjectToDOM,
