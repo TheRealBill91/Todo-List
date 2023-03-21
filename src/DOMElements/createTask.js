@@ -5,6 +5,7 @@ import {
 } from "../projectManager/projectManager";
 
 import { renderProjectTasks } from "../displayController/displayController";
+import { getAllTasks } from "../getAllTasks";
 
 // Creates button for adding task on current page as well as
 // setting up an event listener to open the form inputting details
@@ -75,6 +76,7 @@ const createTask = (event) => {
 
   console.log("Submitted task:", task);
   addTaskToProjectObj(currentProj, task);
+  console.log(getAllTasks());
   taskForm.reset();
   formContainer.style.display = "none";
   formModalBg.style.display = "none";
@@ -104,7 +106,7 @@ const btnPrioritySelector = () => {
   return selectedPriority;
 };
 
-const formatDate = (date) => {};
+const formatDate = (date) => { };
 
 export {
   createTaskBtn,

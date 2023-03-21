@@ -14,7 +14,7 @@ import {
   closeTaskForm,
 } from "../DOMElements/createTask";
 
-import { format, parse, parseISO } from "date-fns";
+import { format, getWeek, isSameWeek, parse, parseISO } from "date-fns";
 
 import {
   changeTaskTitle,
@@ -23,11 +23,13 @@ import {
   changeTaskPriority,
   changeTaskNotes,
   modifyTask,
+  toggleTaskCompletion,
 } from "../toDoManager/toDoManager";
 
 import { setAttributes } from "../setAttributes";
 import { createTaskElement } from "../DOMElements/createTaskElement";
 import { renderProjectHeader } from "../DOMElements/createTaskHeader";
+import { getAllTasks } from "../getAllTasks";
 
 const addProjectButton = document.querySelector(".projSubmitBtn");
 const showProjInputBtn = document.querySelector(".showProjInputBtn");
@@ -112,8 +114,9 @@ const renderProjectTasksOnClick = (event) => {
   });
   // listens for user click of task delete button
   deleteTaskListener();
-
+  changeTaskStatusListener();
   editTaskListener();
+  loadTaskStatus();
 };
 
 // renders project tasks for cases when user doesn't first click on the project
@@ -132,6 +135,33 @@ const renderProjectTasks = () => {
   }
   deleteTaskListener();
   editTaskListener();
+};
+
+const renderWeekTasksListener = () => {
+  const weekTab = document.querySelector(".weekTab");
+  weekTab.addEventListener("click", renderWeekTasks);
+};
+
+const renderWeekTasks = () => {
+  const taskContainer = document.querySelector(".taskContainer");
+  taskContainer.innerHTML = "";
+  renderProjectHeader();
+  const tasks = document.createElement("div");
+  tasks.classList.add("tasks");
+  taskContainer.appendChild(tasks);
+
+  const allTasks = getAllTasks();
+  const currentWeekIndex = getWeek(new Date(), { weekStartsOn: 1 });
+
+  allTasks.forEach((task, index) => {
+    const taskDateString = task.dueDate; // "2022-03-15"
+    const taskDateObject = parseISO(taskDateString);
+    const taskDateWeekIndex = getWeek(taskDateObject, { weekStartsOn: 1 });
+    /* console.log(`This should say 11!: ${taskDateWeekIndex}`); */
+    if (currentWeekIndex === taskDateWeekIndex) {
+      createTaskElement(task, index, tasks);
+    }
+  });
 };
 
 const deleteTaskListener = () => {
@@ -189,6 +219,41 @@ const editTask = (event) => {
       }
     }
   }
+};
+
+// Puts event listener on each checkbox
+const changeTaskStatusListener = () => {
+  const checkBoxElements = document.querySelectorAll(".toggleTaskStatus");
+  checkBoxElements.forEach((checkBox) =>
+    checkBox.addEventListener("change", changeTaskStatus)
+  );
+};
+
+// Changes the completion status of a task when user clicks on checkbox
+const changeTaskStatus = (event) => {
+  const targetCheckBox = +event.target.dataset.index;
+  const currentProj = getCurrentProject();
+  const projTasks = getProjectTasks(currentProj);
+  toggleTaskCompletion(currentProj, projTasks, targetCheckBox);
+};
+
+const loadTaskStatus = () => {
+  // go through each task in the current project. Check the completion property value of
+  // each task. If the task status is complete, do two things:
+  // 1) Check the checkbox (indicates to the user task is complete)
+  // 2) Apply styling to all text in that task element and make it grey
+
+  const currentProj = getCurrentProject();
+  const projTasks = getProjectTasks(currentProj);
+  const checkBoxElements = document.querySelectorAll(".toggleTaskStatus");
+  const tasks = document.querySelectorAll(".tasks > div");
+
+  projTasks.forEach((task, index) => {
+    if (task.isComplete) {
+      checkBoxElements[index].checked = task.isComplete;
+      tasks[index].classList.add("complete");
+    }
+  });
 };
 
 // loads task values into form when user hits the edit button
@@ -284,4 +349,5 @@ export {
   deleteTaskListener,
   renderProjectTasks,
   editTaskListener,
+  renderWeekTasksListener,
 };

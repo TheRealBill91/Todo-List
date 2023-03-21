@@ -56,7 +56,6 @@ const modifyTask = (projTasks, j, getNewTaskValues) => {
   changeTaskDueDate(projTasks, j, newTaskValues[2]);
   changeTaskPriority(projTasks, j, newTaskValues[3]);
   changeTaskNotes(projTasks, j, newTaskValues[4]);
-
 };
 
 const changeTaskTitle = (projTasks, j, newTitle) => {
@@ -67,12 +66,12 @@ const changeTaskTitle = (projTasks, j, newTitle) => {
 
 const changeTaskDescription = (projTasks, j, newDescription) => {
   const currentTask = projTasks[j];
-  currentTask.description = newDescription
+  currentTask.description = newDescription;
 };
 
 const changeTaskDueDate = (projTasks, j, newTaskDueDate) => {
   const currentTask = projTasks[j];
-  currentTask.dueDate = newTaskDueDate
+  currentTask.dueDate = newTaskDueDate;
 };
 
 const changeTaskPriority = (projTasks, j, newPriority) => {
@@ -82,22 +81,28 @@ const changeTaskPriority = (projTasks, j, newPriority) => {
 
 const changeTaskNotes = (projTasks, j, newTaskNotes) => {
   const currentTask = projTasks[j];
-  currentTask.notes = newTaskNotes
+  currentTask.notes = newTaskNotes;
 };
 
-const toggleTaskCompletion = (projectIndex, taskIndex) => {
-  projects.forEach((project, index) => {
-    if (projectIndex === index) {
-      const projectTasks = project.tasksArr;
-      projectTasks.forEach((task, index) => {
-        if (taskIndex === index) {
-          task.isComplete
-            ? (task.isComplete = false)
-            : (task.isComplete = true);
+const toggleTaskCompletion = (currentProj, projTasks, targetCheckBox) => {
+  const tasks = document.querySelectorAll(".tasks > div");
+
+  if (projTasks) {
+    for (let i = 0; i < projTasks.length; i++) {
+      if (i === targetCheckBox) {
+        const currentTask = projTasks[i];
+        if (currentTask.isComplete) {
+          currentTask.isComplete = false;
+          tasks[i].classList.remove("complete");
+        } else {
+          currentTask.isComplete = true;
+          tasks[i].classList.add("complete");
         }
-      });
+
+        console.log(`Is complete? ${currentTask.isComplete}`);
+      }
     }
-  });
+  }
 };
 
 export {

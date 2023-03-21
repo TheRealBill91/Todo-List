@@ -280,6 +280,16 @@ input {
   width: 100%;
 }
 
+/* Make task look disabled */
+.tasks>.complete * {
+  color: lightgray;
+}
+
+/* .tasks .complete button {
+  color: lightgray;
+  background-color: green;
+} */
+
 .leftSideContainer {
   display: flex;
   align-items: center;
@@ -289,6 +299,7 @@ input {
 .taskHeaderContainer {
   display: flex;
   justify-content: center;
+  margin-bottom: 16px;
 }
 
 .taskControls {
@@ -313,7 +324,7 @@ input[type="checkbox"]:before {
   color: #292525;
   position: absolute;
   top: -6px;
-  left: 1px;
+  left: 0px;
   text-shadow: 1px 1px #444;
   opacity: 0;
   transition: all 0.1s ease;
@@ -334,11 +345,10 @@ input[type="checkbox"] {
 
 input[type="checkbox"]:checked:before {
   opacity: 1;
-
   height: 16px;
   width: 16px;
 }
 
 input[type="checkbox"]:checked {
-  background-color: rgb(189, 106, 106);
+  background-color: rgb(77, 148, 83);
 }
