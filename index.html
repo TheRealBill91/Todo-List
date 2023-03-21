@@ -1,139 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Todo List</title>
-    <script defer src="main.js"></script>
-  </head>
 
-  <body>
-    <div class="form-modal-background"></div>
-    <header>
-      <h1>Task Manager</h1>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todo List</title>
+  <script defer src="main.js"></script>
+</head>
 
-    <div class="form-container">
-      <form id="taskForm">
-        <fieldset>
-          <div class="legend">
-            <legend>Fill in Task Info</legend>
-          </div>
-          <div class="fieldset-body">
-            <label for="title"
-              >Title
-              <input id="title" type="text" id="title" name="title" required />
-            </label>
+<body>
+  <div class="form-modal-background"></div>
+  <header>
+    <h1>Task Manager</h1>
+  </header>
 
-            <label for="description"
-              >Description
-              <input
-                id="description"
-                type="text"
-                id="description"
-                name="description"
-                required
-              />
-            </label>
-
-            <label for="dueDate"
-              >Due Date
-              <input id="dueDate" type="date" id="dueDate" name="dueDate" required />
-            </label>
-
-            <label for="priority">
-              Priority
-              <div class="btnPriorityContainer">
-                <label for="low">
-                  Low
-                  <input type="radio" name="priority" id="low" value="low" required />
-                </label>
-                <label for="medium">
-                  Medium
-                  <input
-                    type="radio"
-                    name="priority"
-                    id="medium"
-                    value="medium"
-                  />
-                </label>
-                <label for="high">
-                  High
-                  <input type="radio" name="priority" id="high" value="high" />
-                </label>
-              </div>
-            </label>
-
-            <label for="notes">
-              Notes
-              <textarea id="notes" name="textarea" rows="5" cols="50" required>
-Test</textarea
-              >
-            </label>
-
-            <button class="taskSubmitBtn" type="submit">Submit</button>
-          </div>
-        </fieldset>
-      </form>
-      <button class="close-modal">X</button>
-    </div>
-
-    <aside>
-      <nav>
-        <div class="home">
-          <p>Home</p>
+  <div class="form-container">
+    <form id="taskForm">
+      <fieldset>
+        <div class="legend">
+          <legend>Fill in Task Info</legend>
         </div>
-        <div class="today">
-          <p>Today</p>
-        </div>
-        <div class="thisWeek">
-          <p>Week</p>
-        </div>
-        <!-- This is where you will dynamically generate each project object on the DOM -->
-        <div class="projectContainer">
-          <div>
-            <p>Projects</p>
-            <button class="showProjInputBtn">+</button>
-          </div>
+        <div class="fieldset-body">
+          <label for="title">Title
+            <input id="title" type="text" id="title" name="title" required />
+          </label>
 
-          <div class="projects">
-            <p>Test Project</p>
-          </div>
-          <form class="projectInputForm">
-            <label class="projectTitle" for="projectTitle">
-              Project Title<input
-                class="projTitleInput"
-                type="text"
-                name="projectTitle"
-                id="projectTitle"
-                required
-              />
-            </label>
-            <button class="projSubmitBtn" type="submit">Add</button>
-          </form>
+          <label for="description">Description
+            <input id="description" type="text" id="description" name="description" required />
+          </label>
 
-          <button class="closeProjectInputBtn">Close</button>
-        </div>
-      </nav>
-    </aside>
-    <!-- This is where the dynamically generated task objects will be rendered -->
-    <main>
-      <div class="taskContainer">
-        <div class="tasks">
-          <div class="task">
-            <div class="taskTitle">
-              <p>Task title</p>
+          <label for="dueDate">Due Date
+            <input id="dueDate" type="date" id="dueDate" name="dueDate" required />
+          </label>
+
+          <label for="priority">
+            Priority
+            <div class="btnPriorityContainer">
+              <label for="low">
+                Low
+                <input type="radio" name="priority" id="low" value="low" required />
+              </label>
+              <label for="medium">
+                Medium
+                <input type="radio" name="priority" id="medium" value="medium" />
+              </label>
+              <label for="high">
+                High
+                <input type="radio" name="priority" id="high" value="high" />
+              </label>
             </div>
-            <div class="taskControls">
-              <p>Date</p>
-              <button>Edit</button>
-              <button>Info</button>
-              <button>delete</button>
-            </div>
+          </label>
+
+          <label for="notes">
+            Notes
+            <textarea id="notes" name="textarea" rows="5" cols="50" required>
+Test</textarea>
+          </label>
+
+          <button class="taskSubmitBtn" type="submit">Submit</button>
+        </div>
+      </fieldset>
+    </form>
+    <button class="close-modal">X</button>
+  </div>
+
+  <aside>
+    <nav>
+      <div class="home">
+        <p>Home</p>
+      </div>
+      <div class="today">
+        <p>Today</p>
+      </div>
+      <div class="thisWeek">
+        <p><button class="weekTab">Week</button></p>
+      </div>
+      <!-- This is where you will dynamically generate each project object on the DOM -->
+      <div class="projectContainer">
+        <div>
+          <p>Projects</p>
+          <button class="showProjInputBtn">+</button>
+        </div>
+
+        <div class="projects">
+          <p>Test Project</p>
+        </div>
+        <form class="projectInputForm">
+          <label class="projectTitle" for="projectTitle">
+            Project Title<input class="projTitleInput" type="text" name="projectTitle" id="projectTitle" required />
+          </label>
+          <button class="projSubmitBtn" type="submit">Add</button>
+        </form>
+
+        <button class="closeProjectInputBtn">Close</button>
+      </div>
+    </nav>
+  </aside>
+  <!-- This is where the dynamically generated task objects will be rendered -->
+  <main>
+    <div class="taskContainer">
+      <div class="tasks">
+        <div class="task">
+          <div class="taskTitle">
+            <p>Task title</p>
+          </div>
+          <div class="taskControls">
+            <p>Date</p>
+            <button>Edit</button>
+            <button>Info</button>
+            <button>delete</button>
           </div>
         </div>
       </div>
-    </main>
-  </body>
+    </div>
+  </main>
+</body>
+
 </html>
