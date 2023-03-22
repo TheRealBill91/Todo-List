@@ -3,6 +3,8 @@ import {
   addProjectToProjectsArray,
   getAllProjects,
   setCurrentProject,
+  setCurrentProjectIndex,
+  getCurrentProjectIndex,
   getProjectTasks,
   getCurrentProject,
 } from "../projectManager/projectManager";
@@ -59,7 +61,7 @@ const renderProjectsToDOM = () => {
   projectObjects.forEach((projectObj, index) => {
     const projectDiv = document.createElement("div");
     projectDiv.textContent = projectObj.projectTitle;
-    projectDiv.setAttribute("data-index", `${index}`);
+    projectDiv.setAttribute("data-project", `${index}`);
     projectsHolder.appendChild(projectDiv);
   });
 };
@@ -91,78 +93,74 @@ const renderProjectTasksOnClick = (event) => {
   const taskContainer = document.querySelector(".taskContainer");
   taskContainer.innerHTML = "";
   renderProjectHeader();
-  const tasks = document.createElement("div");
-  tasks.classList.add("tasks");
-  taskContainer.appendChild(tasks);
+  const tasksHolder = document.createElement("div");
+  tasksHolder.classList.add("tasks");
+  taskContainer.appendChild(tasksHolder);
 
   // tasks.innerHTML = "";
-  const projectObjects = getAllProjects();
-  projectObjects.forEach((projObject, index) => {
-    if (index === +event.target.dataset.index) {
-      setCurrentProject(projObject);
-      const projTasks = getProjectTasks(projObject);
+  const projects = getAllProjects();
+  for (let i = 0; i < projects.length; i++) {
+    if (i === +event.target.dataset.project) {
+      // Used for creating tasks
+      setCurrentProjectIndex(i);
+      const projTasks = projects[i].tasksArr;
       // return if there is no proj tasks. Probably means you will want to query task header
       // and change it's title to match current proj that way.
       if (projTasks) {
-        projTasks.forEach((taskObj, index) => {
-          createTaskElement(taskObj, index, tasks);
-        });
+        for (let j = 0; j < projTasks.length; j++) {
+          const task = projTasks[j];
+          createTaskElement(i, j, tasksHolder, task);
+        }
       }
       createTaskBtn();
       createTaskBtnListener();
+      loadTaskStatusForProjects(i);
     }
-  });
+  }
   // listens for user click of task delete button
+
   deleteTaskListener();
   changeTaskStatusListener();
   editTaskListener();
-  loadTaskStatus();
 };
 
 // renders project tasks for cases when user doesn't first click on the project
 // e.g., after a user deletes a task
-const renderProjectTasks = () => {
+const renderProjectTasks = (i) => {
   const tasksHolder = document.querySelector(".tasks");
   tasksHolder.innerHTML = "";
-  const currentProj = getCurrentProject();
-  const projTasks = getProjectTasks(currentProj);
+  const currentProjIndex = getCurrentProjectIndex();
+
+  /*   const projTasks = getProjectTasks(currentProj); */
   // return if there is no proj tasks. Probably means you will want to query task header
   // and change it's title to match current proj that way.
-  if (projTasks) {
+  /* if (projTasks) {
     projTasks.forEach((taskObj, index) => {
       createTaskElement(taskObj, index, tasksHolder);
     });
-  }
+  } */
+
+  const projects = getAllProjects();
+  const currentProjTasks = projects[currentProjIndex].tasksArr;
+
+  currentProjTasks.forEach((task, taskIndex) => {
+    createTaskElement(currentProjIndex, taskIndex, tasksHolder, task);
+  });
   deleteTaskListener();
   editTaskListener();
 };
 
-const renderWeekTasksListener = () => {
-  const weekTab = document.querySelector(".weekTab");
-  weekTab.addEventListener("click", renderWeekTasks);
-};
 
-const renderWeekTasks = () => {
-  const taskContainer = document.querySelector(".taskContainer");
-  taskContainer.innerHTML = "";
-  renderProjectHeader();
-  const tasks = document.createElement("div");
-  tasks.classList.add("tasks");
-  taskContainer.appendChild(tasks);
 
-  const allTasks = getAllTasks();
-  const currentWeekIndex = getWeek(new Date(), { weekStartsOn: 1 });
-
-  allTasks.forEach((task, index) => {
+/* allTasks.forEach((task, index) => {
     const taskDateString = task.dueDate; // "2022-03-15"
     const taskDateObject = parseISO(taskDateString);
     const taskDateWeekIndex = getWeek(taskDateObject, { weekStartsOn: 1 });
-    /* console.log(`This should say 11!: ${taskDateWeekIndex}`); */
+    console.log(`This should say 11!: ${taskDateWeekIndex}`);
     if (currentWeekIndex === taskDateWeekIndex) {
       createTaskElement(task, index, tasks);
     }
-  });
-};
+  }); */
 
 const deleteTaskListener = () => {
   const deleteButtons = document.querySelectorAll(".deleteButton");
@@ -195,27 +193,34 @@ const editTaskListener = () => {
 };
 
 const editTask = (event) => {
-  const targetEditBtn = +event.target.dataset.index;
+  const targetEditBtn = +event.target.dataset.task;
+  const targetProjIndex = +event.target.dataset.project;
   const currentProj = getCurrentProject();
   const formModalBg = document.querySelector(".form-modal-background");
   const formContainer = document.querySelector(".form-container");
 
-  const projTasks = getProjectTasks(currentProj);
-  if (projTasks) {
-    for (let j = 0; j < projTasks.length; j++) {
-      if (j === targetEditBtn) {
-        formModalBg.style.display = "flex";
-        formContainer.style.display = "grid";
-        const currentTask = projTasks[j];
-        loadTaskValues(currentTask);
-        // Use a variable to wrap the callback with parameters for editing task form
-        // Remove the form event listener each time to avoid accumulation
-        // Remove the form event listener in a separate function if not submitted
-        const wrappedModifySubmit = (event) =>
-          modifyTaskSubmit(event, projTasks, j);
-        modifyTaskSubmitListen(wrappedModifySubmit);
-        closeTaskForm(wrappedModifySubmit);
-        return;
+  const projects = getAllProjects();
+
+  for (let i = 0; i < projects.length; i++) {
+    if (i === targetProjIndex) {
+      const projTasks = projects[i].tasksArr;
+
+      for (let j = 0; j < projTasks.length; j++) {
+        if (j === targetEditBtn) {
+          formModalBg.style.display = "flex";
+          formContainer.style.display = "grid";
+          const currentTask = projTasks[j];
+          loadTaskValues(currentTask);
+          // Use a variable to wrap the callback with parameters for editing task form
+          // Remove the form event listener each time to avoid accumulation
+          // Remove the form event listener in a separate function if not submitted
+          const wrappedModifySubmit = (event) =>
+            modifyTaskSubmit(event, projTasks, j, i);
+
+          modifyTaskSubmitListen(wrappedModifySubmit);
+          closeTaskForm(wrappedModifySubmit);
+          return;
+        }
       }
     }
   }
@@ -231,24 +236,28 @@ const changeTaskStatusListener = () => {
 
 // Changes the completion status of a task when user clicks on checkbox
 const changeTaskStatus = (event) => {
-  const targetCheckBox = +event.target.dataset.index;
-  const currentProj = getCurrentProject();
+  const targetCheckBox = +event.target.dataset.task;
+  const targetProjectIndex = +event.target.dataset.project;
+  const projects = getAllProjects();
+  const currentProj = projects[targetProjectIndex];
+  /*  const currentProj = getCurrentProject(); */
   const projTasks = getProjectTasks(currentProj);
   toggleTaskCompletion(currentProj, projTasks, targetCheckBox);
 };
 
-const loadTaskStatus = () => {
-  // go through each task in the current project. Check the completion property value of
-  // each task. If the task status is complete, do two things:
-  // 1) Check the checkbox (indicates to the user task is complete)
-  // 2) Apply styling to all text in that task element and make it grey
-
-  const currentProj = getCurrentProject();
-  const projTasks = getProjectTasks(currentProj);
+// For each task in the current project, load completion status,
+// check the checkbox if complete, and apply grey styling to text
+// in the task element (for project views only)
+const loadTaskStatusForProjects = (i) => {
   const checkBoxElements = document.querySelectorAll(".toggleTaskStatus");
   const tasks = document.querySelectorAll(".tasks > div");
+  const projects = getAllProjects();
+  // This is the project index from renderProjectTasksOnClick
+  const projIndex = i;
+  const currentProjTasks = projects[projIndex].tasksArr;
 
-  projTasks.forEach((task, index) => {
+
+  currentProjTasks.forEach((task, index) => {
     if (task.isComplete) {
       checkBoxElements[index].checked = task.isComplete;
       tasks[index].classList.add("complete");
@@ -298,14 +307,14 @@ const modifyTaskSubmitListen = (wrappedModifySubmit) => {
   taskForm.addEventListener("submit", wrappedModifySubmit, { once: true });
 };
 
-const modifyTaskSubmit = (event, projTasks, j) => {
+const modifyTaskSubmit = (event, projTasks, j, i) => {
   event.preventDefault();
   const taskForm = document.getElementById("taskForm");
   const formModalBg = document.querySelector(".form-modal-background");
   const formContainer = document.querySelector(".form-container");
 
   modifyTask(projTasks, j, getNewTaskValues());
-  renderProjectTasks();
+  renderProjectTasks(i);
   taskForm.reset();
   formModalBg.style.display = "none";
   formContainer.style.display = "none";
@@ -349,5 +358,5 @@ export {
   deleteTaskListener,
   renderProjectTasks,
   editTaskListener,
-  renderWeekTasksListener,
+
 };

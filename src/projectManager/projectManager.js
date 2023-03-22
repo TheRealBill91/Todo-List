@@ -4,6 +4,7 @@ import { setAttributes } from "../setAttributes";
 const projects = [];
 
 let currentProject;
+let currentProjectIndex;
 
 const createProject = (projectTitle, tasksArr) => {
   return { projectTitle, tasksArr };
@@ -35,6 +36,14 @@ const setCurrentProject = (project) => {
   currentProject = project;
 }
 
+const setCurrentProjectIndex = (i) => {
+  currentProjectIndex = i;
+}
+
+const getCurrentProjectIndex = () => {
+  return currentProjectIndex
+}
+
 // Gets the current project the user last clicked on
 const getCurrentProject = () => currentProject;
 
@@ -51,7 +60,9 @@ export {
   createProject,
   getAllProjects,
   addProjectToProjectsArray,
+  setCurrentProjectIndex,
   addTaskToProjectObj,
+  getCurrentProjectIndex,
   deleteProjectTask,
   setCurrentProject,
   getCurrentProject,

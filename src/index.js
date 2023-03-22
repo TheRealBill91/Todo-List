@@ -9,6 +9,8 @@ import {
   toggleTaskCompletion,
 } from "./toDoManager/toDoManager";
 
+import { renderWeekTasksListener } from "./weeklyView";
+
 import {
   deleteProjectTask,
   getCurrentProject,
@@ -32,7 +34,6 @@ import {
   showProjInputEventListener,
   renderProjTasksListener,
   deleteTaskListener,
-  renderWeekTasksListener
 } from "./displayController/displayController";
 
 import "./normalize.css";
@@ -76,13 +77,26 @@ const sampleTaskThree = createToDoTask(
   "2023-03-17",
   "medium",
   "notes",
+  true
+);
+
+const taskForProjTwo = createToDoTask(
+  "taskTwo",
+  "descriptionTwo",
+  "2023-03-21",
+  "medium",
+  "notes",
   false
 );
 const sampleProject = createProject("testProjectObject", []);
+const projectTwo = createProject("ProjTwoTest", []);
+addTaskToProjectObj(projectTwo, taskForProjTwo);
+
 addTaskToProjectObj(sampleProject, sampleTask);
 addTaskToProjectObj(sampleProject, sampleTaskTwo);
 addTaskToProjectObj(sampleProject, sampleTaskThree);
 addProjectToProjectsArray(sampleProject);
+addProjectToProjectsArray(projectTwo);
 
 const currentWeekIndex = getWeek(new Date());
 const sampleDate = format(parseISO("2023-03-20"), "yyyy-MM-dd");
@@ -99,12 +113,13 @@ console.log(`Current Date ${format(new Date(), "yyyy-MM-dd")}`);
 console.log(`Sample week: ${getWeek(new Date())}`);
 console.log(sampleWeekIndex === currentWeekIndex); */
 
-console.log(getWeekOfMonth(new Date()))
+/* console.log(getWeekOfMonth(new Date())) */
+console.log(getAllProjects());
 
 showProjInputEventListener();
 closeProjInputEventListener();
 renderProjectsToDOM();
 renderProjTasksListener();
 projInputFormListener();
-renderWeekTasksListener()
+renderWeekTasksListener();
 /* deleteTaskListener(); */
