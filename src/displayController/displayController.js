@@ -89,7 +89,9 @@ const renderProjTasksListener = () =>
 
 // renders project tasks when user clicks on project on the sidebar
 const renderProjectTasksOnClick = (event) => {
-  /* console.log("Event listener is working!"); */
+  // Holds the task objects for the current project
+  // So they can be used to load the task status for the projects
+  const projTasksArr = [];
   const taskContainer = document.querySelector(".taskContainer");
   taskContainer.innerHTML = "";
   renderProjectHeader();
@@ -109,13 +111,14 @@ const renderProjectTasksOnClick = (event) => {
       if (projTasks) {
         for (let j = 0; j < projTasks.length; j++) {
           const task = projTasks[j];
+          projTasksArr.push(task);
           createTaskElement(i, j, tasksHolder, task);
         }
       }
       createTaskBtn();
       createTaskBtnListener();
-      loadTaskStatusForProjects(i);
     }
+    loadTaskStatusForProjects(projTasksArr);
   }
   // listens for user click of task delete button
 
@@ -125,7 +128,7 @@ const renderProjectTasksOnClick = (event) => {
 };
 
 // renders project tasks for cases when user doesn't first click on the project
-// e.g., after a user deletes a task
+// e.g., after a user deletes or edits a task
 const renderProjectTasks = (i) => {
   const tasksHolder = document.querySelector(".tasks");
   tasksHolder.innerHTML = "";
@@ -150,8 +153,6 @@ const renderProjectTasks = (i) => {
   editTaskListener();
 };
 
-
-
 /* allTasks.forEach((task, index) => {
     const taskDateString = task.dueDate; // "2022-03-15"
     const taskDateObject = parseISO(taskDateString);
@@ -170,16 +171,47 @@ const deleteTaskListener = () => {
 };
 
 const deleteTask = (event) => {
-  const targetDeleteBtn = +event.target.dataset.index;
-  const currentProj = getCurrentProject();
+  const targetDeleteTaskIndex = +event.target.dataset.index;
+  const targetDeleteProjectIndex = +event.target.dataset.project;
+  const tasks = document.querySelectorAll(".tasks > div");
+  const tasksElementsArr = [...tasks];
 
-  const projTasks = getProjectTasks(currentProj);
-  if (projTasks) {
-    for (let j = 0; j < projTasks.length; j++) {
-      if (j === targetDeleteBtn) {
-        projTasks.splice(j, 1);
-        renderProjectTasks();
-        return;
+  // const projTasks = getProjectTasks(currentProj);
+  // if (projTasks) {
+  //   for (let j = 0; j < projTasks.length; j++) {
+  //     if (j === targetDeleteBtn) {
+  //       projTasks.splice(j, 1);
+  //       renderProjectTasks();
+  //       return;
+  //     }
+  //   }
+  // }
+
+  // You will need to add dataset for each view (project, weekly, daily)
+  // when you initally render the task elements to each view
+  // Then you need to use this view value when removing the task element
+
+  const projects = getAllProjects();
+
+  for (let i = 0; i < projects.length; i++) {
+    if (i === targetDeleteProjectIndex) {
+      const projTasks = projects[i].tasksArr;
+      for (let j = 0; j < projTasks.length; j++) {
+        if (j === targetDeleteTaskIndex) {
+          projTasks.splice(j, 1);
+          for (let e = 0; e < tasks.length; e++) {
+            // removes task element from project view
+            // if (view === "Project"){
+            const currentTaskEl = tasks[e];
+            if (e === targetDeleteTaskIndex) {
+              currentTaskEl.remove();
+              return;
+            } else if (e === targetDeleteTaskIndex) {
+              currentTaskEl.remove();
+              return;
+            }
+          }
+        }
       }
     }
   }
@@ -192,6 +224,7 @@ const editTaskListener = () => {
   editButtons.forEach((editBtn) => editBtn.addEventListener("click", editTask));
 };
 
+//
 const editTask = (event) => {
   const targetEditBtn = +event.target.dataset.task;
   const targetProjIndex = +event.target.dataset.project;
@@ -204,7 +237,6 @@ const editTask = (event) => {
   for (let i = 0; i < projects.length; i++) {
     if (i === targetProjIndex) {
       const projTasks = projects[i].tasksArr;
-
       for (let j = 0; j < projTasks.length; j++) {
         if (j === targetEditBtn) {
           formModalBg.style.display = "flex";
@@ -226,6 +258,26 @@ const editTask = (event) => {
   }
 };
 
+// Adds submit event listener to the form for editing a task
+const modifyTaskSubmitListen = (wrappedModifySubmit) => {
+  const taskForm = document.getElementById("taskForm");
+  taskForm.addEventListener("submit", wrappedModifySubmit, { once: true });
+};
+
+// Submits the the form used to edit the selected task
+const modifyTaskSubmit = (event, projTasks, j, i) => {
+  event.preventDefault();
+  const taskForm = document.getElementById("taskForm");
+  const formModalBg = document.querySelector(".form-modal-background");
+  const formContainer = document.querySelector(".form-container");
+
+  modifyTask(projTasks, j, getNewTaskValues());
+  renderProjectTasks(i);
+  taskForm.reset();
+  formModalBg.style.display = "none";
+  formContainer.style.display = "none";
+};
+
 // Puts event listener on each checkbox
 const changeTaskStatusListener = () => {
   const checkBoxElements = document.querySelectorAll(".toggleTaskStatus");
@@ -236,26 +288,29 @@ const changeTaskStatusListener = () => {
 
 // Changes the completion status of a task when user clicks on checkbox
 const changeTaskStatus = (event) => {
-  const targetCheckBox = +event.target.dataset.task;
+  const targetCheckBoxIndex = +event.target.dataset.task;
   const targetProjectIndex = +event.target.dataset.project;
   const projects = getAllProjects();
   const currentProj = projects[targetProjectIndex];
   /*  const currentProj = getCurrentProject(); */
   const projTasks = getProjectTasks(currentProj);
-  toggleTaskCompletion(currentProj, projTasks, targetCheckBox);
+  toggleTaskCompletion(
+    currentProj,
+    projTasks,
+    targetCheckBoxIndex,
+    targetProjectIndex
+  );
 };
 
 // For each task in the current project, load completion status,
 // check the checkbox if complete, and apply grey styling to text
 // in the task element (for project views only)
-const loadTaskStatusForProjects = (i) => {
+const loadTaskStatusForProjects = (Arr) => {
   const checkBoxElements = document.querySelectorAll(".toggleTaskStatus");
   const tasks = document.querySelectorAll(".tasks > div");
-  const projects = getAllProjects();
   // This is the project index from renderProjectTasksOnClick
-  const projIndex = i;
-  const currentProjTasks = projects[projIndex].tasksArr;
-
+  // const projIndex = i;
+  const currentProjTasks = Arr;
 
   currentProjTasks.forEach((task, index) => {
     if (task.isComplete) {
@@ -264,6 +319,8 @@ const loadTaskStatusForProjects = (i) => {
     }
   });
 };
+// Need to go through each task element and compare the
+// project dataset index
 
 // loads task values into form when user hits the edit button
 const loadTaskValues = (currentTask) => {
@@ -302,26 +359,8 @@ const setPriorityRadioButton = (priorityValue) => {
   });
 };
 
-const modifyTaskSubmitListen = (wrappedModifySubmit) => {
-  const taskForm = document.getElementById("taskForm");
-  taskForm.addEventListener("submit", wrappedModifySubmit, { once: true });
-};
-
-const modifyTaskSubmit = (event, projTasks, j, i) => {
-  event.preventDefault();
-  const taskForm = document.getElementById("taskForm");
-  const formModalBg = document.querySelector(".form-modal-background");
-  const formContainer = document.querySelector(".form-container");
-
-  modifyTask(projTasks, j, getNewTaskValues());
-  renderProjectTasks(i);
-  taskForm.reset();
-  formModalBg.style.display = "none";
-  formContainer.style.display = "none";
-};
-
 // Retrieves all of the new task values the user has entered before
-// submitting, and pushes them into an array. Makes it easier to
+// submitting, and pushes them into an array. Makes it easier to get
 // new task values into function that modifies the task values
 const getNewTaskValues = () => {
   const taskValues = [];
@@ -358,5 +397,6 @@ export {
   deleteTaskListener,
   renderProjectTasks,
   editTaskListener,
-
+  loadTaskStatusForProjects,
+  changeTaskStatusListener,
 };

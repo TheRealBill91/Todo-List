@@ -84,19 +84,19 @@ const changeTaskNotes = (projTasks, j, newTaskNotes) => {
   currentTask.notes = newTaskNotes;
 };
 
-const toggleTaskCompletion = (currentProj, projTasks, targetCheckBox) => {
+const toggleTaskCompletion = (currentProj, projTasks, targetCheckBoxIndex, targetProjectIndex) => {
   const tasks = document.querySelectorAll(".tasks > div");
 
   if (projTasks) {
     for (let i = 0; i < projTasks.length; i++) {
-      if (i === targetCheckBox) {
-        const currentTask = projTasks[i];
+      if (i === targetCheckBoxIndex) {
+        const currentTask = projTasks[targetCheckBoxIndex];
         if (currentTask.isComplete) {
           currentTask.isComplete = false;
-          tasks[i].classList.remove("complete");
+          tasks[targetProjectIndex].classList.remove("complete");
         } else {
           currentTask.isComplete = true;
-          tasks[i].classList.add("complete");
+          tasks[targetProjectIndex].classList.add("complete");
         }
 
         console.log(`Is complete? ${currentTask.isComplete}`);

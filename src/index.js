@@ -81,12 +81,12 @@ const sampleTaskThree = createToDoTask(
 );
 
 const taskForProjTwo = createToDoTask(
-  "taskTwo",
+  "ProjTwoTask",
   "descriptionTwo",
   "2023-03-21",
   "medium",
   "notes",
-  false
+  true
 );
 const sampleProject = createProject("testProjectObject", []);
 const projectTwo = createProject("ProjTwoTest", []);

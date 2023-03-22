@@ -7,8 +7,8 @@ const createTaskElement = (i, j, tasksHolder, taskObj) => {
   const taskElement = document.createElement("div");
   setAttributes(taskElement, {
     class: `task-${j}`,
-    "project-index": `${i}`,
-    "task-index": `${j}`,
+    "data-project": `${i}`,
+    "data-index": `${j}`,
   });
   tasksHolder.appendChild(taskElement);
   createLeftContainer(taskElement, i, j, taskValues);
@@ -36,6 +36,7 @@ const createTaskCheckbox = (taskElement, i, j, leftSideContainer) => {
   const taskCheckbox = document.createElement("input");
   setAttributes(taskCheckbox, {
     class: `toggleTaskStatus`,
+    // "data-view": `${}`
     "data-project": `${i}`,
     "data-task": `${j}`,
     type: "checkbox",
