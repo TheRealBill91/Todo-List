@@ -1,7 +1,8 @@
 import { setAttributes } from "../setAttributes";
 
 // Creates task element using DOM
-const createTaskElement = (i, j, tasksHolder, taskObj, viewType) => {
+const createTaskElement = (...args) => {
+  const [i, j, tasksHolder, taskObj, viewType] = args
   // Will likely use to set indexes on task controls
   const taskValues = Object.values(taskObj);
   const taskElement = document.createElement("div");

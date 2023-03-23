@@ -1,10 +1,18 @@
 import { createToDoTask } from "../toDoManager/toDoManager";
 import {
   addTaskToProjectObj,
+  getAllProjects,
   getCurrentProject,
 } from "../projectManager/projectManager";
 
-import { renderProjectTasks } from "../displayController/displayController";
+import { createTaskElement } from "./createTaskElement";
+
+import {
+  renderProjectTasks,
+  deleteTaskListener,
+  editTaskListener,
+  changeTaskStatusListener,
+} from "../displayController/displayController";
 import { getAllTasks } from "../getAllTasks";
 
 // Creates button for adding task on current page as well as
@@ -80,8 +88,42 @@ const createTask = (event) => {
   taskForm.reset();
   formContainer.style.display = "none";
   formModalBg.style.display = "none";
+  addNewTaskElement(task, currentProj);
   // taskForm.removeEventListener("submit", createTask);
-  renderProjectTasks();
+  // renderProjectTasks();
+};
+
+const addNewTaskElement = (task, currentProj) => {
+  const taskContainer = document.querySelector(".taskContainer");
+  const tasksHolder = document.querySelector(".tasks");
+
+  const tasks = document.querySelectorAll(".tasks > div");
+  const randomProjTask = tasks[0];
+  const randomProjView = randomProjTask.dataset.view;
+
+  const viewType = randomProjView;
+
+  const newTaskTitle = task.title;
+  const currentProjTitle = currentProj.projectTitle;
+  const projectObjects = getAllProjects();
+  // projectObjects.forEach((projObject, index) => {
+  //   if (projObject.title === currentProjTitle) {
+  //     const projIndex = index;
+  //   }
+  // });
+
+  const projectIndex = projectObjects.findIndex(
+    (projObj) => projObj.projectTitle === currentProjTitle
+  );
+  const targetProjTasks = projectObjects[projectIndex].tasksArr;
+  const taskIndex = targetProjTasks.findIndex(
+    (projTask) => projTask.title === newTaskTitle
+  );
+
+  createTaskElement(projectIndex, taskIndex, tasksHolder, task, viewType);
+  deleteTaskListener();
+  changeTaskStatusListener();
+  editTaskListener();
 };
 
 // listens for user clicking submit button when creating
@@ -106,7 +148,7 @@ const btnPrioritySelector = () => {
   return selectedPriority;
 };
 
-const formatDate = (date) => { };
+const formatDate = (date) => {};
 
 export {
   createTaskBtn,

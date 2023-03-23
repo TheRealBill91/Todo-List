@@ -106,24 +106,25 @@ const renderProjectTasksOnClick = (event) => {
     if (i === +event.target.dataset.project) {
       // Used for creating tasks
       const project = projects[i];
-      const currentProj = setCurrentProject[project];
+      const currentProj = setCurrentProject(project);
+      console.log(getCurrentProject());
       const projTasks = projects[i].tasksArr;
       // return if there is no proj tasks. Probably means you will want to query task header
       // and change it's title to match current proj that way.
       if (projTasks) {
         for (let j = 0; j < projTasks.length; j++) {
-          const task = projTasks[j];
-          projTasksArr.push(task);
-          createTaskElement(i, j, tasksHolder, task, viewType);
+          const taskObj = projTasks[j];
+          projTasksArr.push(taskObj);
+          createTaskElement(i, j, tasksHolder, taskObj, viewType);
         }
       }
-      createTaskBtn();
-      createTaskBtnListener();
     }
     loadTaskStatusForProjects(projTasksArr);
   }
   // listens for user click of task delete button
 
+  createTaskBtn();
+  createTaskBtnListener();
   deleteTaskListener();
   changeTaskStatusListener();
   editTaskListener();

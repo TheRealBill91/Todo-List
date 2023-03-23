@@ -114,7 +114,18 @@ console.log(`Sample week: ${getWeek(new Date())}`);
 console.log(sampleWeekIndex === currentWeekIndex); */
 
 /* console.log(getWeekOfMonth(new Date())) */
-console.log(getAllProjects());
+// const projectObjects = getAllProjects();
+// const projTitle = "testProjectObject";
+// const taskTitle = "taskThree";
+// const projIndex = projectObjects.findIndex((projObj) => projObj.projectTitle === projTitle);
+
+// const targetProjTasks = projectObjects[projIndex].tasksArr;
+// const taskIndex = targetProjTasks.findIndex((projTask) => projTask.title === taskTitle);
+// console.log(taskIndex);
+
+const tasks = document.querySelectorAll(".tasks > div");
+const randomTask = tasks[0];
+console.log(randomTask);
 
 showProjInputEventListener();
 closeProjInputEventListener();
