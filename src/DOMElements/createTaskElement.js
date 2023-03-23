@@ -1,33 +1,34 @@
 import { setAttributes } from "../setAttributes";
 
 // Creates task element using DOM
-const createTaskElement = (i, j, tasksHolder, taskObj) => {
+const createTaskElement = (i, j, tasksHolder, taskObj, viewType) => {
   // Will likely use to set indexes on task controls
   const taskValues = Object.values(taskObj);
   const taskElement = document.createElement("div");
   setAttributes(taskElement, {
     class: `task-${j}`,
+    "data-view": `${viewType}`,
     "data-project": `${i}`,
     "data-index": `${j}`,
   });
   tasksHolder.appendChild(taskElement);
-  createLeftContainer(taskElement, i, j, taskValues);
-  createTaskControls(taskElement, taskValues, i, j);
+  createLeftContainer(taskElement, i, j, taskValues, viewType);
+  createTaskControls(taskElement, taskValues, i, j, viewType);
 };
 
 // Puts the task checkbox toggle and task title in the same div on the left side
-const createLeftContainer = (taskElement, i, j, taskValues) => {
+const createLeftContainer = (taskElement, i, j, taskValues, viewType) => {
   const leftSideContainer = document.createElement("div");
   leftSideContainer.classList.add("leftSideContainer");
   taskElement.appendChild(leftSideContainer);
   leftSideContainer.append(
-    createTaskCheckbox(taskElement, i, j, leftSideContainer),
+    createTaskCheckbox(taskElement, i, j, leftSideContainer, viewType),
     createTaskTitle(taskValues, i, j, leftSideContainer)
   );
 };
 
 // Creates checkbox for user to toggle task completion status
-const createTaskCheckbox = (taskElement, i, j, leftSideContainer) => {
+const createTaskCheckbox = (taskElement, i, j, leftSideContainer, viewType) => {
   // Will hold the checkbox input and span
   const checkBoxDiv = document.createElement("div");
   checkBoxDiv.classList.add("checkBoxDiv");
@@ -36,7 +37,7 @@ const createTaskCheckbox = (taskElement, i, j, leftSideContainer) => {
   const taskCheckbox = document.createElement("input");
   setAttributes(taskCheckbox, {
     class: `toggleTaskStatus`,
-    // "data-view": `${}`
+    "data-view": `${viewType}`,
     "data-project": `${i}`,
     "data-task": `${j}`,
     type: "checkbox",
@@ -63,7 +64,7 @@ const createTaskTitle = (taskValues, i, j, leftSideContainer) => {
   return taskTitle;
 };
 
-const createTaskControls = (taskElement, taskValues, i, j) => {
+const createTaskControls = (taskElement, taskValues, i, j, viewType) => {
   const taskControls = document.createElement("div");
   taskControls.classList.add("taskControls");
   taskElement.appendChild(taskControls);
@@ -71,6 +72,7 @@ const createTaskControls = (taskElement, taskValues, i, j) => {
   datePara.textContent = `${taskValues[2]}`;
   const editButton = document.createElement("button");
   setAttributes(editButton, {
+    "data-view": `${viewType}`,
     "data-project": `${i}`,
     "data-task": `${j}`,
     class: "editButton",
@@ -85,6 +87,7 @@ const createTaskControls = (taskElement, taskValues, i, j) => {
   infoButton.textContent = "Info";
   const deleteButton = document.createElement("button");
   setAttributes(deleteButton, {
+    "data-view": `${viewType}`,
     "data-project": `${i}`,
     "data-task": `${j}`,
     class: "deleteButton",

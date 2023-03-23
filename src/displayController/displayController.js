@@ -98,13 +98,15 @@ const renderProjectTasksOnClick = (event) => {
   const tasksHolder = document.createElement("div");
   tasksHolder.classList.add("tasks");
   taskContainer.appendChild(tasksHolder);
+  const viewType = "project";
 
   // tasks.innerHTML = "";
   const projects = getAllProjects();
   for (let i = 0; i < projects.length; i++) {
     if (i === +event.target.dataset.project) {
       // Used for creating tasks
-      setCurrentProjectIndex(i);
+      const project = projects[i];
+      const currentProj = setCurrentProject[project];
       const projTasks = projects[i].tasksArr;
       // return if there is no proj tasks. Probably means you will want to query task header
       // and change it's title to match current proj that way.
@@ -112,7 +114,7 @@ const renderProjectTasksOnClick = (event) => {
         for (let j = 0; j < projTasks.length; j++) {
           const task = projTasks[j];
           projTasksArr.push(task);
-          createTaskElement(i, j, tasksHolder, task);
+          createTaskElement(i, j, tasksHolder, task, viewType);
         }
       }
       createTaskBtn();
@@ -174,22 +176,7 @@ const deleteTask = (event) => {
   const targetDeleteTaskIndex = +event.target.dataset.index;
   const targetDeleteProjectIndex = +event.target.dataset.project;
   const tasks = document.querySelectorAll(".tasks > div");
-  const tasksElementsArr = [...tasks];
-
-  // const projTasks = getProjectTasks(currentProj);
-  // if (projTasks) {
-  //   for (let j = 0; j < projTasks.length; j++) {
-  //     if (j === targetDeleteBtn) {
-  //       projTasks.splice(j, 1);
-  //       renderProjectTasks();
-  //       return;
-  //     }
-  //   }
-  // }
-
-  // You will need to add dataset for each view (project, weekly, daily)
-  // when you initally render the task elements to each view
-  // Then you need to use this view value when removing the task element
+  const viewType = event.target.dataset.view;
 
   const projects = getAllProjects();
 
@@ -199,18 +186,18 @@ const deleteTask = (event) => {
       for (let j = 0; j < projTasks.length; j++) {
         if (j === targetDeleteTaskIndex) {
           projTasks.splice(j, 1);
-          for (let e = 0; e < tasks.length; e++) {
+          tasks.forEach((taskEl, index) => {
             // removes task element from project view
             // if (view === "Project"){
-            const currentTaskEl = tasks[e];
-            if (e === targetDeleteTaskIndex) {
-              currentTaskEl.remove();
-              return;
-            } else if (e === targetDeleteTaskIndex) {
-              currentTaskEl.remove();
-              return;
+            if (viewType === "project" && index === targetDeleteTaskIndex) {
+              taskEl.remove();
+            } else if (
+              viewType === "week" &&
+              index === targetDeleteProjectIndex
+            ) {
+              taskEl.remove();
             }
-          }
+          });
         }
       }
     }
@@ -226,19 +213,20 @@ const editTaskListener = () => {
 
 //
 const editTask = (event) => {
-  const targetEditBtn = +event.target.dataset.task;
-  const targetProjIndex = +event.target.dataset.project;
+  const targetEditTaskIndex = +event.target.dataset.task;
+  const targetEditProjIndex = +event.target.dataset.project;
   const currentProj = getCurrentProject();
   const formModalBg = document.querySelector(".form-modal-background");
   const formContainer = document.querySelector(".form-container");
+  const viewType = event.target.dataset.view;
 
   const projects = getAllProjects();
 
   for (let i = 0; i < projects.length; i++) {
-    if (i === targetProjIndex) {
+    if (i === targetEditProjIndex) {
       const projTasks = projects[i].tasksArr;
       for (let j = 0; j < projTasks.length; j++) {
-        if (j === targetEditBtn) {
+        if (j === targetEditTaskIndex) {
           formModalBg.style.display = "flex";
           formContainer.style.display = "grid";
           const currentTask = projTasks[j];
@@ -247,7 +235,15 @@ const editTask = (event) => {
           // Remove the form event listener each time to avoid accumulation
           // Remove the form event listener in a separate function if not submitted
           const wrappedModifySubmit = (event) =>
-            modifyTaskSubmit(event, projTasks, j, i);
+            modifyTaskSubmit(
+              event,
+              projTasks,
+              j,
+              i,
+              targetEditProjIndex,
+              targetEditTaskIndex,
+              viewType
+            );
 
           modifyTaskSubmitListen(wrappedModifySubmit);
           closeTaskForm(wrappedModifySubmit);
@@ -265,17 +261,67 @@ const modifyTaskSubmitListen = (wrappedModifySubmit) => {
 };
 
 // Submits the the form used to edit the selected task
-const modifyTaskSubmit = (event, projTasks, j, i) => {
+const modifyTaskSubmit = (
+  event,
+  projTasks,
+  j,
+  i,
+  targetEditProjIndex,
+  targetEditTaskIndex,
+  viewType
+) => {
   event.preventDefault();
   const taskForm = document.getElementById("taskForm");
   const formModalBg = document.querySelector(".form-modal-background");
   const formContainer = document.querySelector(".form-container");
 
   modifyTask(projTasks, j, getNewTaskValues());
-  renderProjectTasks(i);
+  modifyTaskElement(
+    getNewTaskValues(),
+    targetEditProjIndex,
+    targetEditTaskIndex,
+    viewType
+  );
+  /* renderProjectTasks(i); */
   taskForm.reset();
   formModalBg.style.display = "none";
   formContainer.style.display = "none";
+};
+
+// Changes the title and date text content of the task element that was edited
+const modifyTaskElement = (
+  getNewTaskValues,
+  targetEditProjIndex,
+  targetEditTaskIndex,
+  viewType
+) => {
+  const newTaskValues = getNewTaskValues;
+
+  const taskEls = document.querySelectorAll(".tasks > div");
+
+  for (let i = 0; i < taskEls.length; i++) {
+    const currentTaskEl = taskEls[i];
+    if (viewType === "project" && i === targetEditTaskIndex) {
+      console.log(currentTaskEl);
+      const titleEl = currentTaskEl.childNodes[0].childNodes[1];
+      const titleParaEl = titleEl.childNodes[0];
+      titleParaEl.textContent = newTaskValues[0];
+
+      const dateEl = currentTaskEl.childNodes[1].childNodes[0];
+      dateEl.textContent = newTaskValues[2];
+      console.log(titleEl);
+    } else if (viewType === "week" && i === targetEditProjIndex) {
+      console.log(currentTaskEl);
+      const titleEl = currentTaskEl.childNodes[0].childNodes[1];
+      const titleParaEl = titleEl.childNodes[0];
+      titleParaEl.textContent = newTaskValues[0];
+
+      const dateEl = currentTaskEl.childNodes[1].childNodes[0];
+      dateEl.textContent = newTaskValues[2];
+    }
+  }
+
+  /*  const descriptionInputEl =  */
 };
 
 // Puts event listener on each checkbox
@@ -288,17 +334,19 @@ const changeTaskStatusListener = () => {
 
 // Changes the completion status of a task when user clicks on checkbox
 const changeTaskStatus = (event) => {
-  const targetCheckBoxIndex = +event.target.dataset.task;
-  const targetProjectIndex = +event.target.dataset.project;
+  const targetCheckboxTaskIndex = +event.target.dataset.task;
+  const targetCheckBoxProjectIndex = +event.target.dataset.project;
+  const viewType = event.target.dataset.view;
   const projects = getAllProjects();
-  const currentProj = projects[targetProjectIndex];
+  const currentProj = projects[targetCheckBoxProjectIndex];
   /*  const currentProj = getCurrentProject(); */
   const projTasks = getProjectTasks(currentProj);
   toggleTaskCompletion(
     currentProj,
     projTasks,
-    targetCheckBoxIndex,
-    targetProjectIndex
+    targetCheckboxTaskIndex,
+    targetCheckBoxProjectIndex,
+    viewType
   );
 };
 

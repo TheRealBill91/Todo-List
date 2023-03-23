@@ -84,22 +84,51 @@ const changeTaskNotes = (projTasks, j, newTaskNotes) => {
   currentTask.notes = newTaskNotes;
 };
 
-const toggleTaskCompletion = (currentProj, projTasks, targetCheckBoxIndex, targetProjectIndex) => {
+const toggleTaskCompletion = (
+  currentProj,
+  projTasks,
+  targetCheckBoxProjectIndex,
+  targetCheckboxTaskIndex,
+  viewType
+) => {
   const tasks = document.querySelectorAll(".tasks > div");
 
+  // Check if there are tasks in the project
   if (projTasks) {
+    // Loop through all the tasks in the project
     for (let i = 0; i < projTasks.length; i++) {
-      if (i === targetCheckBoxIndex) {
-        const currentTask = projTasks[targetCheckBoxIndex];
+      // Check if the viewType is "week" and the current loop index matches the target project index
+      if (viewType === "week" && i === targetCheckBoxProjectIndex) {
+        // Get the task object from projTasks using targetCheckBoxProjectIndex
+        const currentTask = projTasks[targetCheckBoxProjectIndex];
+
+        // Toggle the completion status of the task
         if (currentTask.isComplete) {
           currentTask.isComplete = false;
-          tasks[targetProjectIndex].classList.remove("complete");
+          // Update the DOM element using targetCheckboxTaskIndex (weekly view order)
+          tasks[targetCheckboxTaskIndex].classList.remove("complete");
         } else {
           currentTask.isComplete = true;
-          tasks[targetProjectIndex].classList.add("complete");
+          // Update the DOM element using targetCheckboxTaskIndex (weekly view order)
+          tasks[targetCheckboxTaskIndex].classList.add("complete");
         }
+      }
+      // Check if the viewType is "project" and the current loop index
+      // matches the target task index
+      else if (viewType === "project" && i === targetCheckboxTaskIndex) {
+        // Get the task object from projTasks using targetCheckboxTaskIndex (same project tasks)
+        const currentTask = projTasks[targetCheckBoxProjectIndex];
 
-        console.log(`Is complete? ${currentTask.isComplete}`);
+        // Toggle the completion status of the task
+        if (currentTask.isComplete) {
+          currentTask.isComplete = false;
+          // Update the DOM element using targetCheckBoxProjectIndex (same project tasks order)
+          tasks[targetCheckBoxProjectIndex].classList.remove("complete");
+        } else {
+          currentTask.isComplete = true;
+          // Update the DOM element using targetCheckBoxProjectIndex (same project tasks order)
+          tasks[targetCheckBoxProjectIndex].classList.add("complete");
+        }
       }
     }
   }
