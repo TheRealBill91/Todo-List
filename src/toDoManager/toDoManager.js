@@ -92,6 +92,20 @@ const toggleTaskCompletion = (
   viewType
 ) => {
   const tasks = document.querySelectorAll(".tasks > div");
+  // Used to determine if each task in the weekly view belongs to the
+  // same project
+  let sameProjectTasks = true;
+  const start = tasks[0].dataset.project;
+  for (let i = 0; i < tasks.length; i++) {
+    let holder = start;
+    const projectIndex = tasks[i].dataset.project;
+    if (holder !== projectIndex) {
+      sameProjectTasks = false;
+      break;
+    } else {
+      holder = projectIndex;
+    }
+  }
 
   // Check if there are tasks in the project
   if (projTasks) {
@@ -100,39 +114,54 @@ const toggleTaskCompletion = (
       // Check if the viewType is "week" and the current loop index matches the target project index
       if (viewType === "week" && i === targetCheckBoxProjectIndex) {
         // Get the task object from projTasks using targetCheckBoxProjectIndex
-        const currentTask = projTasks[targetCheckBoxProjectIndex];
-
-        // Toggle the completion status of the task
-        if (currentTask.isComplete) {
-          currentTask.isComplete = false;
-          // Update the DOM element using targetCheckboxTaskIndex (weekly view order)
-          tasks[targetCheckboxTaskIndex].classList.remove("complete");
+        const currentTask = projTasks[targetCheckboxTaskIndex];
+        // If each task in the week view is not from the same project, use this logic
+        if (!sameProjectTasks) {
+          // Toggle the completion status of the task
+          if (currentTask.isComplete) {
+            currentTask.isComplete = false;
+            // Update the DOM element using targetCheckboxTaskIndex (weekly view order)
+            tasks[targetCheckBoxProjectIndex].classList.remove("complete");
+            // If each task in the week view is from the same project, use the same logic
+            // from the project view
+          } else {
+            currentTask.isComplete = true;
+            // Update the DOM element using targetCheckboxTaskIndex (weekly view order)
+            tasks[targetCheckBoxProjectIndex].classList.add("complete");
+          }
         } else {
-          currentTask.isComplete = true;
-          // Update the DOM element using targetCheckboxTaskIndex (weekly view order)
-          tasks[targetCheckboxTaskIndex].classList.add("complete");
+          if (currentTask.isComplete) {
+            currentTask.isComplete = false;
+            // Update the DOM element using targetCheckBoxProjectIndex (same project tasks order)
+            tasks[targetCheckboxTaskIndex].classList.remove("complete");
+          } else {
+            currentTask.isComplete = true;
+            // Update the DOM element using targetCheckBoxProjectIndex (same project tasks order)
+            tasks[targetCheckboxTaskIndex].classList.add("complete");
+          }
         }
       }
       // Check if the viewType is "project" and the current loop index
       // matches the target task index
       else if (viewType === "project" && i === targetCheckboxTaskIndex) {
         // Get the task object from projTasks using targetCheckboxTaskIndex (same project tasks)
-        const currentTask = projTasks[targetCheckBoxProjectIndex];
+        const currentTask = projTasks[targetCheckboxTaskIndex];
 
         // Toggle the completion status of the task
         if (currentTask.isComplete) {
           currentTask.isComplete = false;
           // Update the DOM element using targetCheckBoxProjectIndex (same project tasks order)
-          tasks[targetCheckBoxProjectIndex].classList.remove("complete");
+          tasks[targetCheckboxTaskIndex].classList.remove("complete");
         } else {
           currentTask.isComplete = true;
           // Update the DOM element using targetCheckBoxProjectIndex (same project tasks order)
-          tasks[targetCheckBoxProjectIndex].classList.add("complete");
+          tasks[targetCheckboxTaskIndex].classList.add("complete");
         }
       }
     }
   }
 };
+
 
 export {
   createToDoTask,

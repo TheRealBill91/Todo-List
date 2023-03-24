@@ -345,8 +345,8 @@ const changeTaskStatus = (event) => {
   toggleTaskCompletion(
     currentProj,
     projTasks,
-    targetCheckboxTaskIndex,
     targetCheckBoxProjectIndex,
+    targetCheckboxTaskIndex,
     viewType
   );
 };

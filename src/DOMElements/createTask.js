@@ -93,6 +93,8 @@ const createTask = (event) => {
   // renderProjectTasks();
 };
 
+
+// Adds new task element to the project tasks view
 const addNewTaskElement = (task, currentProj) => {
   const taskContainer = document.querySelector(".taskContainer");
   const tasksHolder = document.querySelector(".tasks");
@@ -148,7 +150,7 @@ const btnPrioritySelector = () => {
   return selectedPriority;
 };
 
-const formatDate = (date) => {};
+const formatDate = (date) => { };
 
 export {
   createTaskBtn,

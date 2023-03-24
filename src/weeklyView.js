@@ -2,7 +2,12 @@ import { createTaskElement } from "./DOMElements/createTaskElement";
 import { renderProjectHeader } from "./DOMElements/createTaskHeader";
 import { getAllProjects } from "./projectManager/projectManager";
 import { getWeek, parseISO } from "date-fns";
-import { loadTaskStatusForProjects, changeTaskStatusListener, deleteTaskListener, editTaskListener } from "./displayController/displayController";
+import {
+  loadTaskStatusForProjects,
+  changeTaskStatusListener,
+  deleteTaskListener,
+  editTaskListener,
+} from "./displayController/displayController";
 
 const renderWeekTasksListener = () => {
   const weekTab = document.querySelector(".weekTab");
@@ -16,7 +21,7 @@ const renderWeekTasksOnClick = () => {
   tasksHolder.classList.add("tasks");
   renderProjectHeader();
   taskContainer.appendChild(tasksHolder);
-  // Holds the task objects for the weekly tasks 
+  // Holds the task objects for the weekly tasks
   // So they can be used to load the task status for the weekly tasks
   const weekViewTasksArr = [];
   const viewType = "week";
@@ -33,15 +38,32 @@ const renderWeekTasksOnClick = () => {
       const taskDateWeekIndex = getWeek(taskDateObject, { weekStartsOn: 1 });
       if (currentWeekIndex === taskDateWeekIndex) {
         createTaskElement(i, j, tasksHolder, task, viewType);
-        weekViewTasksArr.push(task)
+        weekViewTasksArr.push(task);
       }
     }
-
   }
+
+  console.table(weekViewTasksArr);
   loadTaskStatusForProjects(weekViewTasksArr);
   changeTaskStatusListener();
   deleteTaskListener();
   editTaskListener();
 };
 
-export { renderWeekTasksListener };
+const getWeeklyTaskObjects = () => {
+  const weeklyTaskObjectsArr = [];
+  const projObjects = getAllProjects();
+  const taskElms = document.querySelectorAll(".tasks > div");
+  for (let i = 0; i < taskElms.length; i++) {
+    const currentTaskElm = taskElms[i];
+    const targetProjectIndex = currentTaskElm.dataset.project;
+    const targetTaskIndex = currentTaskElm.dataset.task;
+    const projObject = projObjects[targetProjectIndex];
+    const taskObj = projObject[targetTaskIndex];
+    weeklyTaskObjectsArr.push(taskObj);
+  }
+
+  return weeklyTaskObjectsArr;
+};
+
+export { renderWeekTasksListener, getWeeklyTaskObjects };
