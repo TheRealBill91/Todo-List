@@ -176,33 +176,22 @@ const deleteTaskListener = () => {
 const deleteTask = (event) => {
   const targetDeleteTaskIndex = +event.target.dataset.index;
   const targetDeleteProjectIndex = +event.target.dataset.project;
-  const tasks = document.querySelectorAll(".tasks > div");
+  const taskElms = document.querySelectorAll(".tasks > div");
   const viewType = event.target.dataset.view;
+  const targetTaskUUID = event.target.dataset.uuid;
 
-  const projects = getAllProjects();
+  const projectObjects = getAllProjects();
+  const projectTaskObjects = projectObjects[targetDeleteProjectIndex].tasksArr;
+  const targetTaskIndex = projectTaskObjects.findIndex(
+    (taskObj) => taskObj.UUID === targetTaskUUID
+  );
 
-  for (let i = 0; i < projects.length; i++) {
-    if (i === targetDeleteProjectIndex) {
-      const projTasks = projects[i].tasksArr;
-      for (let j = 0; j < projTasks.length; j++) {
-        if (j === targetDeleteTaskIndex) {
-          projTasks.splice(j, 1);
-          tasks.forEach((taskEl, index) => {
-            // removes task element from project view
-            // if (view === "Project"){
-            if (viewType === "project" && index === targetDeleteTaskIndex) {
-              taskEl.remove();
-            } else if (
-              viewType === "week" &&
-              index === targetDeleteProjectIndex
-            ) {
-              taskEl.remove();
-            }
-          });
-        }
-      }
-    }
-  }
+  projectTaskObjects.splice(targetTaskIndex, 1);
+
+  taskElms.forEach((task) => {
+    // eslint-disable-next-line no-unused-expressions
+    task.dataset.uuid === targetTaskUUID ? task.remove() : null;
+  });
 };
 
 // Sets event listener on each edit button for all the tasks

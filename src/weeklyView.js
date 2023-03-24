@@ -56,10 +56,11 @@ const getWeeklyTaskObjects = () => {
   const taskElms = document.querySelectorAll(".tasks > div");
   for (let i = 0; i < taskElms.length; i++) {
     const currentTaskElm = taskElms[i];
-    const targetProjectIndex = currentTaskElm.dataset.project;
-    const targetTaskIndex = currentTaskElm.dataset.task;
+    const targetProjectIndex = +currentTaskElm.dataset.project;
+    // make sure to change the name of the dataset to task
+    const targetTaskIndex = +currentTaskElm.dataset.index;
     const projObject = projObjects[targetProjectIndex];
-    const taskObj = projObject[targetTaskIndex];
+    const taskObj = projObject.tasksArr[targetTaskIndex];
     weeklyTaskObjectsArr.push(taskObj);
   }
 

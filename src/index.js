@@ -40,6 +40,7 @@ import "./normalize.css";
 import "./generalStyles.css";
 
 import { setAttributes } from "./setAttributes";
+import { v4 as uuidv4 } from 'uuid';
 
 /* toDoManager(); */
 
@@ -56,6 +57,7 @@ const remove = test.splice(0, 1);
 console.log(remove); */
 
 const sampleTask = createToDoTask(
+  uuidv4(),
   "title",
   "description",
   "2023-03-15",
@@ -64,6 +66,7 @@ const sampleTask = createToDoTask(
   true
 );
 const sampleTaskTwo = createToDoTask(
+  uuidv4(),
   "taskTwo",
   "descriptionTwo",
   "2023-03-21",
@@ -72,18 +75,20 @@ const sampleTaskTwo = createToDoTask(
   false
 );
 const sampleTaskThree = createToDoTask(
+  uuidv4(),
   "taskThree",
   "descriptionThree",
-  "2023-03-17",
+  "2023-03-24",
   "medium",
   "notes",
   true
 );
 
 const taskForProjTwo = createToDoTask(
+  uuidv4(),
   "ProjTwoTask",
   "descriptionTwo",
-  "2023-03-21",
+  "2023-03-13",
   "medium",
   "notes",
   true

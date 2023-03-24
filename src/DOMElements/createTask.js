@@ -14,6 +14,7 @@ import {
   changeTaskStatusListener,
 } from "../displayController/displayController";
 import { getAllTasks } from "../getAllTasks";
+import { v4 as uuidv4 } from "uuid";
 
 // Creates button for adding task on current page as well as
 // setting up an event listener to open the form inputting details
@@ -74,6 +75,7 @@ const createTask = (event) => {
   const notes = document.getElementById("notes");
 
   const task = createToDoTask(
+    uuidv4(),
     titleInput.value,
     descriptionInput.value,
     dueDate.value,
@@ -92,7 +94,6 @@ const createTask = (event) => {
   // taskForm.removeEventListener("submit", createTask);
   // renderProjectTasks();
 };
-
 
 // Adds new task element to the project tasks view
 const addNewTaskElement = (task, currentProj) => {
@@ -150,7 +151,7 @@ const btnPrioritySelector = () => {
   return selectedPriority;
 };
 
-const formatDate = (date) => { };
+const formatDate = (date) => {};
 
 export {
   createTaskBtn,

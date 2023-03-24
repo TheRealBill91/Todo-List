@@ -1,5 +1,6 @@
 import { btnPrioritySelector } from "../DOMElements/createTask";
 import { getAllProjects } from "../projectManager/projectManager";
+import { getWeeklyTaskObjects } from "../weeklyView";
 
 // contains the different factory patterns and functions for
 // creating and modifying to do tasks
@@ -10,6 +11,7 @@ const projects = getAllProjects();
 
 // factory pattern for creating a toDoTask
 const createToDoTask = (
+  UUID,
   title,
   description,
   dueDate,
@@ -18,6 +20,7 @@ const createToDoTask = (
   isComplete
 ) => {
   return {
+    UUID,
     title,
     description,
     dueDate,
@@ -92,6 +95,8 @@ const toggleTaskCompletion = (
   viewType
 ) => {
   const tasks = document.querySelectorAll(".tasks > div");
+  toggleWeeklyTaskCompletion(tasks);
+
   // Used to determine if each task in the weekly view belongs to the
   // same project
   let sameProjectTasks = true;
@@ -133,11 +138,11 @@ const toggleTaskCompletion = (
           if (currentTask.isComplete) {
             currentTask.isComplete = false;
             // Update the DOM element using targetCheckBoxProjectIndex (same project tasks order)
-            tasks[targetCheckboxTaskIndex].classList.remove("complete");
+            tasks[targetCheckBoxProjectIndex].classList.remove("complete");
           } else {
             currentTask.isComplete = true;
             // Update the DOM element using targetCheckBoxProjectIndex (same project tasks order)
-            tasks[targetCheckboxTaskIndex].classList.add("complete");
+            tasks[targetCheckBoxProjectIndex].classList.add("complete");
           }
         }
       }
@@ -162,6 +167,17 @@ const toggleTaskCompletion = (
   }
 };
 
+const toggleWeeklyTaskCompletion = (taskElms, targetCheckBoxProjectIndex, targetCheckboxTaskIndex) => {
+  const weekTaskObjects = getWeeklyTaskObjects();
+
+  // Used to change the appearance of the task element
+  const targetTaskIndex = weekTaskObjects.findIndex(
+    (taskObj, index) => taskObj.title === taskElms[index].firstChild.innerText
+  );
+
+  
+  return targetTaskIndex;
+};
 
 export {
   createToDoTask,

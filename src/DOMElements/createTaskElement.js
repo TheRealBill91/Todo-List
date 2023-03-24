@@ -2,19 +2,21 @@ import { setAttributes } from "../setAttributes";
 
 // Creates task element using DOM
 const createTaskElement = (...args) => {
-  const [i, j, tasksHolder, taskObj, viewType] = args
+  const [i, j, tasksHolder, taskObj, viewType] = args;
   // Will likely use to set indexes on task controls
   const taskValues = Object.values(taskObj);
   const taskElement = document.createElement("div");
+  const taskUUID = taskObj.UUID;
   setAttributes(taskElement, {
     class: `task-${j}`,
+    "data-UUID": taskUUID,
     "data-view": `${viewType}`,
     "data-project": `${i}`,
     "data-index": `${j}`,
   });
   tasksHolder.appendChild(taskElement);
   createLeftContainer(taskElement, i, j, taskValues, viewType);
-  createTaskControls(taskElement, taskValues, i, j, viewType);
+  createTaskControls(taskElement, taskValues, i, j, viewType, taskUUID);
 };
 
 // Puts the task checkbox toggle and task title in the same div on the left side
@@ -60,17 +62,24 @@ const createTaskTitle = (taskValues, i, j, leftSideContainer) => {
     "data-task": `${j}`,
   });
   const taskTitlePara = document.createElement("p");
-  taskTitlePara.textContent = `${taskValues[0]}`;
+  taskTitlePara.textContent = `${taskValues[1]}`;
   taskTitle.appendChild(taskTitlePara);
   return taskTitle;
 };
 
-const createTaskControls = (taskElement, taskValues, i, j, viewType) => {
+const createTaskControls = (
+  taskElement,
+  taskValues,
+  i,
+  j,
+  viewType,
+  taskUUID
+) => {
   const taskControls = document.createElement("div");
   taskControls.classList.add("taskControls");
   taskElement.appendChild(taskControls);
   const datePara = document.createElement("p");
-  datePara.textContent = `${taskValues[2]}`;
+  datePara.textContent = `${taskValues[3]}`;
   const editButton = document.createElement("button");
   setAttributes(editButton, {
     "data-view": `${viewType}`,
@@ -88,6 +97,7 @@ const createTaskControls = (taskElement, taskValues, i, j, viewType) => {
   infoButton.textContent = "Info";
   const deleteButton = document.createElement("button");
   setAttributes(deleteButton, {
+    "data-UUID": taskUUID,
     "data-view": `${viewType}`,
     "data-project": `${i}`,
     "data-task": `${j}`,
