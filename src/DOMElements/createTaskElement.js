@@ -15,23 +15,23 @@ const createTaskElement = (...args) => {
     "data-index": `${j}`,
   });
   tasksHolder.appendChild(taskElement);
-  createLeftContainer(taskElement, i, j, taskValues, viewType);
+  createLeftContainer(taskElement, i, j, taskValues, taskUUID);
   createTaskControls(taskElement, taskValues, i, j, viewType, taskUUID);
 };
 
 // Puts the task checkbox toggle and task title in the same div on the left side
-const createLeftContainer = (taskElement, i, j, taskValues, viewType) => {
+const createLeftContainer = (taskElement, i, j, taskValues, taskUUID) => {
   const leftSideContainer = document.createElement("div");
   leftSideContainer.classList.add("leftSideContainer");
   taskElement.appendChild(leftSideContainer);
   leftSideContainer.append(
-    createTaskCheckbox(taskElement, i, j, leftSideContainer, viewType),
+    createTaskCheckbox(taskElement, i, j, leftSideContainer, taskUUID),
     createTaskTitle(taskValues, i, j, leftSideContainer)
   );
 };
 
 // Creates checkbox for user to toggle task completion status
-const createTaskCheckbox = (taskElement, i, j, leftSideContainer, viewType) => {
+const createTaskCheckbox = (taskElement, i, j, leftSideContainer, taskUUID) => {
   // Will hold the checkbox input and span
   const checkBoxDiv = document.createElement("div");
   checkBoxDiv.classList.add("checkBoxDiv");
@@ -40,9 +40,8 @@ const createTaskCheckbox = (taskElement, i, j, leftSideContainer, viewType) => {
   const taskCheckbox = document.createElement("input");
   setAttributes(taskCheckbox, {
     class: `toggleTaskStatus`,
-    "data-view": `${viewType}`,
+    "data-uuid": taskUUID,
     "data-project": `${i}`,
-    "data-task": `${j}`,
     type: "checkbox",
   });
   checkBoxDiv.appendChild(taskCheckbox);
@@ -82,16 +81,16 @@ const createTaskControls = (
   datePara.textContent = `${taskValues[3]}`;
   const editButton = document.createElement("button");
   setAttributes(editButton, {
+    "data-UUID": taskUUID,
     "data-view": `${viewType}`,
     "data-project": `${i}`,
-    "data-task": `${j}`,
     class: "editButton",
   });
   editButton.textContent = "Edit";
   const infoButton = document.createElement("button");
   setAttributes(infoButton, {
+    "data-UUID": taskUUID,
     "data-project": `${i}`,
-    "data-task": `${j}`,
     class: "infoButton",
   });
   infoButton.textContent = "Info";
@@ -100,7 +99,6 @@ const createTaskControls = (
     "data-UUID": taskUUID,
     "data-view": `${viewType}`,
     "data-project": `${i}`,
-    "data-task": `${j}`,
     class: "deleteButton",
   });
   deleteButton.setAttribute("data-index", `${j}`);

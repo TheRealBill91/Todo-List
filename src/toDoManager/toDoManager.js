@@ -52,131 +52,57 @@ const deleteTask = (index) => {
   return deletedTask;
 };
 
-const modifyTask = (projTasks, j, getNewTaskValues) => {
+const modifyTask = (targetTaskObject, getNewTaskValues) => {
   const newTaskValues = getNewTaskValues;
-  changeTaskTitle(projTasks, j, newTaskValues[0]);
-  changeTaskDescription(projTasks, j, newTaskValues[1]);
-  changeTaskDueDate(projTasks, j, newTaskValues[2]);
-  changeTaskPriority(projTasks, j, newTaskValues[3]);
-  changeTaskNotes(projTasks, j, newTaskValues[4]);
+  changeTaskTitle(targetTaskObject, newTaskValues[0]);
+  changeTaskDescription(targetTaskObject, newTaskValues[1]);
+  changeTaskDueDate(targetTaskObject, newTaskValues[2]);
+  changeTaskPriority(targetTaskObject, newTaskValues[3]);
+  changeTaskNotes(targetTaskObject, newTaskValues[4]);
 };
 
-const changeTaskTitle = (projTasks, j, newTitle) => {
-  const currentTask = projTasks[j];
-
-  currentTask.title = newTitle;
+const changeTaskTitle = (targetTaskObject, newTitle) => {
+  const currentTaskObj = targetTaskObject;
+  currentTaskObj.title = newTitle;
 };
 
-const changeTaskDescription = (projTasks, j, newDescription) => {
-  const currentTask = projTasks[j];
-  currentTask.description = newDescription;
+const changeTaskDescription = (targetTaskObject, newDescription) => {
+  const currentTaskObj = targetTaskObject;
+  currentTaskObj.description = newDescription;
 };
 
-const changeTaskDueDate = (projTasks, j, newTaskDueDate) => {
-  const currentTask = projTasks[j];
-  currentTask.dueDate = newTaskDueDate;
+const changeTaskDueDate = (targetTaskObject, newTaskDueDate) => {
+  const currentTaskObj = targetTaskObject;
+  currentTaskObj.dueDate = newTaskDueDate;
 };
 
-const changeTaskPriority = (projTasks, j, newPriority) => {
-  const currentTask = projTasks[j];
-  currentTask.priority = btnPrioritySelector();
+const changeTaskPriority = (targetTaskObject, newPriority) => {
+  const currentTaskObj = targetTaskObject;
+  currentTaskObj.priority = btnPrioritySelector();
 };
 
-const changeTaskNotes = (projTasks, j, newTaskNotes) => {
-  const currentTask = projTasks[j];
-  currentTask.notes = newTaskNotes;
+const changeTaskNotes = (targetTaskObject, newTaskNotes) => {
+  const currentTaskObj = targetTaskObject;
+  currentTaskObj.notes = newTaskNotes;
 };
 
 const toggleTaskCompletion = (
-  currentProj,
-  projTasks,
-  targetCheckBoxProjectIndex,
-  targetCheckboxTaskIndex,
-  viewType
+  currentProjObj,
+  targetProjectObj,
+  targetCheckBoxProjectIndex
 ) => {
-  const tasks = document.querySelectorAll(".tasks > div");
-  toggleWeeklyTaskCompletion(tasks);
+  const taskElms = document.querySelectorAll(".tasks > div");
+  const taskElmsArr = [...taskElms];
 
-  // Used to determine if each task in the weekly view belongs to the
-  // same project
-  let sameProjectTasks = true;
-  const start = tasks[0].dataset.project;
-  for (let i = 0; i < tasks.length; i++) {
-    let holder = start;
-    const projectIndex = tasks[i].dataset.project;
-    if (holder !== projectIndex) {
-      sameProjectTasks = false;
-      break;
-    } else {
-      holder = projectIndex;
-    }
-  }
-
-  // Check if there are tasks in the project
-  if (projTasks) {
-    // Loop through all the tasks in the project
-    for (let i = 0; i < projTasks.length; i++) {
-      // Check if the viewType is "week" and the current loop index matches the target project index
-      if (viewType === "week" && i === targetCheckBoxProjectIndex) {
-        // Get the task object from projTasks using targetCheckBoxProjectIndex
-        const currentTask = projTasks[targetCheckboxTaskIndex];
-        // If each task in the week view is not from the same project, use this logic
-        if (!sameProjectTasks) {
-          // Toggle the completion status of the task
-          if (currentTask.isComplete) {
-            currentTask.isComplete = false;
-            // Update the DOM element using targetCheckboxTaskIndex (weekly view order)
-            tasks[targetCheckBoxProjectIndex].classList.remove("complete");
-            // If each task in the week view is from the same project, use the same logic
-            // from the project view
-          } else {
-            currentTask.isComplete = true;
-            // Update the DOM element using targetCheckboxTaskIndex (weekly view order)
-            tasks[targetCheckBoxProjectIndex].classList.add("complete");
-          }
-        } else {
-          if (currentTask.isComplete) {
-            currentTask.isComplete = false;
-            // Update the DOM element using targetCheckBoxProjectIndex (same project tasks order)
-            tasks[targetCheckBoxProjectIndex].classList.remove("complete");
-          } else {
-            currentTask.isComplete = true;
-            // Update the DOM element using targetCheckBoxProjectIndex (same project tasks order)
-            tasks[targetCheckBoxProjectIndex].classList.add("complete");
-          }
-        }
-      }
-      // Check if the viewType is "project" and the current loop index
-      // matches the target task index
-      else if (viewType === "project" && i === targetCheckboxTaskIndex) {
-        // Get the task object from projTasks using targetCheckboxTaskIndex (same project tasks)
-        const currentTask = projTasks[targetCheckboxTaskIndex];
-
-        // Toggle the completion status of the task
-        if (currentTask.isComplete) {
-          currentTask.isComplete = false;
-          // Update the DOM element using targetCheckBoxProjectIndex (same project tasks order)
-          tasks[targetCheckboxTaskIndex].classList.remove("complete");
-        } else {
-          currentTask.isComplete = true;
-          // Update the DOM element using targetCheckBoxProjectIndex (same project tasks order)
-          tasks[targetCheckboxTaskIndex].classList.add("complete");
-        }
-      }
-    }
-  }
-};
-
-const toggleWeeklyTaskCompletion = (taskElms, targetCheckBoxProjectIndex, targetCheckboxTaskIndex) => {
-  const weekTaskObjects = getWeeklyTaskObjects();
-
-  // Used to change the appearance of the task element
-  const targetTaskIndex = weekTaskObjects.findIndex(
-    (taskObj, index) => taskObj.title === taskElms[index].firstChild.innerText
+  const targetTaskElm = taskElmsArr.find(
+    (taskElm) => taskElm.dataset.uuid === targetProjectObj.UUID
   );
 
-  
-  return targetTaskIndex;
+  const changeTask = targetProjectObj.isComplete
+    ? ((targetProjectObj.isComplete = false),
+      targetTaskElm.classList.remove("complete"))
+    : ((targetProjectObj.isComplete = true),
+      targetTaskElm.classList.add("complete"));
 };
 
 export {

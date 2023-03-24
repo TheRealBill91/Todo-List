@@ -203,14 +203,34 @@ const editTaskListener = () => {
 
 //
 const editTask = (event) => {
-  const targetEditTaskIndex = +event.target.dataset.task;
+  const targetEditTaskID = event.target.dataset.uuid;
   const targetEditProjIndex = +event.target.dataset.project;
   const currentProj = getCurrentProject();
   const formModalBg = document.querySelector(".form-modal-background");
   const formContainer = document.querySelector(".form-container");
   const viewType = event.target.dataset.view;
 
-  const projects = getAllProjects();
+  const projectObjects = getAllProjects();
+  const projectTaskObjects = projectObjects[targetEditProjIndex].tasksArr;
+  const targetTaskObject = projectTaskObjects.find(
+    (taskObj) => taskObj.UUID === targetEditTaskID
+  );
+
+  formModalBg.style.display = "flex";
+  formContainer.style.display = "grid";
+  loadTaskValues(targetTaskObject);
+
+  const wrappedModifySubmit = (event) =>
+    modifyTaskSubmit(
+      event,
+      projectTaskObjects,
+      targetTaskObject,
+      targetEditProjIndex,
+      targetEditTaskID
+    );
+
+  modifyTaskSubmitListen(wrappedModifySubmit);
+  closeTaskForm(wrappedModifySubmit);
 
   for (let i = 0; i < projects.length; i++) {
     if (i === targetEditProjIndex) {
@@ -253,25 +273,18 @@ const modifyTaskSubmitListen = (wrappedModifySubmit) => {
 // Submits the the form used to edit the selected task
 const modifyTaskSubmit = (
   event,
-  projTasks,
-  j,
-  i,
+  projectTaskObjects,
+  targetTaskObject,
   targetEditProjIndex,
-  targetEditTaskIndex,
-  viewType
+  targetEditTaskID
 ) => {
   event.preventDefault();
   const taskForm = document.getElementById("taskForm");
   const formModalBg = document.querySelector(".form-modal-background");
   const formContainer = document.querySelector(".form-container");
 
-  modifyTask(projTasks, j, getNewTaskValues());
-  modifyTaskElement(
-    getNewTaskValues(),
-    targetEditProjIndex,
-    targetEditTaskIndex,
-    viewType
-  );
+  modifyTask(targetTaskObject, getNewTaskValues());
+  modifyTaskElement(getNewTaskValues(), targetEditProjIndex, targetTaskObject);
   /* renderProjectTasks(i); */
   taskForm.reset();
   formModalBg.style.display = "none";
@@ -282,36 +295,23 @@ const modifyTaskSubmit = (
 const modifyTaskElement = (
   getNewTaskValues,
   targetEditProjIndex,
-  targetEditTaskIndex,
-  viewType
+  targetTaskObject
 ) => {
   const newTaskValues = getNewTaskValues;
 
   const taskEls = document.querySelectorAll(".tasks > div");
+  const taskElsArr = Array.from(taskEls);
+  const targetTaskEl = taskElsArr.find(
+    (taskEl) => taskEl.dataset.uuid === targetTaskObject.UUID
+  );
 
-  for (let i = 0; i < taskEls.length; i++) {
-    const currentTaskEl = taskEls[i];
-    if (viewType === "project" && i === targetEditTaskIndex) {
-      console.log(currentTaskEl);
-      const titleEl = currentTaskEl.childNodes[0].childNodes[1];
-      const titleParaEl = titleEl.childNodes[0];
-      titleParaEl.textContent = newTaskValues[0];
+  const titleEl = targetTaskEl.childNodes[0].childNodes[1];
+  const titleParaEl = titleEl.childNodes[0];
+  titleParaEl.textContent = newTaskValues[0];
 
-      const dateEl = currentTaskEl.childNodes[1].childNodes[0];
-      dateEl.textContent = newTaskValues[2];
-      console.log(titleEl);
-    } else if (viewType === "week" && i === targetEditProjIndex) {
-      console.log(currentTaskEl);
-      const titleEl = currentTaskEl.childNodes[0].childNodes[1];
-      const titleParaEl = titleEl.childNodes[0];
-      titleParaEl.textContent = newTaskValues[0];
-
-      const dateEl = currentTaskEl.childNodes[1].childNodes[0];
-      dateEl.textContent = newTaskValues[2];
-    }
-  }
-
-  /*  const descriptionInputEl =  */
+  const dateEl = targetTaskEl.childNodes[1].childNodes[0];
+  dateEl.textContent = newTaskValues[2];
+  console.log(titleEl);
 };
 
 // Puts event listener on each checkbox
@@ -324,19 +324,20 @@ const changeTaskStatusListener = () => {
 
 // Changes the completion status of a task when user clicks on checkbox
 const changeTaskStatus = (event) => {
-  const targetCheckboxTaskIndex = +event.target.dataset.task;
+  const targetCheckboxTaskID = event.target.dataset.uuid;
   const targetCheckBoxProjectIndex = +event.target.dataset.project;
-  const viewType = event.target.dataset.view;
   const projects = getAllProjects();
-  const currentProj = projects[targetCheckBoxProjectIndex];
+  const currentProjObj = projects[targetCheckBoxProjectIndex];
+
   /*  const currentProj = getCurrentProject(); */
-  const projTasks = getProjectTasks(currentProj);
+  const projTasks = currentProjObj.tasksArr;
+  const targetProjectObj = projTasks.find(
+    (task) => task.UUID === targetCheckboxTaskID
+  );
   toggleTaskCompletion(
-    currentProj,
-    projTasks,
-    targetCheckBoxProjectIndex,
-    targetCheckboxTaskIndex,
-    viewType
+    currentProjObj,
+    targetProjectObj,
+    targetCheckBoxProjectIndex
   );
 };
 
@@ -369,19 +370,19 @@ const loadTaskValues = (currentTask) => {
   const notes = document.getElementById("notes");
 
   const taskValues = Object.values(currentTask);
-  const priorityValue = taskValues[3];
-  const dateString = taskValues[2];
+  const priorityValue = taskValues[4];
+  const dateString = taskValues[3];
   const dateObject = parseISO(dateString);
   // You only need this version for the tasks you manually created
   // inside index.js
   // const parsedDate = parse(dateValue, 'MM/dd/yyyy', new Date());
   const formattedDate = format(dateObject, "yyyy-MM-dd");
 
-  title.value = taskValues[0];
-  description.value = taskValues[1];
+  title.value = taskValues[1];
+  description.value = taskValues[2];
   dueDate.value = formattedDate;
   setPriorityRadioButton(priorityValue);
-  notes.value = taskValues[4];
+  notes.value = taskValues[5];
 };
 
 // loads and checks the correct priority value for the task that user is trying to
