@@ -38,7 +38,7 @@ const showProjInputBtn = document.querySelector(".showProjInputBtn");
 const projectInputForm = document.querySelector(".projectInputForm");
 const projectTitleInput = document.querySelector(".projTitleInput");
 const closeProjInputBtn = document.querySelector(".closeProjectInputBtn");
-const projectObjects = document.querySelectorAll(".projects");
+const projectElms = document.querySelectorAll(".projects");
 
 const addProjectToDOM = (event) => {
   event.preventDefault();
@@ -58,12 +58,13 @@ const renderProjectsToDOM = () => {
   const projectsHolder = document.querySelector(".projects");
   projectsHolder.innerHTML = "";
   const projectObjects = getAllProjects();
-  projectObjects.forEach((projectObj, index) => {
+  for (let i = 1; i < projectObjects.length; i++) {
     const projectDiv = document.createElement("div");
-    projectDiv.textContent = projectObj.projectTitle;
-    projectDiv.setAttribute("data-project", `${index}`);
+    projectDiv.textContent = projectObjects[i].projectTitle;
+    projectDiv.setAttribute("data-project", `${i}`);
     projectsHolder.appendChild(projectDiv);
-  });
+  }
+  projectObjects.forEach((projectObj, index) => { });
 };
 
 const showProjInputEventListener = () =>
@@ -83,7 +84,7 @@ const closeProjectInput = () => {
 };
 
 const renderProjTasksListener = () =>
-  projectObjects.forEach((projObject) =>
+  projectElms.forEach((projElm) =>
     projObject.addEventListener("click", renderProjectTasksOnClick)
   );
 
@@ -231,37 +232,6 @@ const editTask = (event) => {
 
   modifyTaskSubmitListen(wrappedModifySubmit);
   closeTaskForm(wrappedModifySubmit);
-
-  for (let i = 0; i < projects.length; i++) {
-    if (i === targetEditProjIndex) {
-      const projTasks = projects[i].tasksArr;
-      for (let j = 0; j < projTasks.length; j++) {
-        if (j === targetEditTaskIndex) {
-          formModalBg.style.display = "flex";
-          formContainer.style.display = "grid";
-          const currentTask = projTasks[j];
-          loadTaskValues(currentTask);
-          // Use a variable to wrap the callback with parameters for editing task form
-          // Remove the form event listener each time to avoid accumulation
-          // Remove the form event listener in a separate function if not submitted
-          const wrappedModifySubmit = (event) =>
-            modifyTaskSubmit(
-              event,
-              projTasks,
-              j,
-              i,
-              targetEditProjIndex,
-              targetEditTaskIndex,
-              viewType
-            );
-
-          modifyTaskSubmitListen(wrappedModifySubmit);
-          closeTaskForm(wrappedModifySubmit);
-          return;
-        }
-      }
-    }
-  }
 };
 
 // Adds submit event listener to the form for editing a task

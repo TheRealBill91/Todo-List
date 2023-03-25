@@ -44,6 +44,9 @@ import "./generalStyles.css";
 import { setAttributes } from "./setAttributes";
 import { v4 as uuidv4 } from "uuid";
 
+import { createDefaultProject, renderDefaultViewListener } from "./defaultView";
+
+
 /* toDoManager(); */
 
 /* const sampleTask = toDoManager().createToDoTask('title', 'description', '03/15/2023', 'low', 'notes');
@@ -102,6 +105,7 @@ addTaskToProjectObj(projectTwo, taskForProjTwo);
 addTaskToProjectObj(sampleProject, sampleTask);
 addTaskToProjectObj(sampleProject, sampleTaskTwo);
 addTaskToProjectObj(sampleProject, sampleTaskThree);
+createDefaultProject();
 addProjectToProjectsArray(sampleProject);
 addProjectToProjectsArray(projectTwo);
 
@@ -141,4 +145,7 @@ renderProjTasksListener();
 projInputFormListener();
 renderWeekTasksListener();
 renderDailyTasksListener();
+renderDefaultViewListener();
+/* createDefaultProject(); */
+console.table(getAllProjects());
 /* deleteTaskListener(); */

@@ -151,7 +151,7 @@ const btnPrioritySelector = () => {
   return selectedPriority;
 };
 
-const formatDate = (date) => {};
+const formatDate = date => { };
 
 export {
   createTaskBtn,
