@@ -36,11 +36,13 @@ import {
   deleteTaskListener,
 } from "./displayController/displayController";
 
+import { renderDailyTasksListener } from "./dailyView";
+
 import "./normalize.css";
 import "./generalStyles.css";
 
 import { setAttributes } from "./setAttributes";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 /* toDoManager(); */
 
@@ -138,4 +140,5 @@ renderProjectsToDOM();
 renderProjTasksListener();
 projInputFormListener();
 renderWeekTasksListener();
+renderDailyTasksListener();
 /* deleteTaskListener(); */

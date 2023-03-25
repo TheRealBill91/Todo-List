@@ -22,39 +22,25 @@ const addTaskToProjectObj = (project, task) => {
   project.tasksArr.push(task);
 };
 
-const deleteProjectTask = (projectIndex, taskIndex) => {
-  projects.forEach((project, index) => {
-    if (projectIndex === index) {
-      const projectTasks = project.tasksArr;
-      return projectTasks.splice(taskIndex, 1);
-    }
-  })
-};
-
 // Sets the current project to whatever project the user last clicked on
 const setCurrentProject = (project) => {
   currentProject = project;
-}
+};
 
 const setCurrentProjectIndex = (i) => {
   currentProjectIndex = i;
-}
+};
 
 const getCurrentProjectIndex = () => {
-  return currentProjectIndex
-}
+  return currentProjectIndex;
+};
 
 // Gets the current project the user last clicked on
 const getCurrentProject = () => currentProject;
 
 const getProjectTasks = (project) => {
   return project.tasksArr;
-
-}
-
-
-
-
+};
 
 export {
   createProject,
@@ -63,8 +49,7 @@ export {
   setCurrentProjectIndex,
   addTaskToProjectObj,
   getCurrentProjectIndex,
-  deleteProjectTask,
   setCurrentProject,
   getCurrentProject,
-  getProjectTasks
+  getProjectTasks,
 };
