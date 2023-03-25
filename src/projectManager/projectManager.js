@@ -6,6 +6,12 @@ const projects = [];
 let currentProject;
 let currentProjectIndex;
 
+const getProjArr = () => {
+  return projects;
+}
+
+
+
 const createProject = (projectTitle, tasksArr) => {
   return { projectTitle, tasksArr };
 };
@@ -52,4 +58,5 @@ export {
   setCurrentProject,
   getCurrentProject,
   getProjectTasks,
+  getProjArr,
 };

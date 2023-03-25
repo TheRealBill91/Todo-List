@@ -43,9 +43,13 @@ import "./generalStyles.css";
 
 import { setAttributes } from "./setAttributes";
 import { v4 as uuidv4 } from "uuid";
+import { addProjArrLocalStorage } from "./localStorage";
 
-import { createDefaultProject, renderDefaultViewListener } from "./defaultView";
-
+import {
+  createDefaultProject,
+  renderDefaultViewListener,
+  setIndexForDefaultTab,
+} from "./defaultView";
 
 /* toDoManager(); */
 
@@ -109,43 +113,16 @@ createDefaultProject();
 addProjectToProjectsArray(sampleProject);
 addProjectToProjectsArray(projectTwo);
 
-const currentWeekIndex = getWeek(new Date());
-const sampleDate = format(parseISO("2023-03-20"), "yyyy-MM-dd");
-const currentWeekDate = format(new Date(), "yyyy-MM-dd");
-const currentWeek = getWeek(new Date(currentWeekDate));
-const sampleWeekIndex = getWeek(new Date("2023-03-20"));
-
-/* console.log(getProjectTasks(sampleProject));
-console.log(getAllProjects());
-console.log(`Current week: ${currentWeek}`);
-console.log(`Current week in date format: ${currentWeekDate}`)
-console.log(sampleDate)
-console.log(`Current Date ${format(new Date(), "yyyy-MM-dd")}`);
-console.log(`Sample week: ${getWeek(new Date())}`);
-console.log(sampleWeekIndex === currentWeekIndex); */
-
-/* console.log(getWeekOfMonth(new Date())) */
-// const projectObjects = getAllProjects();
-// const projTitle = "testProjectObject";
-// const taskTitle = "taskThree";
-// const projIndex = projectObjects.findIndex((projObj) => projObj.projectTitle === projTitle);
-
-// const targetProjTasks = projectObjects[projIndex].tasksArr;
-// const taskIndex = targetProjTasks.findIndex((projTask) => projTask.title === taskTitle);
-// console.log(taskIndex);
-
-const tasks = document.querySelectorAll(".tasks > div");
-const randomTask = tasks[0];
-console.log(randomTask);
-
 showProjInputEventListener();
 closeProjInputEventListener();
 renderProjectsToDOM();
 renderProjTasksListener();
+setIndexForDefaultTab();
 projInputFormListener();
 renderWeekTasksListener();
 renderDailyTasksListener();
 renderDefaultViewListener();
 /* createDefaultProject(); */
 console.table(getAllProjects());
+addProjArrLocalStorage();
 /* deleteTaskListener(); */

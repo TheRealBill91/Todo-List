@@ -64,7 +64,7 @@ const renderProjectsToDOM = () => {
     projectDiv.setAttribute("data-project", `${i}`);
     projectsHolder.appendChild(projectDiv);
   }
-  projectObjects.forEach((projectObj, index) => { });
+  projectObjects.forEach((projectObj, index) => {});
 };
 
 const showProjInputEventListener = () =>
@@ -85,7 +85,7 @@ const closeProjectInput = () => {
 
 const renderProjTasksListener = () =>
   projectElms.forEach((projElm) =>
-    projObject.addEventListener("click", renderProjectTasksOnClick)
+    projElm.addEventListener("click", renderProjectTasksOnClick)
   );
 
 // renders project tasks when user clicks on project on the sidebar
@@ -281,7 +281,6 @@ const modifyTaskElement = (
 
   const dateEl = targetTaskEl.childNodes[1].childNodes[0];
   dateEl.textContent = newTaskValues[2];
-  console.log(titleEl);
 };
 
 // Puts event listener on each checkbox

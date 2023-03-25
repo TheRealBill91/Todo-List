@@ -43,7 +43,7 @@ const renderWeekTasksOnClick = () => {
     }
   }
 
-  console.table(weekViewTasksArr);
+  // console.table(weekViewTasksArr);
   loadTaskStatusForProjects(weekViewTasksArr);
   changeTaskStatusListener();
   deleteTaskListener();

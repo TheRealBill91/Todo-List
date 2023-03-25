@@ -35,15 +35,17 @@ const renderDefaultTasksOnClick = (event) => {
   const defaultViewTasksArr = [];
   // This will be deleted later
   const viewType = "default";
-  /*   const currentProj = setCurrentProject(project); */
-  const projects = getAllProjects();
-  for (let i = 0; i < projects.length; i++) {
+  const targetDefaultTabIndex = +event.target.dataset.project;
+
+  const projectObjects = getAllProjects();
+  const currentProj = setCurrentProject(projectObjects[0]);
+  for (let i = 0; i < projectObjects.length; i++) {
     /* if (i === +event.target.dataset.project) { */
     // Used for creating tasks
-    const project = projects[i];
-
-    console.log(getCurrentProject());
-    const projTasks = projects[i].tasksArr;
+    const project = projectObjects[i];
+    const currentProjObject = getCurrentProject();
+    console.log(currentProjObject);
+    const projTasks = projectObjects[i].tasksArr;
     // return if there is no proj tasks. Probably means you will want to query task header
     // and change it's title to match current proj that way.
     if (projTasks) {
@@ -67,7 +69,7 @@ const renderDefaultTasksOnClick = (event) => {
 
 const renderProjectTasks = () => {
   const projectObjects = getAllProjects();
-  for (let i = 1; i < projectObjects.length; i++) { }
+  for (let i = 1; i < projectObjects.length; i++) {}
 };
 
 const createDefaultProject = () => {
@@ -76,13 +78,14 @@ const createDefaultProject = () => {
 };
 
 const setIndexForDefaultTab = () => {
-  const defaultTab = document.querySelector(".defaulTab");
-  const projectObjects = getAllProjects();
-  const targetProjectIndex = projectObjects.findIndex(
-    (projectObj) => projectObj.title === "defaultProject"
-  );
+  const defaultTab = document.querySelector(".defaultTab");
+  const targetProjectIndex = 0;
 
   defaultTab.dataset.project = targetProjectIndex;
 };
 
-export { createDefaultProject, renderDefaultViewListener, setIndexForDefaultTab };
+export {
+  createDefaultProject,
+  renderDefaultViewListener,
+  setIndexForDefaultTab,
+};
