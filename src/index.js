@@ -122,9 +122,8 @@ projInputFormListener();
 renderWeekTasksListener();
 renderDailyTasksListener();
 renderDefaultViewListener();
-/* createDefaultProject(); */
 /* console.table(getAllProjects()); */
-/* addProjArrLocalStorage(); */
+addProjArrLocalStorage();
 loadProjectsFromLocalStorage();
 /* console.log(getAllProjects());
  */

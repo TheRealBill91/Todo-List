@@ -1,7 +1,7 @@
 body {
   display: grid;
   /* rows, columns */
-  grid-template: 60px auto / 350px auto;
+  grid-template: 60px 1fr / 350px auto;
   height: 100vh;
   position: relative;
 }
@@ -145,8 +145,6 @@ header {
 
 aside {
   outline: 1px solid black;
-  grid-column: 1/2;
-  grid-row: 2/3;
   background: lightgray;
 }
 
