@@ -15,14 +15,17 @@ import {
 
 const loadProjectsFromLocalStorage = () => {
   const localStorageProjArr = JSON.parse(localStorage.getItem("projectsArr"));
-  console.log(localStorageProjArr)
+  console.log(localStorageProjArr);
   setProjArr(localStorageProjArr);
 };
 
 // Adds project array to local storage
 const addProjArrLocalStorage = () => {
-  const projArr = getProjArr();
-  localStorage.setItem("projectsArr", JSON.stringify(projArr));
+  const localStorageProjArr = JSON.parse(localStorage.getItem("projectsArr"));
+  if (!localStorageProjArr) {
+    const projArr = getProjArr();
+    localStorage.setItem("projectsArr", JSON.stringify(projArr));
+  }
 };
 
 const addProjLocalStorageArr = (project) => {
@@ -114,5 +117,5 @@ export {
   removeTaskFromLocalStorage,
   modifyTaskInLocalStorage,
   updateTaskStatusInLocalStorage,
-  loadProjectsFromLocalStorage
+  loadProjectsFromLocalStorage,
 };
