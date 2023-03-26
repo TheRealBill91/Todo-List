@@ -28,6 +28,7 @@ import { getWeek, parseISO, format, getWeekOfMonth } from "date-fns";
 
 import {
   renderProjectsToDOM,
+  removeProjectFromDOM,
   projInputFormListener,
   addProjectToDOM,
   closeProjInputEventListener,
@@ -116,6 +117,7 @@ addProjectToProjectsArray(projectTwo);
 showProjInputEventListener();
 closeProjInputEventListener();
 renderProjectsToDOM();
+removeProjectFromDOM();
 renderProjTasksListener();
 setIndexForDefaultTab();
 projInputFormListener();

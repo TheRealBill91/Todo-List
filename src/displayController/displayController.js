@@ -44,7 +44,7 @@ const showProjInputBtn = document.querySelector(".showProjInputBtn");
 const projectInputForm = document.querySelector(".projectInputForm");
 const projectTitleInput = document.querySelector(".projTitleInput");
 const closeProjInputBtn = document.querySelector(".closeProjectInputBtn");
-const projectElms = document.querySelectorAll(".projects");
+const projectElms = document.querySelectorAll(".projects > div");
 
 const addProjectToDOM = (event) => {
   event.preventDefault();
@@ -67,11 +67,22 @@ const renderProjectsToDOM = () => {
   const projectObjects = getAllProjects();
   for (let i = 1; i < projectObjects.length; i++) {
     const projectDiv = document.createElement("div");
-    projectDiv.textContent = projectObjects[i].projectTitle;
     projectDiv.setAttribute("data-project", `${i}`);
+    const projectTitle = document.createElement("button");
+    projectTitle.textContent = projectObjects[i].projectTitle;
+    // const projDeleteBtn = document.createElement("button");
+    // projDeleteBtn.textContent = "X";
+    // const projEditTitleBtn = document.createElement("button");
+    // projEditTitleBtn.textContent = "edit";
+    const projectControls = document.createElement("div");
+    projectControls.setAttribute("data-project", `${i}`);
+    projectControls.classList.add("projectControls");
+    projectControls.innerHTML = `<button>edit</button>
+    <button>X</button>`;
+    projectDiv.append(projectTitle, projectControls);
     projectsHolder.appendChild(projectDiv);
   }
-  projectObjects.forEach((projectObj, index) => { });
+  projectObjects.forEach((projectObj, index) => {});
 };
 
 const showProjInputEventListener = () =>
@@ -90,10 +101,13 @@ const closeProjectInput = () => {
   closeProjInputBtn.style.display = "none";
 };
 
-const renderProjTasksListener = () =>
+const renderProjTasksListener = () => {
+  const projectElms = document.querySelectorAll(".projects > div > button");
+
   projectElms.forEach((projElm) =>
     projElm.addEventListener("click", renderProjectTasksOnClick)
   );
+};
 
 // renders project tasks when user clicks on project on the sidebar
 const renderProjectTasksOnClick = (event) => {
@@ -111,7 +125,7 @@ const renderProjectTasksOnClick = (event) => {
   // tasks.innerHTML = "";
   const projects = getAllProjects();
   for (let i = 0; i < projects.length; i++) {
-    if (i === +event.target.dataset.project) {
+    if (i === +event.target.parentElement.dataset.project) {
       // Used for creating tasks
       const project = projects[i];
       const currentProj = setCurrentProject(project);
@@ -136,6 +150,27 @@ const renderProjectTasksOnClick = (event) => {
   deleteTaskListener();
   changeTaskStatusListener();
   editTaskListener();
+};
+
+const removeProjectFromDOM = () => {
+  const deleteButtons = document.querySelectorAll(
+    ".projectControls > button:last-of-type"
+  );
+  const projObjects = getAllProjects();
+  const projElms = document.querySelectorAll(".projects > div");
+  const projElmsArr = Array.from(projElms);
+
+  deleteButtons.forEach((deleteBtn) =>
+    deleteBtn.addEventListener("click", (event) => {
+      const targetProjIndex = +event.target.parentElement.dataset.project;
+      projObjects.splice(targetProjIndex, 1);
+     
+      const targetProjElmIndex = projElmsArr.findIndex((projElm) => {
+        return projElm.dataset.project === targetProjIndex.toString();
+      });
+      projElms[targetProjElmIndex].remove();
+    })
+  );
 };
 
 // renders project tasks for cases when user doesn't first click on the project
@@ -426,4 +461,5 @@ export {
   editTaskListener,
   loadTaskStatusForProjects,
   changeTaskStatusListener,
+  removeProjectFromDOM,
 };

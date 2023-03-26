@@ -40,7 +40,7 @@ body {
   height: 69vh;
 }
 
-#taskForm>fieldset {
+#taskForm > fieldset {
   display: flex;
   flex-direction: column;
   gap: 34px;
@@ -52,7 +52,7 @@ body {
   flex: 1;
 }
 
-fieldset>label:first-of-type {
+fieldset > label:first-of-type {
   margin-top: 8px;
 }
 
@@ -154,7 +154,7 @@ nav {
   flex-direction: column;
 }
 
-nav>div {
+nav > div {
   outline: 1px solid black;
   display: flex;
   justify-content: center;
@@ -162,7 +162,7 @@ nav>div {
   height: 80px;
 }
 
-nav>div>p {
+nav > div > p {
   outline: 1px solid black;
   font-size: 1.2rem;
   padding: 6px;
@@ -173,7 +173,7 @@ nav>div>p {
 }
 
 /* Styles project container header */
-.projectContainer>div>p:first-of-type {
+.projectContainer > div > p:first-of-type {
   /* margin-left: 30px; */
   /*  outline: 1px solid black; */
   justify-content: center;
@@ -181,7 +181,7 @@ nav>div>p {
 }
 
 /* Apply styles for project container title and add button */
-.projectContainer>div:first-of-type {
+.projectContainer > div:first-of-type {
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -191,7 +191,7 @@ nav>div>p {
 }
 
 /* For styling the add project button */
-.projectContainer>div:first-of-type>button {
+.projectContainer > div:first-of-type > button {
   font-size: 1.5rem;
   font-weight: 1000;
 }
@@ -200,26 +200,37 @@ nav>div>p {
   outline: 1px solid black;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
   height: 114px;
   align-items: center;
   width: 70%;
   margin-bottom: 8px;
   overflow: auto;
+  padding: 6px;
 }
 
-.projects>div {
+.projects > div {
   font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  /* justify-content: center; */
+  gap: 6px;
+  width: 100%;
 }
 
-nav>.projectContainer {
+.projectControls > button:last-of-type {
+  color: red;
+}
+
+nav > .projectContainer {
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.projects>p {
+.projects > p {
   outline: 1px solid black;
   padding: 6px;
 }
@@ -232,7 +243,7 @@ nav>.projectContainer {
   justify-self: end;
 }
 
-.projectInput>label {
+.projectInput > label {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -271,7 +282,7 @@ input {
   flex-direction: column;
 }
 
-.tasks>div {
+.tasks > div {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -279,7 +290,7 @@ input {
 }
 
 /* Make task look disabled */
-.tasks>.complete * {
+.tasks > .complete * {
   color: lightgray;
 }
 
@@ -305,7 +316,8 @@ input {
   gap: 4px;
 }
 
-.taskHeader {}
+.taskHeader {
+}
 
 .addTaskBtn {
   width: 60%;
