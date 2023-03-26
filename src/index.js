@@ -116,6 +116,8 @@ addProjectToProjectsArray(projectTwo);
 
 showProjInputEventListener();
 closeProjInputEventListener();
+addProjArrLocalStorage();
+loadProjectsFromLocalStorage();
 renderProjectsToDOM();
 removeProjectFromDOM();
 renderProjTasksListener();
@@ -125,7 +127,6 @@ renderWeekTasksListener();
 renderDailyTasksListener();
 renderDefaultViewListener();
 /* console.table(getAllProjects()); */
-addProjArrLocalStorage();
-loadProjectsFromLocalStorage();
+
 /* console.log(getAllProjects());
  */

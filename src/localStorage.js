@@ -35,6 +35,13 @@ const addProjLocalStorageArr = (project) => {
   console.log(JSON.parse(localStorage.getItem("projectsArr")));
 };
 
+const removeProjLocalStorageArr = (targetProjIndex) => {
+  const localStorageProjArr = JSON.parse(localStorage.getItem("projectsArr"));
+  const removedProj = localStorageProjArr.splice(targetProjIndex, 1);
+  console.log(removedProj);
+  localStorage.setItem("projectsArr", JSON.stringify(localStorageProjArr));
+};
+
 const addTaskToLocalStorage = (currentProj, task) => {
   const localStorageProjArr = JSON.parse(localStorage.getItem("projectsArr"));
   const targetlocalStorageProj = localStorageProjArr.find(
@@ -118,4 +125,5 @@ export {
   modifyTaskInLocalStorage,
   updateTaskStatusInLocalStorage,
   loadProjectsFromLocalStorage,
+  removeProjLocalStorageArr,
 };

@@ -37,6 +37,7 @@ import {
   removeTaskFromLocalStorage,
   modifyTaskInLocalStorage,
   updateTaskStatusInLocalStorage,
+  removeProjLocalStorageArr,
 } from "../localStorage";
 
 const addProjectButton = document.querySelector(".projSubmitBtn");
@@ -164,7 +165,7 @@ const removeProjectFromDOM = () => {
     deleteBtn.addEventListener("click", (event) => {
       const targetProjIndex = +event.target.parentElement.dataset.project;
       projObjects.splice(targetProjIndex, 1);
-     
+      removeProjLocalStorageArr(targetProjIndex);
       const targetProjElmIndex = projElmsArr.findIndex((projElm) => {
         return projElm.dataset.project === targetProjIndex.toString();
       });
