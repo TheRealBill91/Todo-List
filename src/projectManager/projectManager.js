@@ -8,9 +8,18 @@ let currentProjectIndex;
 
 const getProjArr = () => {
   return projects;
-}
+};
 
+const setProjArr = (localStorageArr) => {
+  const projArr = getProjArr();
+  // clear the projects array (use length bc projArr is const)
+  projArr.length = 0;
+  localStorageArr.forEach((proj) => {
+    projArr.push(proj);
+  });
 
+  /* console.log(projArr); */
+};
 
 const createProject = (projectTitle, tasksArr) => {
   return { projectTitle, tasksArr };
@@ -59,4 +68,5 @@ export {
   getCurrentProject,
   getProjectTasks,
   getProjArr,
+  setProjArr,
 };

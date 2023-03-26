@@ -32,6 +32,12 @@ import { setAttributes } from "../setAttributes";
 import { createTaskElement } from "../DOMElements/createTaskElement";
 import { renderProjectHeader } from "../DOMElements/createTaskHeader";
 import { getAllTasks } from "../getAllTasks";
+import {
+  addProjLocalStorageArr,
+  removeTaskFromLocalStorage,
+  modifyTaskInLocalStorage,
+  updateTaskStatusInLocalStorage,
+} from "../localStorage";
 
 const addProjectButton = document.querySelector(".projSubmitBtn");
 const showProjInputBtn = document.querySelector(".showProjInputBtn");
@@ -46,6 +52,7 @@ const addProjectToDOM = (event) => {
   const projectTitleInputValue = projectTitleInput.value;
   const project = createProject(projectTitleInputValue, []);
   addProjectToProjectsArray(project);
+  addProjLocalStorageArr(project);
   renderProjectsToDOM();
   projectInputForm.reset();
 };
@@ -64,7 +71,7 @@ const renderProjectsToDOM = () => {
     projectDiv.setAttribute("data-project", `${i}`);
     projectsHolder.appendChild(projectDiv);
   }
-  projectObjects.forEach((projectObj, index) => {});
+  projectObjects.forEach((projectObj, index) => { });
 };
 
 const showProjInputEventListener = () =>
@@ -187,6 +194,7 @@ const deleteTask = (event) => {
     (taskObj) => taskObj.UUID === targetTaskUUID
   );
 
+  removeTaskFromLocalStorage(targetDeleteProjectIndex, targetTaskIndex);
   projectTaskObjects.splice(targetTaskIndex, 1);
 
   taskElms.forEach((task) => {
@@ -253,6 +261,12 @@ const modifyTaskSubmit = (
   const formModalBg = document.querySelector(".form-modal-background");
   const formContainer = document.querySelector(".form-container");
 
+  modifyTaskInLocalStorage(
+    targetEditProjIndex,
+    targetEditTaskID,
+    getNewTaskValues()
+  );
+
   modifyTask(targetTaskObject, getNewTaskValues());
   modifyTaskElement(getNewTaskValues(), targetEditProjIndex, targetTaskObject);
   /* renderProjectTasks(i); */
@@ -302,6 +316,11 @@ const changeTaskStatus = (event) => {
   const projTasks = currentProjObj.tasksArr;
   const targetProjectObj = projTasks.find(
     (task) => task.UUID === targetCheckboxTaskID
+  );
+
+  updateTaskStatusInLocalStorage(
+    targetCheckBoxProjectIndex,
+    targetCheckboxTaskID
   );
   toggleTaskCompletion(
     currentProjObj,

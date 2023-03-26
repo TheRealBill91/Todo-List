@@ -43,7 +43,7 @@ import "./generalStyles.css";
 
 import { setAttributes } from "./setAttributes";
 import { v4 as uuidv4 } from "uuid";
-import { addProjArrLocalStorage } from "./localStorage";
+import { addProjArrLocalStorage, loadProjectsFromLocalStorage } from "./localStorage";
 
 import {
   createDefaultProject,
@@ -123,6 +123,8 @@ renderWeekTasksListener();
 renderDailyTasksListener();
 renderDefaultViewListener();
 /* createDefaultProject(); */
-console.table(getAllProjects());
-addProjArrLocalStorage();
-/* deleteTaskListener(); */
+/* console.table(getAllProjects()); */
+/* addProjArrLocalStorage(); */
+loadProjectsFromLocalStorage();
+/* console.log(getAllProjects());
+ */

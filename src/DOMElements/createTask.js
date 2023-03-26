@@ -15,6 +15,7 @@ import {
 } from "../displayController/displayController";
 import { getAllTasks } from "../getAllTasks";
 import { v4 as uuidv4 } from "uuid";
+import { addTaskToLocalStorage } from "../localStorage";
 
 // Creates button for adding task on current page as well as
 // setting up an event listener to open the form inputting details
@@ -86,6 +87,7 @@ const createTask = (event) => {
 
   console.log("Submitted task:", task);
   addTaskToProjectObj(currentProj, task);
+  addTaskToLocalStorage(currentProj, task);
   console.log(getAllTasks());
   taskForm.reset();
   formContainer.style.display = "none";
@@ -151,7 +153,7 @@ const btnPrioritySelector = () => {
   return selectedPriority;
 };
 
-const formatDate = date => { };
+const formatDate = (date) => { };
 
 export {
   createTaskBtn,
