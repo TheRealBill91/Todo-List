@@ -38,6 +38,7 @@ import {
   modifyTaskInLocalStorage,
   updateTaskStatusInLocalStorage,
   removeProjLocalStorageArr,
+  editProjTitleLocalStorage,
 } from "../localStorage";
 
 const addProjectButton = document.querySelector(".projSubmitBtn");
@@ -46,6 +47,10 @@ const projectInputForm = document.querySelector(".projectInputForm");
 const projectTitleInput = document.querySelector(".projTitleInput");
 const closeProjInputBtn = document.querySelector(".closeProjectInputBtn");
 const projectElms = document.querySelectorAll(".projects > div");
+
+const projInputFormListener = () => {
+  projectInputForm.addEventListener("submit", addProjectToDOM);
+};
 
 const addProjectToDOM = (event) => {
   event.preventDefault();
@@ -57,9 +62,6 @@ const addProjectToDOM = (event) => {
   renderProjectsToDOM();
   projectInputForm.reset();
 };
-
-const projInputFormListener = () =>
-  projectInputForm.addEventListener("submit", addProjectToDOM);
 
 const renderProjectsToDOM = () => {
   // element that holds the project objects
@@ -79,11 +81,11 @@ const renderProjectsToDOM = () => {
     projectControls.setAttribute("data-project", `${i}`);
     projectControls.classList.add("projectControls");
     projectControls.innerHTML = `<button>edit</button>
-    <button>X</button>`;
+    <button >X</button>`;
     projectDiv.append(projectTitle, projectControls);
     projectsHolder.appendChild(projectDiv);
   }
-  projectObjects.forEach((projectObj, index) => {});
+  projectObjects.forEach((projectObj, index) => { });
 };
 
 const showProjInputEventListener = () =>
@@ -130,7 +132,7 @@ const renderProjectTasksOnClick = (event) => {
       // Used for creating tasks
       const project = projects[i];
       const currentProj = setCurrentProject(project);
-      console.log(getCurrentProject());
+      /* console.log(getCurrentProject()); */
       const projTasks = projects[i].tasksArr;
       // return if there is no proj tasks. Probably means you will want to query task header
       // and change it's title to match current proj that way.
@@ -172,6 +174,110 @@ const removeProjectFromDOM = () => {
       projElms[targetProjElmIndex].remove();
     })
   );
+};
+
+const editProjectTitleOnDOMListener = () => {
+  const editButtons = document.querySelectorAll(
+    ".projectControls>button:first-of-type"
+  );
+
+  editButtons.forEach((editBtn) => {
+    editBtn.addEventListener("click", editProjectTitleOnDOM, { once: true });
+  });
+};
+
+const editProjectTitleOnDOM = (event) => {
+  const targetEditProjIndex = +event.target.parentElement.dataset.project;
+  const projObjects = getAllProjects();
+  const targetProjObject = projObjects[targetEditProjIndex];
+  // DOM elements that hold the project title btn, edit, & delete buttons
+  const projectElmHolders = document.querySelectorAll(".projects > div");
+  // Buttons that show project titles and allows user to render project tasks
+  // when clicked
+  const projectTitleButtons = document.querySelectorAll(
+    ".projects > div > button"
+  );
+
+  const projTitleBtnsArr = Array.from(projectTitleButtons);
+  const targetProjTitleBtnIndex = projTitleBtnsArr.findIndex((projTitleBtn) => {
+    return (
+      projTitleBtn.parentElement.dataset.project ===
+      targetEditProjIndex.toString()
+    );
+  });
+  const targetProjTitleBtn = projectTitleButtons[targetProjTitleBtnIndex];
+  targetProjTitleBtn.style.display = "none";
+
+  const targetProjHolderElm = projectElmHolders[targetProjTitleBtnIndex];
+  targetProjHolderElm.innerHTML = "";
+  const changeTitleInputForm = document.createElement("form");
+  setAttributes(changeTitleInputForm, {
+    class: "editProjTitleForm",
+    "data-project": `${targetEditProjIndex}`,
+  });
+  changeTitleInputForm.classList.add("editProjTitleForm");
+  changeTitleInputForm.innerHTML = `<input 
+    class="projTitleEdit" 
+    type="text" 
+    value=${targetProjObject.projectTitle}
+    name="projectTitleEdit" 
+    id="projectTitleEdit" 
+    required=""
+    ><button>Submit</button>
+     `;
+
+  targetProjHolderElm.appendChild(changeTitleInputForm);
+
+  const projectControls = document.querySelectorAll(".projectControls");
+  const targetProjControlsDiv = projectControls[targetProjTitleBtnIndex];
+  /*  targetProjHolderElm.insertBefore(changeTitleInputForm, targetProjControlsDiv); */
+  /* targetProjControlsDiv.remove(); */
+
+  const wrappedModifyProjectSubmit = (event) => {
+    editProjTitleSubmit(
+      event,
+      changeTitleInputForm,
+      targetProjObject,
+      targetEditProjIndex,
+      targetProjHolderElm
+    );
+  };
+
+  editProjTitleSubmitListener(wrappedModifyProjectSubmit);
+};
+
+const editProjTitleSubmitListener = (wrappedModifyProjectSubmit) => {
+  const editTitleForm = document.querySelector(".projects > div > form");
+  editTitleForm.addEventListener("submit", wrappedModifyProjectSubmit, {
+    once: true,
+  });
+};
+
+const editProjTitleSubmit = (
+  event,
+  changeTitleInputForm,
+  targetProjObject,
+  targetEditProjIndex,
+  targetProjHolderElm
+) => {
+  event.preventDefault();
+  const newProjTitle = changeTitleInputForm.childNodes[0].value;
+  targetProjObject.projectTitle = newProjTitle;
+  editProjTitleLocalStorage(targetEditProjIndex, newProjTitle);
+
+  targetProjHolderElm.textContent = "";
+  targetProjHolderElm.dataset.project = `${targetEditProjIndex}`;
+  targetProjHolderElm.innerHTML = `
+      <button>${newProjTitle}</button>
+      <div data-project="${targetEditProjIndex}" class="projectControls">
+        <button>edit</button>
+        <button>X</button>
+      </div>
+      `;
+
+  editProjectTitleOnDOMListener();
+  removeProjectFromDOM();
+  renderProjTasksListener();
 };
 
 // renders project tasks for cases when user doesn't first click on the project
@@ -333,6 +439,33 @@ const modifyTaskElement = (
   dateEl.textContent = newTaskValues[2];
 };
 
+// Retrieves all of the new task values the user has entered before
+// submitting, and pushes them into an array. Makes it easier to get
+// new task values into function that modifies the task values
+const getNewTaskValues = () => {
+  const taskValues = [];
+
+  const title = document.getElementById("title");
+  const newTitle = title.value;
+  taskValues.push(newTitle);
+
+  const description = document.getElementById("description");
+  const newDescription = description.value;
+  taskValues.push(newDescription);
+
+  const dueDate = document.getElementById("dueDate");
+  const newDueDate = dueDate.value;
+  taskValues.push(newDueDate);
+
+  taskValues.push(btnPrioritySelector());
+
+  const notes = document.getElementById("notes");
+  const newNotes = notes.value;
+  taskValues.push(newNotes);
+
+  return taskValues;
+};
+
 // Puts event listener on each checkbox
 const changeTaskStatusListener = () => {
   const checkBoxElements = document.querySelectorAll(".toggleTaskStatus");
@@ -422,33 +555,6 @@ const setPriorityRadioButton = (priorityValue) => {
   });
 };
 
-// Retrieves all of the new task values the user has entered before
-// submitting, and pushes them into an array. Makes it easier to get
-// new task values into function that modifies the task values
-const getNewTaskValues = () => {
-  const taskValues = [];
-
-  const title = document.getElementById("title");
-  const newTitle = title.value;
-  taskValues.push(newTitle);
-
-  const description = document.getElementById("description");
-  const newDescription = description.value;
-  taskValues.push(newDescription);
-
-  const dueDate = document.getElementById("dueDate");
-  const newDueDate = dueDate.value;
-  taskValues.push(newDueDate);
-
-  taskValues.push(btnPrioritySelector());
-
-  const notes = document.getElementById("notes");
-  const newNotes = notes.value;
-  taskValues.push(newNotes);
-
-  return taskValues;
-};
-
 export {
   addProjectToDOM,
   renderProjectsToDOM,
@@ -463,4 +569,6 @@ export {
   loadTaskStatusForProjects,
   changeTaskStatusListener,
   removeProjectFromDOM,
+  editProjectTitleOnDOMListener,
+  editProjTitleSubmitListener,
 };

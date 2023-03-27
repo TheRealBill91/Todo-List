@@ -35,6 +35,8 @@ import {
   showProjInputEventListener,
   renderProjTasksListener,
   deleteTaskListener,
+  editProjectTitleOnDOMListener,
+  editProjTitleSubmitListener,
 } from "./displayController/displayController";
 
 import { renderDailyTasksListener } from "./dailyView";
@@ -50,6 +52,7 @@ import {
   createDefaultProject,
   renderDefaultViewListener,
   setIndexForDefaultTab,
+  renderDefaultTasks
 } from "./defaultView";
 
 /* toDoManager(); */
@@ -114,6 +117,8 @@ createDefaultProject();
 addProjectToProjectsArray(sampleProject);
 addProjectToProjectsArray(projectTwo);
 
+
+
 showProjInputEventListener();
 closeProjInputEventListener();
 addProjArrLocalStorage();
@@ -122,10 +127,13 @@ renderProjectsToDOM();
 removeProjectFromDOM();
 renderProjTasksListener();
 setIndexForDefaultTab();
+
 projInputFormListener();
 renderWeekTasksListener();
+editProjectTitleOnDOMListener();
 renderDailyTasksListener();
 renderDefaultViewListener();
+renderDefaultTasks();
 /* console.table(getAllProjects()); */
 
 /* console.log(getAllProjects());

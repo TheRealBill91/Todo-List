@@ -15,7 +15,7 @@ import {
 
 const loadProjectsFromLocalStorage = () => {
   const localStorageProjArr = JSON.parse(localStorage.getItem("projectsArr"));
-  console.log(localStorageProjArr);
+  /*   console.log(localStorageProjArr); */
   setProjArr(localStorageProjArr);
 };
 
@@ -32,13 +32,21 @@ const addProjLocalStorageArr = (project) => {
   const localStorageProjArr = JSON.parse(localStorage.getItem("projectsArr"));
   localStorageProjArr.push(project);
   localStorage.setItem("projectsArr", JSON.stringify(localStorageProjArr));
-  console.log(JSON.parse(localStorage.getItem("projectsArr")));
+  /*  console.log(JSON.parse(localStorage.getItem("projectsArr"))); */
+};
+
+const editProjTitleLocalStorage = (targetEditProjIndex, newProjTitle) => {
+  const localStorageProjArr = JSON.parse(localStorage.getItem("projectsArr"));
+  const targetProj = localStorageProjArr[targetEditProjIndex];
+  targetProj.projectTitle = newProjTitle;
+  localStorage.setItem("projectsArr", JSON.stringify(localStorageProjArr));
+  /* console.log(JSON.parse(localStorage.getItem("projectsArr"))); */
 };
 
 const removeProjLocalStorageArr = (targetProjIndex) => {
   const localStorageProjArr = JSON.parse(localStorage.getItem("projectsArr"));
   const removedProj = localStorageProjArr.splice(targetProjIndex, 1);
-  console.log(removedProj);
+  /* console.log(removedProj); */
   localStorage.setItem("projectsArr", JSON.stringify(localStorageProjArr));
 };
 
@@ -50,7 +58,7 @@ const addTaskToLocalStorage = (currentProj, task) => {
 
   addTaskToProjectObj(targetlocalStorageProj, task);
   localStorage.setItem("projectsArr", JSON.stringify(localStorageProjArr));
-  console.log(JSON.parse(localStorage.getItem("projectsArr")));
+  /*   console.log(JSON.parse(localStorage.getItem("projectsArr"))); */
 };
 
 const removeTaskFromLocalStorage = (
@@ -62,10 +70,10 @@ const removeTaskFromLocalStorage = (
     localStorageProjArr[targetDeleteProjectIndex].tasksArr;
   projTaskObjects.splice(targetTaskIndex, 1);
   localStorage.setItem("projectsArr", JSON.stringify(localStorageProjArr));
-  console.log(
+  /* console.log(
     "Shows new proj array after deleted task",
     JSON.parse(localStorage.getItem("projectsArr"))
-  );
+  ); */
 };
 
 const modifyTaskInLocalStorage = (
@@ -87,10 +95,10 @@ const modifyTaskInLocalStorage = (
   changeTaskNotes(targetTaskObject, newTaskValues[4]);
 
   localStorage.setItem("projectsArr", JSON.stringify(localStorageProjArr));
-  console.log(
-    "Shows new proj array after edited task",
-    JSON.parse(localStorage.getItem("projectsArr"))
-  );
+  /*  console.log(
+     "Shows new proj array after edited task",
+     JSON.parse(localStorage.getItem("projectsArr"))
+   ); */
 };
 
 const updateTaskStatusInLocalStorage = (
@@ -111,10 +119,10 @@ const updateTaskStatusInLocalStorage = (
     : (targetProjectObj.isComplete = true);
 
   localStorage.setItem("projectsArr", JSON.stringify(localStorageProjArr));
-  console.log(
+  /* console.log(
     "Shows new proj array after updating task status",
     JSON.parse(localStorage.getItem("projectsArr"))
-  );
+  ); */
 };
 
 export {
@@ -126,4 +134,5 @@ export {
   updateTaskStatusInLocalStorage,
   loadProjectsFromLocalStorage,
   removeProjLocalStorageArr,
+  editProjTitleLocalStorage,
 };
