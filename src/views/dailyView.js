@@ -1,13 +1,13 @@
-import { createTaskElement } from "./DOMElements/createTaskElement";
-import { renderProjectHeader } from "./DOMElements/createTaskHeader";
-import { getAllProjects, createProject, addProjectToProjectsArray } from "./projectManager/projectManager";
+import { createTaskElement } from "../DOMElements/createTaskElement";
+import { renderProjectHeader } from "../DOMElements/createTaskHeader";
+import { getAllProjects, createProject, addProjectToProjectsArray } from "../projectManager/projectManager";
 import { getDate, parseISO } from "date-fns";
 import {
     loadTaskStatusForProjects,
     changeTaskStatusListener,
     deleteTaskListener,
     editTaskListener,
-} from "./displayController/displayController";
+} from "../controllers/displayController";
 
 const renderDailyTasksListener = () => {
     const dayTab = document.querySelector(".dayTab");

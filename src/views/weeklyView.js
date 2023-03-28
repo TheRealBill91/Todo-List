@@ -1,13 +1,13 @@
-import { createTaskElement } from "./DOMElements/createTaskElement";
-import { renderProjectHeader } from "./DOMElements/createTaskHeader";
-import { getAllProjects } from "./projectManager/projectManager";
+import { createTaskElement } from "../DOMElements/createTaskElement";
+import { renderProjectHeader } from "../DOMElements/createTaskHeader";
+import { getAllProjects } from "../projectManager/projectManager";
 import { getWeek, parseISO } from "date-fns";
 import {
   loadTaskStatusForProjects,
   changeTaskStatusListener,
   deleteTaskListener,
   editTaskListener,
-} from "./displayController/displayController";
+} from "../controllers/displayController";
 
 const renderWeekTasksListener = () => {
   const weekTab = document.querySelector(".weekTab");

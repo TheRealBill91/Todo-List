@@ -1,22 +1,23 @@
-import { renderProjectHeader } from "./DOMElements/createTaskHeader";
-import { getAllTasks } from "./getAllTasks";
+import { renderProjectHeader } from "../DOMElements/createTaskHeader";
 import {
   getAllProjects,
-  getCurrentProject,
   setCurrentProject,
   createProject,
   addProjectToProjectsArray,
-} from "./projectManager/projectManager";
-import { createTaskElement } from "./DOMElements/createTaskElement";
+} from "../projectManager/projectManager";
+import { createTaskElement } from "../DOMElements/createTaskElement";
 
 import {
   loadTaskStatusForProjects,
   deleteTaskListener,
   changeTaskStatusListener,
   editTaskListener,
-} from "./displayController/displayController";
+} from "../controllers/displayController";
 
-import { createTaskBtn, createTaskBtnListener } from "./DOMElements/createTask";
+import {
+  createTaskBtn,
+  createTaskBtnListener,
+} from "../DOMElements/createTask";
 
 const renderDefaultViewListener = () => {
   const defaultTab = document.querySelector(".defaultTab");
@@ -35,16 +36,13 @@ const renderDefaultTasksOnClick = (event) => {
   const defaultViewTasksArr = [];
   // This will be deleted later
   const viewType = "default";
-  const targetDefaultTabIndex = +event.target.dataset.project;
 
   const projectObjects = getAllProjects();
-  const currentProj = setCurrentProject(projectObjects[0]);
+  setCurrentProject(projectObjects[0]);
   for (let i = 0; i < projectObjects.length; i++) {
     /* if (i === +event.target.dataset.project) { */
     // Used for creating tasks
-    const project = projectObjects[i];
-    const currentProjObject = getCurrentProject();
-    console.log(currentProjObject);
+    /* console.log(currentProjObject); */
     const projTasks = projectObjects[i].tasksArr;
     // return if there is no proj tasks.
     if (projTasks) {
@@ -63,7 +61,7 @@ const renderDefaultTasksOnClick = (event) => {
   deleteTaskListener();
   changeTaskStatusListener();
   editTaskListener();
-  console.table(getAllProjects());
+  /* console.table(getAllProjects()); */
 };
 
 const renderDefaultTasks = () => {
@@ -83,8 +81,6 @@ const renderDefaultTasks = () => {
   setCurrentProject(projectObjects[0]);
   for (let i = 0; i < projectObjects.length; i++) {
     // Used for creating tasks
-    const project = projectObjects[i];
-    const currentProjObject = getCurrentProject();
     /* console.log(currentProjObject); */
     const projTasks = projectObjects[i].tasksArr;
     // return if there is no proj tasks. Probably means you will want to query task header

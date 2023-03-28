@@ -26,12 +26,12 @@ import {
   changeTaskNotes,
   modifyTask,
   toggleTaskCompletion,
+  getAllTasks,
 } from "../toDoManager/toDoManager";
 
 import { setAttributes } from "../setAttributes";
 import { createTaskElement } from "../DOMElements/createTaskElement";
 import { renderProjectHeader } from "../DOMElements/createTaskHeader";
-import { getAllTasks } from "../getAllTasks";
 import {
   addProjLocalStorageArr,
   removeTaskFromLocalStorage,
@@ -39,14 +39,11 @@ import {
   updateTaskStatusInLocalStorage,
   removeProjLocalStorageArr,
   editProjTitleLocalStorage,
-} from "../localStorage";
+} from "./localStorageController";
 
-const addProjectButton = document.querySelector(".projSubmitBtn");
 const showProjInputBtn = document.querySelector(".showProjInputBtn");
 const projectInputForm = document.querySelector(".projectInputForm");
-const projectTitleInput = document.querySelector(".projTitleInput");
 const closeProjInputBtn = document.querySelector(".closeProjectInputBtn");
-const projectElms = document.querySelectorAll(".projects > div");
 
 const projInputFormListener = () => {
   projectInputForm.addEventListener("submit", addProjectToDOM);
@@ -73,15 +70,13 @@ const renderProjectsToDOM = () => {
     projectDiv.setAttribute("data-project", `${i}`);
     const projectTitle = document.createElement("button");
     projectTitle.textContent = projectObjects[i].projectTitle;
-    // const projDeleteBtn = document.createElement("button");
-    // projDeleteBtn.textContent = "X";
     // const projEditTitleBtn = document.createElement("button");
     // projEditTitleBtn.textContent = "edit";
     const projectControls = document.createElement("div");
     projectControls.setAttribute("data-project", `${i}`);
     projectControls.classList.add("projectControls");
-    projectControls.innerHTML = `<button>edit</button>
-    <button >X</button>`;
+    projectControls.innerHTML = `<button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>square-edit-outline</title><path d="M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z"></path></svg></button>
+    <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"></path></svg></button>`;
     projectDiv.append(projectTitle, projectControls);
     projectsHolder.appendChild(projectDiv);
   }
@@ -92,7 +87,7 @@ const showProjInputEventListener = () =>
   showProjInputBtn.addEventListener("click", showProjInput);
 
 const showProjInput = () => {
-  projectInputForm.style.display = "block";
+  projectInputForm.style.display = "flex";
   closeProjInputBtn.style.display = "block";
 };
 
@@ -228,8 +223,6 @@ const editProjectTitleOnDOM = (event) => {
 
   targetProjHolderElm.appendChild(changeTitleInputForm);
 
-  const projectControls = document.querySelectorAll(".projectControls");
-  const targetProjControlsDiv = projectControls[targetProjTitleBtnIndex];
   /*  targetProjHolderElm.insertBefore(changeTitleInputForm, targetProjControlsDiv); */
   /* targetProjControlsDiv.remove(); */
 
@@ -270,8 +263,8 @@ const editProjTitleSubmit = (
   targetProjHolderElm.innerHTML = `
       <button>${newProjTitle}</button>
       <div data-project="${targetEditProjIndex}" class="projectControls">
-        <button>edit</button>
-        <button>X</button>
+        <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>square-edit-outline</title><path d="M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z"></path></svg></button>
+        <button><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"></path></svg></button>
       </div>
       `;
 
@@ -324,10 +317,8 @@ const deleteTaskListener = () => {
 };
 
 const deleteTask = (event) => {
-  const targetDeleteTaskIndex = +event.target.dataset.index;
   const targetDeleteProjectIndex = +event.target.dataset.project;
   const taskElms = document.querySelectorAll(".tasks > div");
-  const viewType = event.target.dataset.view;
   const targetTaskUUID = event.target.dataset.uuid;
 
   const projectObjects = getAllProjects();
@@ -356,10 +347,8 @@ const editTaskListener = () => {
 const editTask = (event) => {
   const targetEditTaskID = event.target.dataset.uuid;
   const targetEditProjIndex = +event.target.dataset.project;
-  const currentProj = getCurrentProject();
   const formModalBg = document.querySelector(".form-modal-background");
   const formContainer = document.querySelector(".form-container");
-  const viewType = event.target.dataset.view;
 
   const projectObjects = getAllProjects();
   const projectTaskObjects = projectObjects[targetEditProjIndex].tasksArr;

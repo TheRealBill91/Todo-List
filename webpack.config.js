@@ -8,6 +8,14 @@ module.exports = {
         path: path.resolve(__dirname, "dist"),
     },
     devtool: "inline-source-map",
+    devServer: {
+        static: {
+            directory: path.resolve(__dirname, "dist"),
+        },
+        compress: true,
+        port: 8080,
+    },
+
     module: {
         rules: [
             {
@@ -25,4 +33,3 @@ module.exports = {
         ],
     },
 };
-

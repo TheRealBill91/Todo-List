@@ -3,7 +3,7 @@ import {
   getCurrentProject,
   addTaskToProjectObj,
   setProjArr,
-} from "./projectManager/projectManager";
+} from "../projectManager/projectManager";
 
 import {
   changeTaskTitle,
@@ -11,7 +11,7 @@ import {
   changeTaskDueDate,
   changeTaskPriority,
   changeTaskNotes,
-} from "./toDoManager/toDoManager";
+} from "../toDoManager/toDoManager";
 
 const loadProjectsFromLocalStorage = () => {
   const localStorageProjArr = JSON.parse(localStorage.getItem("projectsArr"));

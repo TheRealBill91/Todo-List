@@ -1,6 +1,5 @@
 import { btnPrioritySelector } from "../DOMElements/createTask";
 import { getAllProjects } from "../projectManager/projectManager";
-import { getWeeklyTaskObjects } from "../weeklyView";
 
 // contains the different factory patterns and functions for
 // creating and modifying to do tasks
@@ -52,6 +51,19 @@ const deleteTask = (index) => {
   return deletedTask;
 };
 
+// Retrieves all tasks from every project, will be used to display
+// tasks in the home/inbox view, as well as the today and this
+// week views
+const getAllTasks = () => {
+  const tasks = [];
+  projects.forEach((project) => {
+    const currentTasks = project.tasksArr;
+    /*  console.log("Current task object key values:", Object.keys(currentTasks)) */
+    tasks.push(...currentTasks);
+  });
+  return tasks;
+};
+
 const modifyTask = (targetTaskObject, getNewTaskValues) => {
   const newTaskValues = getNewTaskValues;
   changeTaskTitle(targetTaskObject, newTaskValues[0]);
@@ -98,11 +110,13 @@ const toggleTaskCompletion = (
     (taskElm) => taskElm.dataset.uuid === targetProjectObj.UUID
   );
 
-  const changeTask = targetProjectObj.isComplete
-    ? ((targetProjectObj.isComplete = false),
-      targetTaskElm.classList.remove("complete"))
-    : ((targetProjectObj.isComplete = true),
-      targetTaskElm.classList.add("complete"));
+  if (targetProjectObj.isComplete) {
+    targetProjectObj.isComplete = false;
+    targetTaskElm.classList.remove("complete");
+  } else {
+    targetProjectObj.isComplete = true;
+    targetTaskElm.classList.add("complete");
+  }
 };
 
 export {
@@ -117,4 +131,5 @@ export {
   changeTaskNotes,
   toggleTaskCompletion,
   modifyTask,
+  getAllTasks,
 };

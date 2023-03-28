@@ -1,4 +1,4 @@
-import { createToDoTask } from "../toDoManager/toDoManager";
+import { createToDoTask, getAllTasks } from "../toDoManager/toDoManager";
 import {
   addTaskToProjectObj,
   getAllProjects,
@@ -8,14 +8,12 @@ import {
 import { createTaskElement } from "./createTaskElement";
 
 import {
-  renderProjectTasks,
   deleteTaskListener,
   editTaskListener,
   changeTaskStatusListener,
-} from "../displayController/displayController";
-import { getAllTasks } from "../getAllTasks";
+} from "../controllers/displayController";
 import { v4 as uuidv4 } from "uuid";
-import { addTaskToLocalStorage } from "../localStorage";
+import { addTaskToLocalStorage } from "../controllers/localStorageController";
 
 // Creates button for adding task on current page as well as
 // setting up an event listener to open the form inputting details
@@ -99,7 +97,7 @@ const createTask = (event) => {
 
 // Adds new task element to the project tasks view
 const addNewTaskElement = (task, currentProj) => {
-  const taskContainer = document.querySelector(".taskContainer");
+  /* const taskContainer = document.querySelector(".taskContainer"); */
   const tasksHolder = document.querySelector(".tasks");
 
   const tasks = document.querySelectorAll(".tasks > div");
@@ -153,7 +151,6 @@ const btnPrioritySelector = () => {
   return selectedPriority;
 };
 
-const formatDate = (date) => { };
 
 export {
   createTaskBtn,

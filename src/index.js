@@ -1,139 +1,118 @@
-import {
-  createToDoTask,
-  addToDoTaskArr,
-  deleteAllTasks,
-  deleteTask,
-  changeTaskPriority,
-  changeTaskTitle,
-  changeTaskNotes,
-  toggleTaskCompletion,
-} from "./toDoManager/toDoManager";
+import { createToDoTask } from "./toDoManager/toDoManager";
 
-import { renderWeekTasksListener } from "./weeklyView";
+import { renderWeekTasksListener } from "./views/weeklyView";
 
 import {
-  deleteProjectTask,
-  getCurrentProject,
-  setCurrentProject,
   addTaskToProjectObj,
   createProject,
   addProjectToProjectsArray,
-  getAllProjects,
-  getProjectTasks,
 } from "./projectManager/projectManager";
-
-import { projectHolder, getAllTasks } from "./getAllTasks";
-
-import { getWeek, parseISO, format, getWeekOfMonth } from "date-fns";
 
 import {
   renderProjectsToDOM,
   removeProjectFromDOM,
   projInputFormListener,
-  addProjectToDOM,
   closeProjInputEventListener,
   showProjInputEventListener,
   renderProjTasksListener,
-  deleteTaskListener,
   editProjectTitleOnDOMListener,
-  editProjTitleSubmitListener,
-} from "./displayController/displayController";
+} from "./controllers/displayController";
 
-import { renderDailyTasksListener } from "./dailyView";
+import { renderDailyTasksListener } from "./views/dailyView";
 
-import "./normalize.css";
-import "./generalStyles.css";
+import "./css/normalize.css";
+import "./css/styles.css";
 
-import { setAttributes } from "./setAttributes";
 import { v4 as uuidv4 } from "uuid";
-import { addProjArrLocalStorage, loadProjectsFromLocalStorage } from "./localStorage";
+import {
+  addProjArrLocalStorage,
+  loadProjectsFromLocalStorage,
+} from "./controllers/localStorageController";
 
 import {
   createDefaultProject,
   renderDefaultViewListener,
   setIndexForDefaultTab,
-  renderDefaultTasks
-} from "./defaultView";
+  renderDefaultTasks,
+} from "./views/defaultView";
 
-/* toDoManager(); */
+const createSampleTasks = () => {
+  const sampleTask = createToDoTask(
+    uuidv4(),
+    "title",
+    "description",
+    "2023-03-15",
+    "low",
+    "notes",
+    true
+  );
+  const sampleTaskTwo = createToDoTask(
+    uuidv4(),
+    "taskTwo",
+    "descriptionTwo",
+    "2023-03-21",
+    "medium",
+    "notes",
+    false
+  );
+  const sampleTaskThree = createToDoTask(
+    uuidv4(),
+    "taskThree",
+    "descriptionThree",
+    "2023-03-24",
+    "medium",
+    "notes",
+    true
+  );
 
-/* const sampleTask = toDoManager().createToDoTask('title', 'description', '03/15/2023', 'low', 'notes');
-toDoManager().addToDoTaskArr(sampleTask);
-console.table(toDoManager().getAllTasks());
-const deleteTask = toDoManager().deleteTask(0);
-console.log("Tasks have been deleted:", deleteTask);
-console.log(toDoManager().getAllTasks());
+  const taskForProjTwo = createToDoTask(
+    uuidv4(),
+    "ProjTwoTask",
+    "descriptionTwo",
+    "2023-03-13",
+    "medium",
+    "notes",
+    true
+  );
 
-const test = [1, 2, 3];
+  return { sampleTask, sampleTaskTwo, sampleTaskThree, taskForProjTwo };
+};
 
-const remove = test.splice(0, 1);
-console.log(remove); */
+const createSampleProjects = () => {
+  const sampleProject = createProject("testProjectObject", []);
+  const projectTwo = createProject("ProjTwoTest", []);
+  addTaskToProjectObj(projectTwo, createSampleTasks().taskForProjTwo);
 
-const sampleTask = createToDoTask(
-  uuidv4(),
-  "title",
-  "description",
-  "2023-03-15",
-  "low",
-  "notes",
-  true
-);
-const sampleTaskTwo = createToDoTask(
-  uuidv4(),
-  "taskTwo",
-  "descriptionTwo",
-  "2023-03-21",
-  "medium",
-  "notes",
-  false
-);
-const sampleTaskThree = createToDoTask(
-  uuidv4(),
-  "taskThree",
-  "descriptionThree",
-  "2023-03-24",
-  "medium",
-  "notes",
-  true
-);
+  addTaskToProjectObj(sampleProject, createSampleTasks().sampleTask);
+  addTaskToProjectObj(sampleProject, createSampleTasks().sampleTaskTwo);
+  addTaskToProjectObj(sampleProject, createSampleTasks().sampleTaskThree);
+  createDefaultProject();
+  addProjectToProjectsArray(sampleProject);
+  addProjectToProjectsArray(projectTwo);
+};
 
-const taskForProjTwo = createToDoTask(
-  uuidv4(),
-  "ProjTwoTask",
-  "descriptionTwo",
-  "2023-03-13",
-  "medium",
-  "notes",
-  true
-);
-const sampleProject = createProject("testProjectObject", []);
-const projectTwo = createProject("ProjTwoTest", []);
-addTaskToProjectObj(projectTwo, taskForProjTwo);
+const initialSetup = () => {
+  createSampleProjects();
 
-addTaskToProjectObj(sampleProject, sampleTask);
-addTaskToProjectObj(sampleProject, sampleTaskTwo);
-addTaskToProjectObj(sampleProject, sampleTaskThree);
-createDefaultProject();
-addProjectToProjectsArray(sampleProject);
-addProjectToProjectsArray(projectTwo);
+  showProjInputEventListener();
+  closeProjInputEventListener();
+  addProjArrLocalStorage();
+  loadProjectsFromLocalStorage();
+  renderProjectsToDOM();
+  removeProjectFromDOM();
+  renderProjTasksListener();
+  setIndexForDefaultTab();
 
+  projInputFormListener();
+  renderWeekTasksListener();
+  editProjectTitleOnDOMListener();
+  renderDailyTasksListener();
+  renderDefaultViewListener();
+  renderDefaultTasks();
+};
 
+initialSetup();
 
-showProjInputEventListener();
-closeProjInputEventListener();
-addProjArrLocalStorage();
-loadProjectsFromLocalStorage();
-renderProjectsToDOM();
-removeProjectFromDOM();
-renderProjTasksListener();
-setIndexForDefaultTab();
-
-projInputFormListener();
-renderWeekTasksListener();
-editProjectTitleOnDOMListener();
-renderDailyTasksListener();
-renderDefaultViewListener();
-renderDefaultTasks();
 /* console.table(getAllProjects()); */
 
 /* console.log(getAllProjects());
