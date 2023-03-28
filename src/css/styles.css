@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
 :root {
-  --default-font: "Inter", sans-serif;
+  --default-font: "Inter", sans-serif, "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
 }
 
 .home p,
@@ -53,7 +54,7 @@ body {
   height: 69vh;
 }
 
-#taskForm > fieldset {
+#taskForm>fieldset {
   display: flex;
   flex-direction: column;
   gap: 34px;
@@ -65,7 +66,7 @@ body {
   flex: 1;
 }
 
-fieldset > label:first-of-type {
+fieldset>label:first-of-type {
   margin-top: 8px;
 }
 
@@ -158,7 +159,7 @@ header {
   /* height: 80px; */
 }
 
-header > div {
+header>div {
   margin-left: 24px;
   font-size: 1.1rem;
   display: flex;
@@ -185,7 +186,7 @@ nav {
   margin-top: 8px;
 }
 
-nav > div {
+nav>div {
   /* outline: 1px solid black; */
   display: flex;
   justify-content: center;
@@ -193,7 +194,7 @@ nav > div {
   height: 80px;
 }
 
-nav > div > button {
+nav>div>button {
   /*  outline: 1px solid black; */
   font-size: 1.2rem;
   padding: 12px;
@@ -207,16 +208,16 @@ nav > div > button {
   transition: 0.01s ease-in-out;
 }
 
-nav > div > button:hover {
+nav>div>button:hover {
   background-color: rgb(209, 209, 209);
 }
 
-nav > div > button > svg {
+nav>div>button>svg {
   height: 30px;
 }
 
 /* Styles project container header */
-.projectContainer > div > p:first-of-type {
+.projectContainer>div>p:first-of-type {
   /* margin-left: 30px; */
   /*  outline: 1px solid black; */
   justify-content: center;
@@ -224,7 +225,7 @@ nav > div > button > svg {
 }
 
 /* Apply styles for project container title and add button */
-.projectContainer > div:first-of-type {
+.projectContainer>div:first-of-type {
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -235,7 +236,7 @@ nav > div > button > svg {
 }
 
 /* For styling the add project button */
-.projectContainer > div:first-of-type > button {
+.projectContainer>div:first-of-type>button {
   font-size: 1.7rem;
   font-weight: 1000;
   padding: 10px;
@@ -243,7 +244,7 @@ nav > div > button > svg {
 }
 
 /* For styling the add project button */
-.projectContainer > div:first-of-type > button:hover {
+.projectContainer>div:first-of-type>button:hover {
   background-color: rgb(209, 209, 209);
 }
 
@@ -259,7 +260,7 @@ nav > div > button > svg {
   overflow: auto;
 }
 
-.projects > div {
+.projects>div {
   font-size: 1.1rem;
   display: flex;
   align-items: center;
@@ -282,54 +283,55 @@ nav > div > button > svg {
   height: 18px;
 }
 
-.projectControls > button:hover {
+.projectControls>button:hover {
   background-color: rgb(209, 209, 209);
 }
 
-.projectControls > button:last-of-type {
+.projectControls>button:last-of-type {
   color: red;
   width: 75%;
   padding: 8px;
   border: none;
 }
 
-.projectControls > button:first-of-type {
+.projectControls>button:first-of-type {
   color: darkgrey;
   width: 75%;
   padding: 8px;
   border: none;
 }
 
-.projects > div > button {
+.projects>div>button {
   width: 75%;
   padding: 8px;
   border: none;
   font-size: 0.9rem;
+  font-family: var(--default-font);
 }
 
-.projects > div > button:hover {
+.projects>div>button:hover {
   background-color: rgb(209, 209, 209);
 }
 
-.projects > div > form > input {
+.projects>div>form>input {
   width: 100%;
   height: 30px;
 }
 
-.projects > div > form {
+.projects>div>form {
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-nav > .projectContainer {
+nav>.projectContainer {
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.projects > p {
+.projects>p {
   outline: 1px solid black;
   padding: 6px;
 }
@@ -342,13 +344,13 @@ nav > .projectContainer {
   justify-self: end;
 }
 
-.projectInput > label {
+.projectInput>label {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.projectTitle > div {
+.projectTitle>div {
   display: flex;
 }
 
@@ -363,7 +365,7 @@ input {
   align-items: center;
 }
 
-.projectInputForm > button {
+.projectInputForm>button {
   height: 30px;
   align-self: center;
 }
@@ -394,7 +396,7 @@ input {
   gap: 10px;
 }
 
-.tasks > div {
+.tasks>div {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -406,7 +408,7 @@ input {
 }
 
 /* Make task look disabled */
-.tasks > .complete * {
+.tasks>.complete * {
   color: rgb(107, 107, 107);
 }
 
@@ -422,13 +424,13 @@ input {
   background-color: rgb(209, 209, 209);
 }
 
-.editButton > svg {
+.editButton>svg {
   width: 20px;
   height: auto;
   pointer-events: none;
 }
 
-.deleteButton > svg {
+.deleteButton>svg {
   pointer-events: none;
   width: 20px;
   height: auto;

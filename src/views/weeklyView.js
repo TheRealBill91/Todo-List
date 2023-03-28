@@ -17,10 +17,7 @@ const renderWeekTasksListener = () => {
 const renderWeekTasksOnClick = () => {
   const taskContainer = document.querySelector(".taskContainer");
   taskContainer.innerHTML = "";
-  const tasksHolder = document.createElement("div");
-  tasksHolder.classList.add("tasks");
-  renderProjectHeader();
-  taskContainer.appendChild(tasksHolder);
+
   // Holds the task objects for the weekly tasks
   // So they can be used to load the task status for the weekly tasks
   const weekViewTasksArr = [];
@@ -28,7 +25,8 @@ const renderWeekTasksOnClick = () => {
 
   const currentWeekIndex = getWeek(new Date(), { weekStartsOn: 1 });
   const projects = getAllProjects();
-
+  renderProjectHeader(viewType);
+  const tasksHolder = document.querySelector(".tasks");
   for (let i = 0; i < projects.length; i++) {
     const projectTasks = projects[i].tasksArr;
     for (let j = 0; j < projectTasks.length; j++) {

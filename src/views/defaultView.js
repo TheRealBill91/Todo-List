@@ -40,7 +40,7 @@ const renderDefaultTasksOnClick = (event) => {
   const projectObjects = getAllProjects();
   setCurrentProject(projectObjects[0]);
   const currentProj = getCurrentProject();
-  renderProjectHeader(currentProj);
+  renderProjectHeader(viewType);
   const tasksHolder = document.querySelector(".tasks");
   for (let i = 0; i < projectObjects.length; i++) {
     /* if (i === +event.target.dataset.project) { */
@@ -79,7 +79,7 @@ const renderDefaultTasks = () => {
   const projectObjects = getAllProjects();
   setCurrentProject(projectObjects[0]);
   const currentProj = getCurrentProject();
-  renderProjectHeader(currentProj);
+  renderProjectHeader(viewType);
   const tasksHolder = document.querySelector(".tasks");
   for (let i = 0; i < projectObjects.length; i++) {
     // Used for creating tasks
