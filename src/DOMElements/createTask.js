@@ -19,11 +19,17 @@ import { addTaskToLocalStorage } from "../controllers/localStorageController";
 // setting up an event listener to open the form inputting details
 
 const createTaskBtn = () => {
-  const taskContainer = document.querySelector(".taskContainer");
+  const tasksHolder = document.querySelector(".tasks");
   const addTaskBtn = document.createElement("button");
   addTaskBtn.classList.add("addTaskBtn");
-  addTaskBtn.textContent = "Add Task";
-  taskContainer.appendChild(addTaskBtn);
+  addTaskBtn.innerHTML = `
+  <div>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus-circle-outline</title><path d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" /></svg>
+    <p>Add Task</p>
+  </div>
+  `;
+  /* addTaskBtn.textContent = "Add Task"; */
+  tasksHolder.appendChild(addTaskBtn);
 };
 
 // Sets up event listener to open task form when user clicks
@@ -83,10 +89,10 @@ const createTask = (event) => {
     false
   );
 
-  console.log("Submitted task:", task);
+  /*  console.log("Submitted task:", task); */
   addTaskToProjectObj(currentProj, task);
   addTaskToLocalStorage(currentProj, task);
-  console.log(getAllTasks());
+  /*  console.log(getAllTasks()); */
   taskForm.reset();
   formContainer.style.display = "none";
   formModalBg.style.display = "none";
@@ -150,7 +156,6 @@ const btnPrioritySelector = () => {
 
   return selectedPriority;
 };
-
 
 export {
   createTaskBtn,
