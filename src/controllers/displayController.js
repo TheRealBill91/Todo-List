@@ -114,10 +114,10 @@ const renderProjectTasksOnClick = (event) => {
   const projTasksArr = [];
   const taskContainer = document.querySelector(".taskContainer");
   taskContainer.innerHTML = "";
-  renderProjectHeader();
-  const tasksHolder = document.createElement("div");
-  tasksHolder.classList.add("tasks");
-  taskContainer.appendChild(tasksHolder);
+
+  // const tasksHolder = document.createElement("div");
+  // tasksHolder.classList.add("tasks");
+  // taskContainer.appendChild(tasksHolder);
   const viewType = "project";
 
   // tasks.innerHTML = "";
@@ -127,6 +127,8 @@ const renderProjectTasksOnClick = (event) => {
       // Used for creating tasks
       const project = projects[i];
       const currentProj = setCurrentProject(project);
+      renderProjectHeader(project);
+      const tasksHolder = document.querySelector(".tasks");
       /* console.log(getCurrentProject()); */
       const projTasks = projects[i].tasksArr;
       // return if there is no proj tasks. Probably means you will want to query task header

@@ -4,6 +4,7 @@ import {
   setCurrentProject,
   createProject,
   addProjectToProjectsArray,
+  getCurrentProject,
 } from "../projectManager/projectManager";
 import { createTaskElement } from "../DOMElements/createTaskElement";
 
@@ -27,10 +28,9 @@ const renderDefaultViewListener = () => {
 const renderDefaultTasksOnClick = (event) => {
   const taskContainer = document.querySelector(".taskContainer");
   taskContainer.innerHTML = "";
-  const tasksHolder = document.createElement("div");
-  tasksHolder.classList.add("tasks");
-  renderProjectHeader();
-  taskContainer.appendChild(tasksHolder);
+  // const tasksHolder = document.createElement("div");
+  // tasksHolder.classList.add("tasks");
+
   // Holds the task objects for the weekly tasks
   // So they can be used to load the task status for the weekly tasks
   const defaultViewTasksArr = [];
@@ -39,6 +39,9 @@ const renderDefaultTasksOnClick = (event) => {
 
   const projectObjects = getAllProjects();
   setCurrentProject(projectObjects[0]);
+  const currentProj = getCurrentProject();
+  renderProjectHeader(currentProj);
+  const tasksHolder = document.querySelector(".tasks");
   for (let i = 0; i < projectObjects.length; i++) {
     /* if (i === +event.target.dataset.project) { */
     // Used for creating tasks
@@ -67,10 +70,6 @@ const renderDefaultTasksOnClick = (event) => {
 const renderDefaultTasks = () => {
   const taskContainer = document.querySelector(".taskContainer");
   taskContainer.innerHTML = "";
-  const tasksHolder = document.createElement("div");
-  tasksHolder.classList.add("tasks");
-  renderProjectHeader();
-  taskContainer.appendChild(tasksHolder);
   // Holds the task objects for the weekly tasks
   // So they can be used to load the task status for the weekly tasks
   const defaultViewTasksArr = [];
@@ -79,6 +78,9 @@ const renderDefaultTasks = () => {
 
   const projectObjects = getAllProjects();
   setCurrentProject(projectObjects[0]);
+  const currentProj = getCurrentProject();
+  renderProjectHeader(currentProj);
+  const tasksHolder = document.querySelector(".tasks");
   for (let i = 0; i < projectObjects.length; i++) {
     // Used for creating tasks
     /* console.log(currentProjObject); */
@@ -93,9 +95,8 @@ const renderDefaultTasks = () => {
       }
     }
     /* } */
-    loadTaskStatusForProjects(defaultViewTasksArr);
   }
-
+  loadTaskStatusForProjects(defaultViewTasksArr);
   createTaskBtn();
   createTaskBtnListener();
   deleteTaskListener();

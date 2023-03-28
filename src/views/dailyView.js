@@ -1,6 +1,6 @@
 import { createTaskElement } from "../DOMElements/createTaskElement";
 import { renderProjectHeader } from "../DOMElements/createTaskHeader";
-import { getAllProjects, createProject, addProjectToProjectsArray } from "../projectManager/projectManager";
+import { getAllProjects, createProject, addProjectToProjectsArray, getCurrentProject } from "../projectManager/projectManager";
 import { getDate, parseISO } from "date-fns";
 import {
     loadTaskStatusForProjects,
@@ -17,10 +17,9 @@ const renderDailyTasksListener = () => {
 const renderDayTasksOnClick = () => {
     const taskContainer = document.querySelector(".taskContainer");
     taskContainer.innerHTML = "";
-    const tasksHolder = document.createElement("div");
-    tasksHolder.classList.add("tasks");
-    renderProjectHeader();
-    taskContainer.appendChild(tasksHolder);
+    const currentProj = getCurrentProject();
+    renderProjectHeader(currentProj);
+    const tasksHolder = document.querySelector(".tasks");
     // Holds the task objects for the weekly tasks
     // So they can be used to load the task status for the weekly tasks
     const dayViewTasksArr = [];
