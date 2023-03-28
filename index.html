@@ -11,126 +11,128 @@
 </head>
 
 <body>
-  <div class="form-modal-background"></div>
-  <header>
-    <div class="headerContent">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <title>check-bold</title>
-        <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-      </svg>
-      <h1>Task Manager</h1>
-    </div>
-  </header>
+  <div class="container">
+    <div class="form-modal-background"></div>
+    <header>
+      <div class="headerContent">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <title>check-bold</title>
+          <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+        </svg>
+        <h1>Task Manager</h1>
+      </div>
+    </header>
 
-  <div class="form-container">
-    <form id="taskForm">
-      <fieldset>
-        <div class="legend">
-          <legend>Fill in Task Info</legend>
-        </div>
-        <div class="fieldset-body">
-          <label for="title">Title
-            <input id="title" type="text" id="title" name="title" required />
-          </label>
+    <div class="form-container">
+      <form id="taskForm">
+        <fieldset>
+          <div class="legend">
+            <legend>Fill in Task Info</legend>
+          </div>
+          <div class="fieldset-body">
+            <label for="title">Title
+              <input id="title" type="text" id="title" name="title" required />
+            </label>
 
-          <label for="description">Description
-            <input id="description" type="text" id="description" name="description" required />
-          </label>
+            <label for="description">Description
+              <input id="description" type="text" id="description" name="description" required />
+            </label>
 
-          <label for="dueDate">Due Date
-            <input id="dueDate" type="date" id="dueDate" name="dueDate" required />
-          </label>
+            <label for="dueDate">Due Date
+              <input id="dueDate" type="date" id="dueDate" name="dueDate" required />
+            </label>
 
-          <label for="priority">
-            Priority
-            <div class="btnPriorityContainer">
-              <label for="low">
-                Low
-                <input type="radio" name="priority" id="low" value="low" required />
-              </label>
-              <label for="medium">
-                Medium
-                <input type="radio" name="priority" id="medium" value="medium" />
-              </label>
-              <label for="high">
-                High
-                <input type="radio" name="priority" id="high" value="high" />
-              </label>
-            </div>
-          </label>
+            <label for="priority">
+              Priority
+              <div class="btnPriorityContainer">
+                <label for="low">
+                  Low
+                  <input type="radio" name="priority" id="low" value="low" required />
+                </label>
+                <label for="medium">
+                  Medium
+                  <input type="radio" name="priority" id="medium" value="medium" />
+                </label>
+                <label for="high">
+                  High
+                  <input type="radio" name="priority" id="high" value="high" />
+                </label>
+              </div>
+            </label>
 
-          <label for="notes">
-            Notes
-            <textarea id="notes" name="textarea" rows="5" cols="50" required>
+            <label for="notes">
+              Notes
+              <textarea id="notes" name="textarea" rows="5" cols="50" required>
 Test</textarea>
-          </label>
+            </label>
 
-          <button class="taskSubmitBtn" type="submit">Submit</button>
+            <button class="taskSubmitBtn" type="submit">Submit</button>
+          </div>
+        </fieldset>
+      </form>
+      <button class="close-modal">X</button>
+    </div>
+
+    <aside>
+      <nav>
+        <div class="home">
+          <button class="defaultTab">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <title>home</title>
+              <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" />
+            </svg>
+            <p>Home</p>
+          </button>
         </div>
-      </fieldset>
-    </form>
-    <button class="close-modal">X</button>
+        <div class="today">
+          <button class="dayTab">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <title>calendar-today</title>
+              <path
+                d="M7,10H12V15H7M19,19H5V8H19M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" />
+            </svg>
+            <p>Today</p>
+          </button>
+        </div>
+        <div class="thisWeek">
+          <button class="weekTab">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <title>calendar-range</title>
+              <path
+                d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
+            </svg>
+            <p>Week</p>
+          </button>
+        </div>
+        <!-- This is where you will dynamically generate each project object on the DOM -->
+        <div class="projectContainer">
+          <div>
+            <p>Projects</p>
+            <button class="showProjInputBtn">+</button>
+          </div>
+
+          <div class="projects">
+            <p>Test Project</p>
+          </div>
+          <form class="projectInputForm">
+            <label class="projectTitle" for="projectTitle">
+              Project Title
+              <div>
+                <input class="projTitleInput" type="text" name="projectTitle" id="projectTitle" required />
+                <button class="projSubmitBtn" type="submit">Add</button>
+              </div>
+            </label>
+
+            <button class="closeProjectInputBtn">Close</button>
+          </form>
+        </div>
+      </nav>
+    </aside>
+    <!-- This is where the dynamically generated task objects will be rendered -->
+    <main>
+      <div class="taskContainer"></div>
+    </main>
   </div>
-
-  <aside>
-    <nav>
-      <div class="home">
-        <button class="defaultTab">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <title>home</title>
-            <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" />
-          </svg>
-          <p>Home</p>
-        </button>
-      </div>
-      <div class="today">
-        <button class="dayTab">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <title>calendar-today</title>
-            <path
-              d="M7,10H12V15H7M19,19H5V8H19M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" />
-          </svg>
-          <p>Today</p>
-        </button>
-      </div>
-      <div class="thisWeek">
-        <button class="weekTab">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <title>calendar-range</title>
-            <path
-              d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
-          </svg>
-          <p>Week</p>
-        </button>
-      </div>
-      <!-- This is where you will dynamically generate each project object on the DOM -->
-      <div class="projectContainer">
-        <div>
-          <p>Projects</p>
-          <button class="showProjInputBtn">+</button>
-        </div>
-
-        <div class="projects">
-          <p>Test Project</p>
-        </div>
-        <form class="projectInputForm">
-          <label class="projectTitle" for="projectTitle">
-            Project Title
-            <div>
-              <input class="projTitleInput" type="text" name="projectTitle" id="projectTitle" required />
-              <button class="projSubmitBtn" type="submit">Add</button>
-            </div>
-          </label>
-
-          <button class="closeProjectInputBtn">Close</button>
-        </form>
-      </div>
-    </nav>
-  </aside>
-  <!-- This is where the dynamically generated task objects will be rendered -->
-  <main>
-    <div class="taskContainer"></div>
-  </main>
 </body>
 
 </html>
