@@ -486,6 +486,10 @@ input {
   gap: 4px;
 }
 
+.taskControls .pastDue {
+  color: #e74c4c
+}
+
 .addTaskBtn {
   width: 100%;
   padding: 8px;

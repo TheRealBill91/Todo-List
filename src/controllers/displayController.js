@@ -27,6 +27,7 @@ import {
   modifyTask,
   toggleTaskCompletion,
   getAllTasks,
+  toggleDueDateStatus,
 } from "../toDoManager/toDoManager";
 
 import { setAttributes } from "../setAttributes";
@@ -137,7 +138,14 @@ const renderProjectTasksOnClick = (event) => {
         for (let j = 0; j < projTasks.length; j++) {
           const taskObj = projTasks[j];
           projTasksArr.push(taskObj);
-          createTaskElement(i, j, tasksHolder, taskObj, viewType);
+          const taskElement = createTaskElement(
+            i,
+            j,
+            tasksHolder,
+            taskObj,
+            viewType
+          );
+          toggleDueDateStatus(taskObj, taskElement);
         }
       }
     }
@@ -428,6 +436,7 @@ const modifyTaskElement = (
 
   const dateEl = targetTaskEl.childNodes[1].childNodes[0];
   dateEl.textContent = newTaskValues[2];
+  toggleDueDateStatus(targetTaskObject, targetTaskEl);
 };
 
 // Retrieves all of the new task values the user has entered before

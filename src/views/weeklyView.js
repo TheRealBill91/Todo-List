@@ -9,6 +9,8 @@ import {
   editTaskListener,
 } from "../controllers/displayController";
 
+import { toggleDueDateStatus } from "../toDoManager/toDoManager";
+
 const renderWeekTasksListener = () => {
   const weekTab = document.querySelector(".weekTab");
   weekTab.addEventListener("click", renderWeekTasksOnClick);
@@ -35,7 +37,14 @@ const renderWeekTasksOnClick = () => {
       const taskDateObject = parseISO(taskDateString);
       const taskDateWeekIndex = getWeek(taskDateObject, { weekStartsOn: 1 });
       if (currentWeekIndex === taskDateWeekIndex) {
-        createTaskElement(i, j, tasksHolder, task, viewType);
+        const taskElement = createTaskElement(
+          i,
+          j,
+          tasksHolder,
+          task,
+          viewType
+        );
+        toggleDueDateStatus(task, taskElement);
         weekViewTasksArr.push(task);
       }
     }

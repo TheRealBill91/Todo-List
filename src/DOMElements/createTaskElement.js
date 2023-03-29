@@ -17,6 +17,7 @@ const createTaskElement = (...args) => {
   tasksHolder.appendChild(taskElement);
   createLeftContainer(taskElement, i, j, taskValues, taskUUID);
   createTaskControls(taskElement, taskValues, i, j, viewType, taskUUID);
+  return taskElement
 };
 
 // Puts the task checkbox toggle and task title in the same div on the left side

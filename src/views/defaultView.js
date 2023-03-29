@@ -20,6 +20,8 @@ import {
   createTaskBtnListener,
 } from "../DOMElements/createTask";
 
+import { toggleDueDateStatus } from "../toDoManager/toDoManager";
+
 const renderDefaultViewListener = () => {
   const defaultTab = document.querySelector(".defaultTab");
   defaultTab.addEventListener("click", renderDefaultTasksOnClick);
@@ -39,7 +41,6 @@ const renderDefaultTasksOnClick = (event) => {
 
   const projectObjects = getAllProjects();
   setCurrentProject(projectObjects[0]);
-  const currentProj = getCurrentProject();
   renderProjectHeader(viewType);
   const tasksHolder = document.querySelector(".tasks");
   for (let i = 0; i < projectObjects.length; i++) {
@@ -52,7 +53,14 @@ const renderDefaultTasksOnClick = (event) => {
       for (let j = 0; j < projTasks.length; j++) {
         const taskObj = projTasks[j];
         defaultViewTasksArr.push(taskObj);
-        createTaskElement(i, j, tasksHolder, taskObj, viewType);
+        const taskElement = createTaskElement(
+          i,
+          j,
+          tasksHolder,
+          taskObj,
+          viewType
+        );
+        toggleDueDateStatus(taskObj, taskElement);
       }
     }
     /* } */
@@ -91,7 +99,14 @@ const renderDefaultTasks = () => {
       for (let j = 0; j < projTasks.length; j++) {
         const taskObj = projTasks[j];
         defaultViewTasksArr.push(taskObj);
-        createTaskElement(i, j, tasksHolder, taskObj, viewType);
+        const taskElement = createTaskElement(
+          i,
+          j,
+          tasksHolder,
+          taskObj,
+          viewType
+        );
+        toggleDueDateStatus(taskObj, taskElement);
       }
     }
     /* } */

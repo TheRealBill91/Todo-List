@@ -1,5 +1,6 @@
 import { btnPrioritySelector } from "../DOMElements/createTask";
 import { getAllProjects } from "../projectManager/projectManager";
+import { getDate, parseISO, isPast, startOfDay, isBefore } from "date-fns";
 
 // contains the different factory patterns and functions for
 // creating and modifying to do tasks
@@ -98,6 +99,22 @@ const changeTaskNotes = (targetTaskObject, newTaskNotes) => {
   currentTaskObj.notes = newTaskNotes;
 };
 
+const toggleDueDateStatus = (taskObj, taskElement) => {
+  // To ignore time aspect, need to set new date to startOfDay,
+  // as "parseISO(taskDueDateString)" does not take time into account
+  const currentDateObj = startOfDay(new Date());
+  const taskDueDateString = taskObj.dueDate;
+  const taskDueDateObj = parseISO(taskDueDateString);
+  const isPastDate = currentDateObj > taskDueDateObj;
+  const taskElDatePara = taskElement.childNodes[1].childNodes[0];
+  /* console.log(isPastDate); */
+  if (isPastDate) {
+    taskElDatePara.classList.add("pastDue");
+  } else {
+    taskElDatePara.classList.remove("pastDue");
+  }
+};
+
 const toggleTaskCompletion = (
   currentProjObj,
   targetProjectObj,
@@ -132,4 +149,5 @@ export {
   toggleTaskCompletion,
   modifyTask,
   getAllTasks,
+  toggleDueDateStatus,
 };

@@ -1,6 +1,11 @@
 import { createTaskElement } from "../DOMElements/createTaskElement";
 import { renderProjectHeader } from "../DOMElements/createTaskHeader";
-import { getAllProjects, createProject, addProjectToProjectsArray, getCurrentProject } from "../projectManager/projectManager";
+import {
+    getAllProjects,
+    createProject,
+    addProjectToProjectsArray,
+    getCurrentProject,
+} from "../projectManager/projectManager";
 import { getDate, parseISO } from "date-fns";
 import {
     loadTaskStatusForProjects,
@@ -8,6 +13,8 @@ import {
     deleteTaskListener,
     editTaskListener,
 } from "../controllers/displayController";
+
+import { toggleDueDateStatus } from "../toDoManager/toDoManager";
 
 const renderDailyTasksListener = () => {
     const dayTab = document.querySelector(".dayTab");
@@ -36,7 +43,14 @@ const renderDayTasksOnClick = () => {
             const taskDateObject = parseISO(taskDateString);
             const taskDate = getDate(taskDateObject);
             if (currentDate === taskDate) {
-                createTaskElement(i, j, tasksHolder, task, viewType);
+                const taskElement = createTaskElement(
+                    i,
+                    j,
+                    tasksHolder,
+                    task,
+                    viewType
+                );
+                toggleDueDateStatus(task, taskElement);
                 dayViewTasksArr.push(task);
             }
         }
@@ -48,7 +62,5 @@ const renderDayTasksOnClick = () => {
     deleteTaskListener();
     editTaskListener();
 };
-
-
 
 export { renderDailyTasksListener };
