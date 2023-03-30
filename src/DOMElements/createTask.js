@@ -19,6 +19,7 @@ import { addTaskToLocalStorage } from "../controllers/localStorageController";
 // setting up an event listener to open the form inputting details
 
 const createTaskBtn = () => {
+  const taskContainer = document.querySelector(".taskContainer");
   const tasksHolder = document.querySelector(".tasks");
   const addTaskBtn = document.createElement("button");
   addTaskBtn.classList.add("addTaskBtn");
@@ -29,7 +30,8 @@ const createTaskBtn = () => {
   </div>
   `;
   /* addTaskBtn.textContent = "Add Task"; */
-  tasksHolder.appendChild(addTaskBtn);
+  taskContainer.insertBefore(addTaskBtn, tasksHolder);
+  // tasksHolder.appendChild(addTaskBtn);
 };
 
 // Sets up event listener to open task form when user clicks
