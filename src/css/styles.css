@@ -18,6 +18,10 @@ header {
   grid-row: 1/2;
 }
 
+#mobileMenu {
+  display: none;
+}
+
 .container {
   display: grid;
   /* rows, columns */
@@ -620,6 +624,7 @@ input[type="checkbox"]:checked {
 
   #mobileMenu {
     border: none;
+    display: flex;
   }
 
   aside {
