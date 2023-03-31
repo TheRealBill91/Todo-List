@@ -555,6 +555,17 @@ const setPriorityRadioButton = (priorityValue) => {
   });
 };
 
+
+const toggleMobileMenu = () => {
+  const menuButton = document.getElementById("mobileMenu");
+  const aside = document.querySelector(".mobileAside");
+  menuButton.addEventListener("click", (event) => {
+    aside.classList.toggle("showMobileMenu");
+    // aside.style.display = "block";
+  })
+
+}
+
 export {
   addProjectToDOM,
   renderProjectsToDOM,
@@ -571,4 +582,5 @@ export {
   removeProjectFromDOM,
   editProjectTitleOnDOMListener,
   editProjTitleSubmitListener,
+  toggleMobileMenu
 };

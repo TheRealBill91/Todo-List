@@ -16,6 +16,7 @@ import {
   showProjInputEventListener,
   renderProjTasksListener,
   editProjectTitleOnDOMListener,
+  toggleMobileMenu
 } from "./controllers/displayController";
 
 import { renderDailyTasksListener } from "./views/dailyView";
@@ -109,6 +110,8 @@ const initialSetup = () => {
   renderDailyTasksListener();
   renderDefaultViewListener();
   renderDefaultTasks();
+
+  toggleMobileMenu();
 };
 
 initialSetup();
