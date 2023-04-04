@@ -81,7 +81,7 @@ const renderProjectsToDOM = () => {
     projectDiv.append(projectTitle, projectControls);
     projectsHolder.appendChild(projectDiv);
   }
-  projectObjects.forEach((projectObj, index) => { });
+  projectObjects.forEach((projectObj, index) => {});
 };
 
 const showProjInputEventListener = () =>
@@ -555,16 +555,14 @@ const setPriorityRadioButton = (priorityValue) => {
   });
 };
 
-
 const toggleMobileMenu = () => {
   const menuButton = document.getElementById("mobileMenu");
   const aside = document.querySelector(".mobileAside");
   menuButton.addEventListener("click", (event) => {
     aside.classList.toggle("showMobileMenu");
     // aside.style.display = "block";
-  })
-
-}
+  });
+};
 
 export {
   addProjectToDOM,
@@ -582,5 +580,5 @@ export {
   removeProjectFromDOM,
   editProjectTitleOnDOMListener,
   editProjTitleSubmitListener,
-  toggleMobileMenu
+  toggleMobileMenu,
 };
