@@ -11,6 +11,7 @@ import {
   deleteTaskListener,
   editTaskListener,
   changeTaskStatusListener,
+  setTaskPriorityColor,
 } from "../controllers/displayController";
 import { v4 as uuidv4 } from "uuid";
 import { addTaskToLocalStorage } from "../controllers/localStorageController";
@@ -117,11 +118,6 @@ const addNewTaskElement = (task, currentProj) => {
   const newTaskTitle = task.title;
   const currentProjTitle = currentProj.projectTitle;
   const projectObjects = getAllProjects();
-  // projectObjects.forEach((projObject, index) => {
-  //   if (projObject.title === currentProjTitle) {
-  //     const projIndex = index;
-  //   }
-  // });
 
   const projectIndex = projectObjects.findIndex(
     (projObj) => projObj.projectTitle === currentProjTitle
@@ -131,7 +127,15 @@ const addNewTaskElement = (task, currentProj) => {
     (projTask) => projTask.title === newTaskTitle
   );
 
-  createTaskElement(projectIndex, taskIndex, tasksHolder, task, viewType);
+  const taskElm = createTaskElement(
+    projectIndex,
+    taskIndex,
+    tasksHolder,
+    task,
+    viewType,
+    tasks
+  );
+  setTaskPriorityColor(taskElm, task);
   deleteTaskListener();
   changeTaskStatusListener();
   editTaskListener();

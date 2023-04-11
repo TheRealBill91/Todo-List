@@ -13,6 +13,7 @@ import {
   deleteTaskListener,
   changeTaskStatusListener,
   editTaskListener,
+  loadTaskPriorityColor,
 } from "../controllers/displayController";
 
 import {
@@ -63,10 +64,9 @@ const renderDefaultTasksOnClick = (event) => {
         toggleDueDateStatus(taskObj, taskElement);
       }
     }
-    /* } */
-    loadTaskStatusForProjects(defaultViewTasksArr);
   }
-
+  loadTaskStatusForProjects(defaultViewTasksArr);
+  loadTaskPriorityColor(defaultViewTasksArr);
   createTaskBtn();
   createTaskBtnListener();
   deleteTaskListener();
@@ -85,6 +85,7 @@ const renderDefaultTasks = () => {
   const viewType = "default";
 
   const projectObjects = getAllProjects();
+  const tasks = document.querySelectorAll(".tasks > div");
   setCurrentProject(projectObjects[0]);
   const currentProj = getCurrentProject();
   renderProjectHeader(viewType);
@@ -104,13 +105,15 @@ const renderDefaultTasks = () => {
           j,
           tasksHolder,
           taskObj,
-          viewType
+          viewType,
+          tasks
         );
         toggleDueDateStatus(taskObj, taskElement);
       }
     }
     /* } */
   }
+  loadTaskPriorityColor(defaultViewTasksArr);
   loadTaskStatusForProjects(defaultViewTasksArr);
   createTaskBtn();
   createTaskBtnListener();

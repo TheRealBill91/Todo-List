@@ -34,7 +34,7 @@ const getAllProjects = () => {
 };
 
 const addTaskToProjectObj = (project, task) => {
-  project.tasksArr.push(task);
+  project.tasksArr.unshift(task);
 };
 
 // Sets the current project to whatever project the user last clicked on

@@ -12,6 +12,7 @@ import {
   changeTaskStatusListener,
   deleteTaskListener,
   editTaskListener,
+  loadTaskPriorityColor
 } from "../controllers/displayController";
 
 import { toggleDueDateStatus } from "../toDoManager/toDoManager";
@@ -57,6 +58,7 @@ const renderDayTasksOnClick = () => {
   }
 
   /* console.table(dayViewTasksArr); */
+  loadTaskPriorityColor(dayViewTasksArr);
   loadTaskStatusForProjects(dayViewTasksArr);
   changeTaskStatusListener();
   deleteTaskListener();

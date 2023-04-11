@@ -2,7 +2,7 @@ import { setAttributes } from "../setAttributes";
 
 // Creates task element using DOM
 const createTaskElement = (...args) => {
-  const [i, j, tasksHolder, taskObj, viewType] = args;
+  const [i, j, tasksHolder, taskObj, viewType, tasks] = args;
   // Will likely use to set indexes on task controls
   const taskValues = Object.values(taskObj);
   const taskElement = document.createElement("div");
@@ -14,10 +14,18 @@ const createTaskElement = (...args) => {
     "data-project": `${i}`,
     "data-index": `${j}`,
   });
-  tasksHolder.appendChild(taskElement);
+
+  // If there is atleast one task elm in the tasksHolder,
+  // then insert the new task elm at the top of the taskHolder
+  if (!tasks) {
+    tasksHolder.appendChild(taskElement);
+  } else {
+    tasksHolder.insertBefore(taskElement, tasks[0]);
+  }
+
   createLeftContainer(taskElement, i, j, taskValues, taskUUID);
   createTaskControls(taskElement, taskValues, i, j, viewType, taskUUID);
-  return taskElement
+  return taskElement;
 };
 
 // Puts the task checkbox toggle and task title in the same div on the left side

@@ -149,12 +149,13 @@ const renderProjectTasksOnClick = (event) => {
         }
       }
     }
-    loadTaskStatusForProjects(projTasksArr);
   }
   // listens for user click of task delete button
 
   createTaskBtn();
   createTaskBtnListener();
+  loadTaskPriorityColor(projTasksArr);
+  loadTaskStatusForProjects(projTasksArr);
   deleteTaskListener();
   changeTaskStatusListener();
   editTaskListener();
@@ -437,6 +438,7 @@ const modifyTaskElement = (
   const dateEl = targetTaskEl.childNodes[1].childNodes[0];
   dateEl.textContent = newTaskValues[2];
   toggleDueDateStatus(targetTaskObject, targetTaskEl);
+  changeTaskPriorityColor(targetTaskEl, newTaskValues);
 };
 
 // Retrieves all of the new task values the user has entered before
@@ -515,8 +517,51 @@ const loadTaskStatusForProjects = (Arr) => {
     }
   });
 };
-// Need to go through each task element and compare the
-// project dataset index
+
+// Loads task priority colors and displays it with
+// a border color around the task
+const loadTaskPriorityColor = (Arr) => {
+  const checkBoxElements = document.querySelectorAll(".toggleTaskStatus");
+  const tasks = document.querySelectorAll(".tasks > div");
+  // This is the project index from renderProjectTasksOnClick
+  // const projIndex = i;
+  const currentProjTasks = Arr;
+
+  currentProjTasks.forEach((task, index) => {
+    const taskPriority =
+      task.priority === "low"
+        ? (tasks[index].style.border = "1px solid yellow")
+        : task.priority === "medium"
+        ? (tasks[index].style.border = "1px solid orange")
+        : task.priority === "high"
+        ? (tasks[index].style.border = "1px solid red")
+        : null;
+  });
+};
+
+// Changes the task priorty color around task el
+// after user edits a task using task form
+const changeTaskPriorityColor = (targetTaskEl, newTaskValues) => {
+  if (newTaskValues[3] === "low") {
+    targetTaskEl.style.border = "1px solid yellow";
+  } else if (newTaskValues[3] === "medium") {
+    targetTaskEl.style.border = "1px solid orange";
+  } else {
+    targetTaskEl.style.border = "1px solid red";
+  }
+};
+
+// Will set the task priority border color on
+// a newly created task elm
+const setTaskPriorityColor = (taskElm, task) => {
+  if (task.priority === "low") {
+    taskElm.style.border = "1px solid yellow";
+  } else if (task.priority === "medium") {
+    taskElm.style.border = "1px solid orange";
+  } else {
+    taskElm.style.border = "1px solid red";
+  }
+};
 
 // loads task values into form when user hits the edit button
 const loadTaskValues = (currentTask) => {
@@ -581,4 +626,6 @@ export {
   editProjectTitleOnDOMListener,
   editProjTitleSubmitListener,
   toggleMobileMenu,
+  loadTaskPriorityColor,
+  setTaskPriorityColor
 };

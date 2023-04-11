@@ -7,6 +7,7 @@ import {
   changeTaskStatusListener,
   deleteTaskListener,
   editTaskListener,
+  loadTaskPriorityColor
 } from "../controllers/displayController";
 
 import { toggleDueDateStatus } from "../toDoManager/toDoManager";
@@ -51,6 +52,7 @@ const renderWeekTasksOnClick = () => {
   }
 
   // console.table(weekViewTasksArr);
+  loadTaskPriorityColor(weekViewTasksArr);
   loadTaskStatusForProjects(weekViewTasksArr);
   changeTaskStatusListener();
   deleteTaskListener();

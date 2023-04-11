@@ -16,7 +16,7 @@ import {
   showProjInputEventListener,
   renderProjTasksListener,
   editProjectTitleOnDOMListener,
-  toggleMobileMenu
+  toggleMobileMenu,
 } from "./controllers/displayController";
 
 import { renderDailyTasksListener } from "./views/dailyView";
@@ -118,5 +118,3 @@ initialSetup();
 
 /* console.table(getAllProjects()); */
 
-/* console.log(getAllProjects());
- */
