@@ -161,7 +161,7 @@ textarea#notes {
 label {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 
 .btnPriorityContainer {
@@ -419,6 +419,8 @@ nav > .projectContainer {
 
 .projectTitle > div {
   display: flex;
+  gap: 8px;
+  height: 32px;
 }
 
 input {
@@ -432,9 +434,24 @@ input {
   align-items: center;
 }
 
-.projectInputForm > button {
-  height: 30px;
+input#projectTitle {
+  width: 60%;
+}
+
+.projectTitle svg {
+  height: 18px;
+}
+
+.projectInputForm button {
+  /* height: 30px; */
   align-self: center;
+  background-color: rgb(209, 209, 209);
+  border: none;
+  transition: 0.1s ease-in-out;
+}
+
+.projectInputForm button:hover {
+  background-color: rgb(178, 178, 178);
 }
 
 .closeProjectAddInput {
@@ -442,7 +459,7 @@ input {
 }
 
 .closeProjectInputBtn {
-  display: none;
+  display: block;
   transition: 0.1s;
 }
 
@@ -452,6 +469,7 @@ input {
   gap: 14px;
   padding: 8px 5vw;
   min-height: 100vh;
+  margin-bottom: 14px;
   /* outline: 1px solid black; */
 }
 

@@ -41,12 +41,12 @@ import {
   removeProjLocalStorageArr,
   editProjTitleLocalStorage,
 } from "./localStorageController";
+import { createProjInputFormElm } from "../DOMElements/createProjectFormElm";
 
 const showProjInputBtn = document.querySelector(".showProjInputBtn");
-const projectInputForm = document.querySelector(".projectInputForm");
-const closeProjInputBtn = document.querySelector(".closeProjectInputBtn");
 
 const projInputFormListener = () => {
+  const projectInputForm = document.querySelector(".projectInputForm");
   projectInputForm.addEventListener("submit", addProjectToDOM);
 };
 
@@ -81,23 +81,35 @@ const renderProjectsToDOM = () => {
     projectDiv.append(projectTitle, projectControls);
     projectsHolder.appendChild(projectDiv);
   }
-  projectObjects.forEach((projectObj, index) => {});
+  editProjectTitleOnDOMListener();
 };
 
 const showProjInputEventListener = () =>
   showProjInputBtn.addEventListener("click", showProjInput);
 
 const showProjInput = () => {
+  const projectsHolder = document.querySelector(".projects");
+
+  projectsHolder.innerHTML = "";
+  projectsHolder.appendChild(createProjInputFormElm());
+  const projectInputForm = document.querySelector(".projectInputForm");
+  const closeProjInputBtn = document.querySelector(".closeProjectInputBtn");
   projectInputForm.style.display = "flex";
   closeProjInputBtn.style.display = "block";
+  projInputFormListener();
+  closeProjInputEventListener();
 };
 
-const closeProjInputEventListener = () =>
+const closeProjInputEventListener = () => {
+  const closeProjInputBtn = document.querySelector(".closeProjectInputBtn");
   closeProjInputBtn.addEventListener("click", closeProjectInput);
+};
 
 const closeProjectInput = () => {
-  projectInputForm.style.display = "none";
-  closeProjInputBtn.style.display = "none";
+  const projectsHolder = document.querySelector(".projects");
+  projectsHolder.innerHTML = "";
+
+  renderProjectsToDOM();
 };
 
 const renderProjTasksListener = () => {
@@ -627,5 +639,5 @@ export {
   editProjTitleSubmitListener,
   toggleMobileMenu,
   loadTaskPriorityColor,
-  setTaskPriorityColor
+  setTaskPriorityColor,
 };

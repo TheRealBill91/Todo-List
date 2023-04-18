@@ -96,7 +96,7 @@ const initialSetup = () => {
   createSampleProjects();
 
   showProjInputEventListener();
-  closeProjInputEventListener();
+  // closeProjInputEventListener();
   addProjArrLocalStorage();
   loadProjectsFromLocalStorage();
   renderProjectsToDOM();
@@ -104,7 +104,7 @@ const initialSetup = () => {
   renderProjTasksListener();
   setIndexForDefaultTab();
 
-  projInputFormListener();
+  // projInputFormListener();
   renderWeekTasksListener();
   editProjectTitleOnDOMListener();
   renderDailyTasksListener();
