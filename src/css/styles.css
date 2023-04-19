@@ -183,18 +183,19 @@ input[type="radio"] {
 
   position: relative;
   top: 4px;
+  align-self: center;
 }
 
 input[type="radio"]:checked#high {
-  border: 4px solid red;
+  border: 4px solid #cf2020;
 }
 
 input[type="radio"]:checked#medium {
-  border: 4px solid orange;
+  border: 4px solid rgb(221, 154, 32);
 }
 
 input[type="radio"]:checked#low {
-  border: 4px solid yellow;
+  border: 4px solid rgb(228, 228, 35);
 }
 
 header {
@@ -230,6 +231,11 @@ header > div > svg {
 .headerContent {
   display: flex;
   align-items: center;
+  gap: 8px;
+}
+
+.headerContent h1 {
+  margin-bottom: 20px;
 }
 
 header svg {
@@ -467,7 +473,7 @@ input#projectTitle {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: 8px 5vw;
+  padding: 8px 8vw;
   min-height: 100vh;
   margin-bottom: 14px;
   /* outline: 1px solid black; */
@@ -586,11 +592,19 @@ input#projectTitle {
   display: flex;
   align-items: center;
   gap: 6px;
-  transition: 0.01s ease-in-out;
+  transition: 0.4s ease-in-out;
 }
 
 .addTaskBtn:hover {
   transform: scale(1.004);
+}
+
+.addTaskBtn:hover > div svg {
+  fill: black;
+}
+
+.addTaskBtn:hover > div p {
+  color: black;
 }
 
 .addTaskBtn p {
@@ -673,6 +687,14 @@ input[type="checkbox"]:checked {
     display: flex;
   }
 
+  nav > div {
+    /* outline: 1px solid black; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 72px;
+  }
+
   #taskForm {
     display: flex;
     z-index: 1;
@@ -711,7 +733,12 @@ input[type="checkbox"]:checked {
   .headerContent {
     display: flex;
     align-items: center;
-    gap: 4px;
+    flex-direction: row-reverse;
+    gap: 6px;
+  }
+
+  .headerContent h1 {
+    margin-bottom: 20px;
   }
 
   .form-modal-background {

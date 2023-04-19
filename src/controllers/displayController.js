@@ -53,6 +53,7 @@ const projInputFormListener = () => {
 const addProjectToDOM = (event) => {
   event.preventDefault();
   const projectTitleInput = document.querySelector(".projTitleInput");
+  const projectInputForm = document.querySelector(".projectInputForm");
   const projectTitleInputValue = projectTitleInput.value;
   const project = createProject(projectTitleInputValue, []);
   addProjectToProjectsArray(project);
@@ -542,11 +543,11 @@ const loadTaskPriorityColor = (Arr) => {
   currentProjTasks.forEach((task, index) => {
     const taskPriority =
       task.priority === "low"
-        ? (tasks[index].style.border = "1px solid yellow")
+        ? (tasks[index].style.borderRight = "8px solid #e4e423")
         : task.priority === "medium"
-        ? (tasks[index].style.border = "1px solid orange")
+        ? (tasks[index].style.borderRight = "8px solid #dd9a20")
         : task.priority === "high"
-        ? (tasks[index].style.border = "1px solid red")
+        ? (tasks[index].style.borderRight = "8px solid #cf2020")
         : null;
   });
 };
@@ -621,6 +622,16 @@ const toggleMobileMenu = () => {
   });
 };
 
+// If user clicks home, today, or week buttons, and mobile
+// media query is active, close mobile menu
+const closeMobileMenuOnClick = () => {
+  const aside = document.querySelector(".mobileAside");
+  const mobileMQ = window.matchMedia("(max-device-width: 812px)");
+  if (mobileMQ) {
+    aside.classList.toggle("showMobileMenu");
+  }
+};
+
 export {
   addProjectToDOM,
   renderProjectsToDOM,
@@ -640,4 +651,5 @@ export {
   toggleMobileMenu,
   loadTaskPriorityColor,
   setTaskPriorityColor,
+  closeMobileMenuOnClick,
 };

@@ -14,6 +14,7 @@ import {
   changeTaskStatusListener,
   editTaskListener,
   loadTaskPriorityColor,
+  closeMobileMenuOnClick,
 } from "../controllers/displayController";
 
 import {
@@ -72,6 +73,7 @@ const renderDefaultTasksOnClick = (event) => {
   deleteTaskListener();
   changeTaskStatusListener();
   editTaskListener();
+  closeMobileMenuOnClick()
   /* console.table(getAllProjects()); */
 };
 

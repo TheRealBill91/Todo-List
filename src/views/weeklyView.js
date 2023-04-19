@@ -7,7 +7,8 @@ import {
   changeTaskStatusListener,
   deleteTaskListener,
   editTaskListener,
-  loadTaskPriorityColor
+  loadTaskPriorityColor,
+  closeMobileMenuOnClick
 } from "../controllers/displayController";
 
 import { toggleDueDateStatus } from "../toDoManager/toDoManager";
@@ -57,6 +58,7 @@ const renderWeekTasksOnClick = () => {
   changeTaskStatusListener();
   deleteTaskListener();
   editTaskListener();
+  closeMobileMenuOnClick()
 };
 
 const getWeeklyTaskObjects = () => {
