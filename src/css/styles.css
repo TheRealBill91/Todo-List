@@ -64,6 +64,23 @@ body {
   overflow: auto;
 }
 
+.form-container::-webkit-scrollbar {
+  width: 10px;
+  height: 20px;
+  background-color: white;
+  border-radius: 0px 12px 12px 0px;
+  margin: 0;
+  padding: 0;
+}
+
+.form-container::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 12px;
+  height: 14px;
+  margin: 0;
+  padding: 0;
+}
+
 #taskForm {
   display: flex;
   z-index: 1;
@@ -303,6 +320,7 @@ nav > div > button > svg {
   align-items: center;
   width: 70%;
   flex: 1 auto;
+  margin-left: 8px;
   align-self: flex-start;
 }
 
@@ -330,6 +348,22 @@ nav > div > button > svg {
   width: 75%;
   margin-bottom: 8px;
   overflow: auto;
+  overflow-x: hidden;
+  background-color: rgb(218, 218, 218);
+  border-radius: 8px 8px;
+  box-shadow: inset #d1d1d15c 0px 3px 4px 1px;
+}
+
+.projects::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.projects::-webkit-scrollbar-thumb {
+  width: auto;
+  height: 6px;
+  background-color: grey;
+  border-radius: 6px;
 }
 
 .projects > div {
@@ -341,6 +375,7 @@ nav > div > button > svg {
   gap: 8px;
   width: 100%;
   padding: 8px;
+  margin-right: 6px;
 }
 
 .projectControls {
@@ -438,6 +473,7 @@ input {
   flex-direction: column;
   transition: 0.1s;
   align-items: center;
+  margin-left: 12px;
 }
 
 input#projectTitle {
@@ -713,6 +749,22 @@ input[type="checkbox"]:checked {
     top: 10px;
   }
 
+  .projects {
+    /* outline: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 120px;
+    align-items: center;
+    width: 75%;
+    margin-bottom: 22px;
+    overflow: auto;
+    overflow-x: hidden;
+    background-color: rgb(218, 218, 218);
+    border-radius: 8px 8px;
+    box-shadow: inset #d1d1d15c 0px 3px 4px 1px;
+  }
+
   .form-container {
     z-index: 3;
     position: relative;
@@ -720,15 +772,16 @@ input[type="checkbox"]:checked {
     display: none;
     width: 80%;
     padding: 12px 14px;
-    /* height: 73vh; */
+    height: 76vh;
     box-shadow: 0px 6px 4px 4px rgba(155, 155, 155, 0.322);
     border-radius: 12px 12px;
     grid-template-columns: 1fr 32px;
     grid-template-rows: 74vh;
     place-self: center;
     overflow: auto;
-    height: auto;
-    /* top: 30px; */
+    /* height: auto; */
+    /* top: -36px; */
+    bottom: 41px;
   }
   .headerContent {
     display: flex;

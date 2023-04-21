@@ -92,6 +92,8 @@ const showProjInput = () => {
   const projectsHolder = document.querySelector(".projects");
 
   projectsHolder.innerHTML = "";
+  projectsHolder.style.backgroundColor = "rgb(230, 230, 230)";
+  projectsHolder.style.boxShadow = "none";
   projectsHolder.appendChild(createProjInputFormElm());
   const projectInputForm = document.querySelector(".projectInputForm");
   const closeProjInputBtn = document.querySelector(".closeProjectInputBtn");
@@ -109,6 +111,7 @@ const closeProjInputEventListener = () => {
 const closeProjectInput = () => {
   const projectsHolder = document.querySelector(".projects");
   projectsHolder.innerHTML = "";
+  projectsHolder.style = "";
 
   renderProjectsToDOM();
 };
@@ -556,11 +559,11 @@ const loadTaskPriorityColor = (Arr) => {
 // after user edits a task using task form
 const changeTaskPriorityColor = (targetTaskEl, newTaskValues) => {
   if (newTaskValues[3] === "low") {
-    targetTaskEl.style.border = "1px solid yellow";
+    targetTaskEl.style.borderRight = "8px solid #e4e423";
   } else if (newTaskValues[3] === "medium") {
-    targetTaskEl.style.border = "1px solid orange";
-  } else {
-    targetTaskEl.style.border = "1px solid red";
+    targetTaskEl.style.borderRight = "8px solid #dd9a20";
+  } else if (newTaskValues[3] === "high") {
+    targetTaskEl.style.borderRight = "8px solid #cf2020";
   }
 };
 
@@ -568,12 +571,12 @@ const changeTaskPriorityColor = (targetTaskEl, newTaskValues) => {
 // a newly created task elm
 const setTaskPriorityColor = (taskElm, task) => {
   if (task.priority === "low") {
-    taskElm.style.border = "1px solid yellow";
+    taskElm.style.borderRight = "8px solid #e4e423";
   } else if (task.priority === "medium") {
-    taskElm.style.border = "1px solid orange";
-  } else {
-    taskElm.style.border = "1px solid red";
-  }
+    taskElm.style.borderRight = "8px solid #dd9a20";
+  } else if (task.priority === "high") {
+    taskElm.style.borderRight = "8px solid #cf2020";
+  } 
 };
 
 // loads task values into form when user hits the edit button

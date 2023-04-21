@@ -1,137 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <script defer src="main.js"></script>
+    <link
+      rel="icon"
+      href="assets/icons/check-circle-outline.svg"
+      type="image/svg"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Todo List</title>
-  <script defer src="main.js"></script>
-  <link rel="icon" href="assets/icons/check-circle-outline.svg" type="image/svg" />
-</head>
+  <body>
+    <div class="form-modal-background">
+      <div class="form-container">
+        <form id="taskForm">
+          <fieldset>
+            <div class="legend">
+              <legend>Fill in Task Info</legend>
+            </div>
+            <div class="fieldset-body">
+              <label for="title"
+                >Title
+                <input
+                  id="title"
+                  type="text"
+                  id="title"
+                  name="title"
+                  required
+                />
+              </label>
 
-<body>
-  <div class="form-modal-background">
-    <div class="form-container">
-      <form id="taskForm">
-        <fieldset>
-          <div class="legend">
-            <legend>Fill in Task Info</legend>
-          </div>
-          <div class="fieldset-body">
-            <label for="title">Title
-              <input id="title" type="text" id="title" name="title" required />
-            </label>
+              <label for="description"
+                >Description
+                <input
+                  id="description"
+                  type="text"
+                  id="description"
+                  name="description"
+                  required
+                />
+              </label>
 
-            <label for="description">Description
-              <input id="description" type="text" id="description" name="description" required />
-            </label>
+              <label for="dueDate"
+                >Due Date
+                <input
+                  id="dueDate"
+                  type="date"
+                  id="dueDate"
+                  name="dueDate"
+                  required
+                />
+              </label>
 
-            <label for="dueDate">Due Date
-              <input id="dueDate" type="date" id="dueDate" name="dueDate" required />
-            </label>
+              <label for="priority">
+                Priority
+                <div class="btnPriorityContainer">
+                  <label for="low">
+                    Low
+                    <input
+                      type="radio"
+                      name="priority"
+                      id="low"
+                      value="low"
+                    />
+                  </label>
+                  <label for="medium">
+                    Medium
+                    <input
+                      type="radio"
+                      name="priority"
+                      id="medium"
+                      value="medium"
+                    />
+                  </label>
+                  <label for="high">
+                    High
+                    <input
+                      type="radio"
+                      name="priority"
+                      id="high"
+                      value="high"
+                    />
+                  </label>
+                </div>
+              </label>
 
-            <label for="priority">
-              Priority
-              <div class="btnPriorityContainer">
-                <label for="low">
-                  Low
-                  <input type="radio" name="priority" id="low" value="low" required />
-                </label>
-                <label for="medium">
-                  Medium
-                  <input type="radio" name="priority" id="medium" value="medium" />
-                </label>
-                <label for="high">
-                  High
-                  <input type="radio" name="priority" id="high" value="high" />
-                </label>
-              </div>
-            </label>
+              <label for="notes">
+                Notes
+                <textarea
+                  id="notes"
+                  name="textarea"
+                  rows="5"
+                  cols="50"
+                  required
+                ></textarea>
+              </label>
 
-            <label for="notes">
-              Notes
-              <textarea id="notes" name="textarea" rows="5" cols="50" required>
-Test</textarea>
-            </label>
-
-            <button class="taskSubmitBtn" type="submit">Submit</button>
-          </div>
-        </fieldset>
-      </form>
-      <button class="close-modal">X</button>
-    </div>
-  </div>
-  <div class="container">
-    <header>
-      <div>
-        <button id="mobileMenu">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <title>menu</title>
-            <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
-          </svg>
-        </button>
-
-        <div class="headerContent">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <title>check-bold</title>
-            <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-          </svg>
-          <h1>Task Manager</h1>
-        </div>
+              <button class="taskSubmitBtn" type="submit">Submit</button>
+            </div>
+          </fieldset>
+        </form>
+        <button class="close-modal">X</button>
       </div>
-    </header>
-
-    <aside class="mobileAside">
-      <nav>
-        <div class="home">
-          <button class="defaultTab">
+    </div>
+    <div class="container">
+      <header>
+        <div>
+          <button id="mobileMenu">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <title>home</title>
-              <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" />
+              <title>menu</title>
+              <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
             </svg>
-            <p>Inbox</p>
           </button>
-        </div>
-        <div class="today">
-          <button class="dayTab">
+
+          <div class="headerContent">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <title>calendar-today</title>
+              <title>check-bold</title>
               <path
-                d="M7,10H12V15H7M19,19H5V8H19M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" />
+                d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"
+              />
             </svg>
-            <p>Today</p>
-          </button>
-        </div>
-        <div class="thisWeek">
-          <button class="weekTab">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <title>calendar-range</title>
-              <path
-                d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z" />
-            </svg>
-            <p>Week</p>
-          </button>
-        </div>
-        <!-- This is where you will dynamically generate each project object on the DOM -->
-        <div class="projectContainer">
-          <div>
-            <p>Projects</p>
-            <button class="showProjInputBtn">+</button>
+            <h1>Task Manager</h1>
           </div>
-
-          <div class="projects">
-            <p>Test Project</p>
-          </div>
-         
         </div>
-      </nav>
-    </aside>
-    <!-- This is where the dynamically generated task objects will be rendered -->
-    <main>
-      <div class="taskContainer"></div>
-    </main>
-  </div>
-</body>
+      </header>
 
+      <aside class="mobileAside">
+        <nav>
+          <div class="home">
+            <button class="defaultTab">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <title>home</title>
+                <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" />
+              </svg>
+              <p>Inbox</p>
+            </button>
+          </div>
+          <div class="today">
+            <button class="dayTab">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <title>calendar-today</title>
+                <path
+                  d="M7,10H12V15H7M19,19H5V8H19M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z"
+                />
+              </svg>
+              <p>Today</p>
+            </button>
+          </div>
+          <div class="thisWeek">
+            <button class="weekTab">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <title>calendar-range</title>
+                <path
+                  d="M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"
+                />
+              </svg>
+              <p>Week</p>
+            </button>
+          </div>
+          <!-- This is where you will dynamically generate each project object on the DOM -->
+          <div class="projectContainer">
+            <div>
+              <p>Projects</p>
+              <button class="showProjInputBtn">+</button>
+            </div>
+
+            <div class="projects">
+              <p>Test Project</p>
+            </div>
+          </div>
+        </nav>
+      </aside>
+      <!-- This is where the dynamically generated task objects will be rendered -->
+      <main>
+        <div class="taskContainer"></div>
+      </main>
+    </div>
+  </body>
 </html>
