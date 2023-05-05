@@ -1,6 +1,13 @@
 import { btnPrioritySelector } from "../DOMElements/createTask";
 import { getAllProjects } from "../projectManager/projectManager";
-import { getDate, parseISO, isPast, startOfDay, isBefore } from "date-fns";
+import {
+  getDate,
+  parseISO,
+  isPast,
+  startOfDay,
+  isBefore,
+  format,
+} from "date-fns";
 
 // contains the different factory patterns and functions for
 // creating and modifying to do tasks
@@ -86,6 +93,7 @@ const changeTaskDescription = (targetTaskObject, newDescription) => {
 
 const changeTaskDueDate = (targetTaskObject, newTaskDueDate) => {
   const currentTaskObj = targetTaskObject;
+  const newDate = format(parseISO(newTaskDueDate), "LLL do");
   currentTaskObj.dueDate = newTaskDueDate;
 };
 

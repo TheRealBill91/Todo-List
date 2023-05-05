@@ -1,3 +1,4 @@
+import { format, parseISO } from "date-fns";
 import { setAttributes } from "../setAttributes";
 
 // Creates task element using DOM
@@ -87,7 +88,9 @@ const createTaskControls = (
   taskControls.classList.add("taskControls");
   taskElement.appendChild(taskControls);
   const datePara = document.createElement("p");
-  datePara.textContent = `${taskValues[3]}`;
+  const dateObj = parseISO(taskValues[3]);
+   const formattedDate = format(dateObj, "LLL do");
+  datePara.textContent = formattedDate;
   const editButton = document.createElement("button");
   setAttributes(editButton, {
     "data-UUID": taskUUID,

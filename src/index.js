@@ -40,48 +40,48 @@ import {
 const createSampleTasks = () => {
   const sampleTask = createToDoTask(
     uuidv4(),
-    "title",
-    "description",
+    "Wash the car",
+    "Go to drive through car wash",
     "2023-03-15",
-    "low",
-    "notes",
+    "medium",
+    "",
     true
   );
   const sampleTaskTwo = createToDoTask(
     uuidv4(),
-    "taskTwo",
-    "descriptionTwo",
+    "Do laundry",
+    "Clean towels and sheets",
     "2023-03-21",
     "medium",
-    "notes",
+    "",
     false
   );
   const sampleTaskThree = createToDoTask(
     uuidv4(),
-    "taskThree",
-    "descriptionThree",
+    "Load the dishwasher",
+    "Put dirty dishes in the dishwasher",
     "2023-03-24",
-    "medium",
-    "notes",
+    "high",
+    "",
     true
   );
 
   const taskForProjTwo = createToDoTask(
     uuidv4(),
-    "ProjTwoTask",
-    "descriptionTwo",
+    "Learn testing",
+    "Learn how to write tests for your code",
     "2023-03-13",
     "medium",
     "notes",
-    true
+    false
   );
 
   return { sampleTask, sampleTaskTwo, sampleTaskThree, taskForProjTwo };
 };
 
 const createSampleProjects = () => {
-  const sampleProject = createProject("testProjectObject", []);
-  const projectTwo = createProject("ProjTwoTest", []);
+  const sampleProject = createProject("Chores", []);
+  const projectTwo = createProject("Web Development", []);
   addTaskToProjectObj(projectTwo, createSampleTasks().taskForProjTwo);
 
   addTaskToProjectObj(sampleProject, createSampleTasks().sampleTask);
