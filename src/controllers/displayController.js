@@ -452,7 +452,7 @@ const modifyTaskElement = (
   titleParaEl.textContent = newTaskValues[0];
 
   const dateEl = targetTaskEl.childNodes[1].childNodes[0];
-  dateEl.textContent = format(newTaskValues[2], "LLL do");
+  dateEl.textContent = format(parseISO(newTaskValues[2]), "LLL do");
   toggleDueDateStatus(targetTaskObject, targetTaskEl);
   changeTaskPriorityColor(targetTaskEl, newTaskValues);
 };

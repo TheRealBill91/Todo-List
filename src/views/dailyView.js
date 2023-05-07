@@ -6,7 +6,7 @@ import {
   addProjectToProjectsArray,
   getCurrentProject,
 } from "../projectManager/projectManager";
-import { getDate, parseISO } from "date-fns";
+import { getDate, parseISO , format } from "date-fns";
 import {
   loadTaskStatusForProjects,
   changeTaskStatusListener,
@@ -17,6 +17,8 @@ import {
 } from "../controllers/displayController";
 
 import { toggleDueDateStatus } from "../toDoManager/toDoManager";
+
+
 
 const renderDailyTasksListener = () => {
   const dayTab = document.querySelector(".dayTab");
@@ -33,7 +35,7 @@ const renderDayTasksOnClick = () => {
   // This will be deleted later
   const viewType = "day";
 
-  const currentDate = getDate(new Date());
+  const currentDate = format(new Date(), "LLL do");
   const projects = getAllProjects();
   renderProjectHeader(viewType);
   const tasksHolder = document.querySelector(".tasks");
@@ -43,7 +45,7 @@ const renderDayTasksOnClick = () => {
       const task = projectTasks[j];
       const taskDateString = task.dueDate;
       const taskDateObject = parseISO(taskDateString);
-      const taskDate = getDate(taskDateObject);
+      const taskDate = format(taskDateObject, "LLL do");
       if (currentDate === taskDate) {
         const taskElement = createTaskElement(
           i,
